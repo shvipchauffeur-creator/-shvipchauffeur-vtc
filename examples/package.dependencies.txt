@@ -1,0 +1,3 @@
+Install these dependencies at the project root:
+
+npm install mongodb jsonwebtoken bcryptjs

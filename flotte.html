@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHVIP — Flotte</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:"#05070E", obsidian:"#070A12", gold:"#D6B15E", gold2:"#B8922A",
+            pearl:"#E9ECF2", muted:"#A8B0C2", glass:"rgba(255,255,255,0.06)",
+            line:"rgba(255,255,255,0.12)"
+          },
+          boxShadow:{ luxe:"0 24px 80px rgba(0,0,0,0.65)" },
+          fontFamily:{ heading:["Poppins","sans-serif"], body:["Inter","sans-serif"] }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: Inter, sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family: Poppins, sans-serif; }
+    body.rtl { direction: rtl; }
+    body.rtl .rtl-text-right { text-align: right; }
+    body.rtl .rtl-flex-reverse { flex-direction: row-reverse; }
+  </style>
+
+  <script src="i18n.js"></script>
+</head>
+<body class="bg-ink text-pearl antialiased" onload="initLang()">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-ink/55 backdrop-blur-md border-b border-line">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full border border-line bg-white/5 flex items-center justify-center">
+            <span class="iconify text-xl text-gold" data-icon="lucide:crown"></span>
+          </div>
+          <span class="text-2xl font-extrabold tracking-tight">SH<span class="text-gold">VIP</span></span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-10 text-sm">
+          <a href="index.html" data-i18n="nav.home" class="text-muted hover:text-pearl transition">Accueil</a>
+          <a href="services.html" data-i18n="nav.services" class="text-muted hover:text-pearl transition">Services</a>
+          <a href="flotte.html" data-i18n="nav.fleet" class="text-pearl">Flotte</a>
+          <a href="partenaires.html" data-i18n="nav.partners" class="text-muted hover:text-pearl transition">Partenaires</a>
+          <a href="contact.html" data-i18n="nav.contact" class="text-muted hover:text-pearl transition">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-3 rtl-flex-reverse">
+          <div class="hidden md:flex items-center gap-2">
+            <button type="button" onclick="setLang('fr')" class="px-3 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-xs font-semibold">FR</button>
+            <button type="button" onclick="setLang('en')" class="px-3 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-xs font-semibold">EN</button>
+            <button type="button" onclick="setLang('ar')" class="px-3 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-xs font-semibold">AR</button>
+          </div>
+          <a href="contact.html#reserver"
+             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition rtl-flex-reverse">
+            <span class="iconify text-lg" data-icon="lucide:calendar-check"></span>
+            <span data-i18n="header.book">Réserver</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="pt-28">
+    <section class="py-14">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 rtl-text-right" data-i18n="fleet.title">Flotte</h1>
+        <p class="text-muted max-w-3xl rtl-text-right" data-i18n="fleet.subtitle">
+          Véhicules premium sélectionnés pour le confort et l’élégance.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-8 mt-10">
+          <div class="rounded-3xl p-6 bg-glass border border-line shadow-luxe">
+            <img src="./CLASSE-E.png" alt="Mercedes Classe E" class="w-full h-56 object-cover rounded-2xl mb-5">
+            <h3 class="text-lg font-bold mb-2 rtl-text-right" data-i18n="fleet.eT">Mercedes Classe E</h3>
+            <p class="text-muted text-sm rtl-text-right" data-i18n="fleet.eD">Business — confort premium.</p>
+          </div>
+
+          <div class="rounded-3xl p-6 bg-glass border border-line shadow-luxe">
+            <img src="./CLASSE-S.png" alt="Mercedes Classe S" class="w-full h-56 object-cover rounded-2xl mb-5">
+            <h3 class="text-lg font-bold mb-2 rtl-text-right" data-i18n="fleet.sT">Mercedes Classe S</h3>
+            <p class="text-muted text-sm rtl-text-right" data-i18n="fleet.sD">Luxury — prestige VIP.</p>
+          </div>
+
+          <div class="rounded-3xl p-6 bg-glass border border-line shadow-luxe">
+            <img src="./CLASSE-V.png" alt="Mercedes Classe V" class="w-full h-56 object-cover rounded-2xl mb-5">
+            <h3 class="text-lg font-bold mb-2 rtl-text-right" data-i18n="fleet.vT">Mercedes Classe V</h3>
+            <p class="text-muted text-sm rtl-text-right" data-i18n="fleet.vD">Van — groupes & familles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-line bg-black/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
+      <div class="inline-flex items-center gap-2 text-2xl font-bold">SH<span class="text-gold">VIP</span></div>
+      <div class="mt-5 flex flex-wrap justify-center gap-4 text-sm text-muted">
+        <a href="/conditions-generales/" class="hover:text-pearl transition" data-i18n="footer.cgv">Conditions générales</a>
+        <span class="text-muted/60">•</span>
+        <a href="/politique-de-confidentialite/" class="hover:text-pearl transition" data-i18n="footer.privacy">Politique de confidentialité</a>
+      </div>
+      <p class="text-xs text-muted mt-8" data-i18n="footer.copy">© 2026 SHVIP. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

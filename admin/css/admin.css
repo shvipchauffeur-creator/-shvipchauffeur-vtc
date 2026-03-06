@@ -1,0 +1,161 @@
+body { font-family: 'Inter', sans-serif; background-color: #05070E; color: #E9ECF2; }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #D6B15E 0%, #B8922A 100%);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(214, 177, 94, 0.5);
+      border-radius: 3px;
+    }
+    .nav-item.active {
+      background: rgba(214, 177, 94, 0.15);
+      border-left: 3px solid #D6B15E;
+      color: #D6B15E;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    .modal.active {
+      display: flex;
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 500;
+      z-index: 100;
+      transform: translateX(400px);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+    .toast.error { background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); }
+    .toast.warning { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
+    
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+      display: inline-block;
+    }
+    
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: 4px;
+    }
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Calendar Styles */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: 60px repeat(7, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .calendar-header {
+      background: rgba(214, 177, 94, 0.2);
+      padding: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    .calendar-time {
+      background: rgba(0,0,0,0.3);
+      padding: 8px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #A8B0C2;
+    }
+    .calendar-cell {
+      background: rgba(255,255,255,0.03);
+      min-height: 60px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .calendar-cell:hover {
+      background: rgba(214, 177, 94, 0.1);
+    }
+    .calendar-event {
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: 0.7rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .calendar-event:hover {
+      transform: scale(1.02);
+      z-index: 10;
+    }
+    .event-reservation { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+    .event-available { background: rgba(214, 177, 94, 0.3); border: 1px dashed #D6B15E; }
+    .event-unavailable { background: rgba(239, 68, 68, 0.3); }
+    .event-pending { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
+
+    /* Notification panel */
+    .notification-panel {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 380px;
+      max-height: 500px;
+      background: rgba(5, 7, 14, 0.95);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      z-index: 40;
+      transform: translateX(420px);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+    .notification-panel.active {
+      transform: translateX(0);
+    }
+    .notification-item {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.05);
+      border-left: 3px solid #D6B15E;
+      animation: slideIn 0.3s ease;
+    }
+    .notification-item.new {
+      background: rgba(214, 177, 94, 0.1);
+    }

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHVIP — Demande privée | Contact</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:"#05070E", obsidian:"#070A12", gold:"#D6B15E", gold2:"#B8922A",
+            pearl:"#E9ECF2", muted:"#A8B0C2", glass:"rgba(255,255,255,0.06)",
+            line:"rgba(255,255,255,0.12)"
+          },
+          boxShadow:{ luxe:"0 24px 80px rgba(0,0,0,0.65)" },
+          fontFamily:{ heading:["Poppins","sans-serif"], body:["Inter","sans-serif"] }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { font-family: Inter, sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family: Poppins, sans-serif; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+
+<body class="bg-ink text-pearl antialiased">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-ink/55 backdrop-blur-md border-b border-line">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full border border-line bg-white/5 flex items-center justify-center">
+            <span class="iconify text-xl text-gold" data-icon="lucide:crown"></span>
+          </div>
+          <span class="text-2xl font-extrabold tracking-tight">SH<span class="text-gold">VIP</span></span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-10 text-sm">
+          <a href="index.html" class="text-muted hover:text-pearl transition">Accueil</a>
+          <a href="services.html" class="text-muted hover:text-pearl transition">Services</a>
+          <a href="flotte.html" class="text-muted hover:text-pearl transition">Flotte</a>
+          <a href="partenaires.html" class="text-muted hover:text-pearl transition">Partenaires</a>
+          <a href="contact.html" class="text-pearl">Contact</a>
+        </div>
+
+        <a href="#demande-privee"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition">
+          <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
+          <span>Demande privée</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="pt-28">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <p class="text-xs uppercase tracking-[0.25em] text-gold/90">Contact</p>
+      <h1 class="text-4xl md:text-5xl font-extrabold mt-3" id="demande-privee">Demande privée</h1>
+      <p class="text-muted mt-4 max-w-2xl leading-relaxed">
+        L’accès aux services SHVIP se fait sur demande. Réponse rapide et coordination discrète.
+      </p>
+      <p class="text-muted/80 mt-2 text-sm">
+        <span class="text-pearl/90 font-semibold">EN</span> — Access is granted upon request. Fast response, discreet coordination.
+      </p>
+
+      <div class="grid lg:grid-cols-2 gap-10 mt-10">
+
+        <!-- Demande privée (Formspree) -->
+        <div class="rounded-3xl p-6 md:p-8 bg-glass border border-line shadow-luxe backdrop-blur">
+          <h2 class="text-xl font-bold mb-2">Demande privée</h2>
+          <p class="text-sm text-muted mb-5">
+            Décrivez votre besoin (aéroport, disposition, événement). Nous vous répondons rapidement.
+            <span class="block mt-1 text-muted/80">EN — Describe your request (airport, disposal, event). We reply quickly.</span>
+          </p>
+
+          <form action="https://formspree.io/f/mvzbbzoq" method="POST" class="space-y-4">
+            <input type="hidden" name="type" value="Demande privée SHVIP" />
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-medium text-muted mb-1">Nom</label>
+                <input type="text" name="nom" required placeholder="Votre nom"
+                       class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-muted mb-1">Téléphone</label>
+                <input type="tel" name="telephone" placeholder="+33 6 .. .. .. .."
+                       class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-muted mb-1">Email</label>
+              <input type="email" name="email" required placeholder="Votre email"
+                     class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-medium text-muted mb-1">Date</label>
+                <input type="date" name="date"
+                       class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-muted mb-1">Heure</label>
+                <input type="time" name="heure"
+                       class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-muted mb-1">Départ</label>
+              <input type="text" name="depart" placeholder="Adresse de départ"
+                     class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-muted mb-1">Arrivée</label>
+              <input type="text" name="arrivee" placeholder="Adresse d’arrivée"
+                     class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-muted mb-1">Message</label>
+              <textarea name="message" rows="4" required placeholder="Votre demande (CDG/Orly/Le Bourget, disposition, événement)…"
+                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="w-full py-4 rounded-2xl font-bold text-black bg-gradient-to-r from-gold to-gold2 shadow-luxe hover:opacity-90 transition flex items-center justify-center gap-2">
+              <span class="iconify text-lg" data-icon="lucide:send"></span>
+              Envoyer la demande
+            </button>
+          </form>
+        </div>
+
+        <!-- Paiement -->
+        <div class="space-y-10">
+
+          <div class="rounded-3xl p-6 md:p-8 bg-glass border border-line shadow-luxe backdrop-blur">
+            <div class="flex items-center justify-between gap-3">
+              <h2 class="text-xl font-bold">Paiement sécurisé</h2>
+              <span class="text-xs px-3 py-1 rounded-full border border-line bg-white/5 text-gold">Stripe</span>
+            </div>
+
+            <p class="text-muted mt-3">
+              Paiement par carte bancaire. Coordination et confirmation après paiement.
+              <span class="block mt-1 text-muted/80">EN — Card payment. Confirmation follows after payment.</span>
+            </p>
+
+            <div class="mt-6 grid md:grid-cols-3 gap-3">
+              <div class="md:col-span-1">
+                <label class="block text-sm font-medium text-muted mb-1">Type</label>
+                <select id="payLabel"
+                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold">
+                  <option value="acompte">Acompte</option>
+                  <option value="solde">Solde</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-1">
+                <label class="block text-sm font-medium text-muted mb-1">Montant (€)</label>
+                <input id="payAmount" type="number" min="20" step="1" inputmode="numeric" placeholder="Ex : 500"
+                       class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
+              </div>
+
+              <div class="md:col-span-1 flex items-end">
+                <button id="payBtn" type="button"
+                        class="w-full py-4 rounded-2xl font-bold text-black bg-gradient-to-r from-gold to-gold2 shadow-luxe hover:opacity-90 transition flex items-center justify-center gap-2">
+                  <span class="iconify text-lg" data-icon="lucide:lock"></span>
+                  Payer
+                </button>
+              </div>
+            </div>
+
+            <p id="payMsg" class="text-xs text-muted mt-4"></p>
+
+            <div class="mt-6 text-xs text-muted">
+              En payant, vous acceptez nos
+              <a href="conditions-generales/index.html" class="underline hover:text-pearl">conditions générales</a>
+              et notre
+              <a href="politique-de-confidentialite/index.html" class="underline hover:text-pearl">politique de confidentialité</a>.
+            </div>
+          </div>
+
+          <div class="rounded-3xl p-6 md:p-8 bg-white/5 border border-line shadow-luxe backdrop-blur">
+            <h3 class="text-lg font-bold">Coordination</h3>
+            <p class="text-muted mt-3 leading-relaxed">
+              Après votre demande, nous confirmons les détails (horaire, point de rendez-vous, suivi).
+              <span class="block mt-1 text-muted/80">EN — We confirm timing, meeting point and coordination details.</span>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line bg-obsidian">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center text-sm text-muted">
+      <div class="inline-flex items-center gap-2 text-2xl font-bold">SH<span class="text-gold">VIP</span></div>
+      <div class="mt-5 flex flex-wrap justify-center gap-4 text-sm text-muted">
+        <a href="conditions-generales/index.html" class="hover:text-pearl transition">Conditions générales</a>
+        <span class="text-muted/60">•</span>
+        <a href="politique-de-confidentialite/index.html" class="hover:text-pearl transition">Politique de confidentialité</a>
+      </div>
+      <p class="text-xs text-muted mt-8">© 2026 SHVIP. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- Stripe Pay -->
+  <script>
+    (function () {
+      const btn = document.getElementById("payBtn");
+      const amountEl = document.getElementById("payAmount");
+      const typeEl = document.getElementById("payLabel");
+      const msg = document.getElementById("payMsg");
+
+      function setMessage(text) { msg.textContent = text || ""; }
+
+      btn.addEventListener("click", async () => {
+        const amount = Number(amountEl.value || 0);
+        const type = String(typeEl.value || "acompte").toLowerCase();
+
+        if (!amount || amount < 20) {
+          setMessage("Veuillez entrer un montant valide (minimum 20€).");
+          return;
+        }
+
+        btn.disabled = true;
+        btn.classList.add("opacity-70");
+        setMessage("Création du paiement sécurisé…");
+
+        try {
+          // ⚠️ Function name matches file: netlify/functions/create-checkout-session.js
+          const res = await fetch("/.netlify/functions/create-checkout-session", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount, type })
+          });
+
+          const text = await res.text();
+          if (!text) throw new Error("Réponse vide du serveur (aucun JSON reçu).");
+
+          let data;
+          try { data = JSON.parse(text); }
+          catch { throw new Error("Réponse non valide (JSON attendu)."); }
+
+          if (!res.ok) throw new Error(data.error || data.message || "Erreur Stripe/Netlify.");
+
+          if (!data.url) throw new Error("URL de paiement manquante dans la réponse serveur.");
+
+          window.location.href = data.url;
+        } catch (e) {
+          setMessage("Erreur : " + (e.message || e));
+          btn.disabled = false;
+          btn.classList.remove("opacity-70");
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

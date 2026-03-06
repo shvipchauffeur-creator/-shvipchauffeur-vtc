@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>SHVIP — Dashboard Admin Pro</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: "#D6B15E",
+            gold2: "#B8922A",
+            pearl: "#E9ECF2",
+            muted: "#A8B0C2",
+            success: "#10B981",
+            danger: "#EF4444",
+            warning: "#F59E0B",
+            info: "#3B82F6"
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'slide-in': 'slideIn 0.3s ease-out',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideIn: {
+              '0%': { transform: 'translateX(-20px)', opacity: '0' },
+              '100%': { transform: 'translateX(0)', opacity: '1' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+  
+  <link rel="stylesheet" href="./css/admin.css" />
+</head>
+<body class="min-h-screen overflow-hidden">
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Notification Panel -->
+  <div id="notificationPanel" class="notification-panel custom-scrollbar">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="font-bold flex items-center gap-2 text-white">
+        <i class="fas fa-bell text-[#D6B15E]"></i>
+        Notifications
+        <span id="notifCount" class="bg-[#D6B15E] text-black text-xs px-2 py-0.5 rounded-full">0</span>
+      </h3>
+      <button onclick="app.toggleNotifications()" class="text-[#A8B0C2] hover:text-[#E9ECF2]">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div id="notificationsList" class="space-y-2 max-h-96 overflow-y-auto">
+      <!-- Notifications injected here -->
+    </div>
+    <button onclick="app.markAllRead()" class="w-full mt-4 py-2 text-sm text-[#A8B0C2] hover:text-[#D6B15E] transition-colors border-t border-[rgba(255,255,255,0.12)]">
+      Tout marquer comme lu
+    </button>
+  </div>
+
+  <!-- Login Screen -->
+  <div id="loginScreen" class="fixed inset-0 bg-[#05070E] z-[60] flex items-center justify-center">
+    <div class="w-full max-w-md p-8">
+      <div class="text-center mb-8">
+        <div class="w-20 h-20 rounded-2xl gold-gradient flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#D6B15E]/20">
+          <i class="fas fa-crown text-black text-3xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold mb-2">SHVIP Admin</h1>
+        <p class="text-[#A8B0C2]">Authentification requise</p>
+      </div>
+      
+      <form id="loginForm" onsubmit="app.login(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs text-[#A8B0C2] mb-2 uppercase tracking-wider">Token Administrateur</label>
+          <input type="password" id="adminToken" required 
+                 class="w-full px-4 py-3 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white font-mono text-sm"
+                 placeholder="shvip_admin_...">
+          <p class="text-xs text-[#A8B0C2] mt-2">
+            <i class="fas fa-shield-alt mr-1"></i>
+            Le token est défini dans les variables d'environnement Netlify (ADMIN_TOKEN)
+          </p>
+        </div>
+        
+        <button type="submit" class="w-full py-3 rounded-xl gold-gradient text-black font-bold transition-all hover:shadow-lg hover:shadow-[#D6B15E]/20">
+          <i class="fas fa-lock mr-2"></i>Accéder au Dashboard
+        </button>
+        
+        <div id="loginError" class="hidden p-3 rounded-lg bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#EF4444] text-sm text-center">
+          Token invalide. Vérifiez vos variables d'environnement Netlify.
+        </div>
+      </form>
+      
+      <div class="mt-8 pt-6 border-t border-[rgba(255,255,255,0.12)] text-center">
+        <p class="text-xs text-[#A8B0C2]">
+          <i class="fas fa-info-circle mr-1"></i>
+          Cette page est protégée. Toute tentative d'accès non autorisée est enregistrée.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App (Hidden until login) -->
+  <div id="mainApp" class="hidden flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-black/40 border-r border-[rgba(255,255,255,0.12)] flex flex-col">
+      <div class="p-6 border-b border-[rgba(255,255,255,0.12)]">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl gold-gradient flex items-center justify-center">
+            <i class="fas fa-crown text-black text-lg"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-lg tracking-tight">SHVIP</h1>
+            <div class="flex items-center gap-1 text-xs text-[#A8B0C2]">
+              <span class="live-dot"></span>
+              <span>Connecté</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="flex-1 py-6 px-3 space-y-1 overflow-y-auto custom-scrollbar">
+        <button onclick="app.navigate('dashboard')" class="nav-item active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left">
+          <i class="fas fa-chart-line w-5"></i>
+          Tableau de bord
+        </button>
+        <button onclick="app.navigate('calendar')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-calendar-alt w-5"></i>
+          Planning Chauffeurs
+        </button>
+        <button onclick="app.navigate('rides')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-route w-5"></i>
+          Courses en direct
+        </button>
+        <button onclick="app.navigate('reservations')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-clipboard-list w-5"></i>
+          Réservations
+        </button>
+        <button onclick="app.navigate('payments')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fab fa-stripe w-5"></i>
+          Paiements Stripe
+        </button>
+        <button onclick="app.navigate('quotes')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-file-invoice-dollar w-5"></i>
+          Devis
+        </button>
+        <button onclick="app.navigate('invoices')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-file-invoice w-5"></i>
+          Factures
+        </button>
+        <button onclick="app.navigate('drivers')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-id-card w-5"></i>
+          Chauffeurs
+        </button>
+        <button onclick="app.navigate('clients')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-users w-5"></i>
+          Clients
+        </button>
+        <button onclick="app.navigate('stats')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-chart-pie w-5"></i>
+          Statistiques
+        </button>
+        <button onclick="app.navigate('settings')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all hover:bg-white/5 text-left text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-cog w-5"></i>
+          Configuration
+        </button>
+      </nav>
+
+      <div class="p-4 border-t border-[rgba(255,255,255,0.12)]">
+        <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[rgba(255,255,255,0.06)]">
+          <div class="w-8 h-8 rounded-full bg-[#D6B15E] flex items-center justify-center text-black font-bold text-xs">
+            A
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium truncate">Administrateur</p>
+            <p class="text-xs text-[#A8B0C2] truncate" id="envIndicator">Production</p>
+          </div>
+          <button onclick="app.logout()" class="text-[#A8B0C2] hover:text-[#EF4444] transition-colors" title="Déconnexion">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-hidden flex flex-col">
+      <!-- Header -->
+      <header class="h-16 border-b border-[rgba(255,255,255,0.12)] bg-black/20 flex items-center justify-between px-8">
+        <div class="flex items-center gap-4">
+          <h2 id="pageTitle" class="text-xl font-bold">Tableau de bord</h2>
+          <span id="pageSubtitle" class="text-sm text-[#A8B0C2]">Vue d'ensemble</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <div id="apiStatus" class="flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-[#10B981]/20 text-[#10B981]">
+            <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
+            API Connectée
+          </div>
+          
+          <!-- Notifications Bell -->
+          <button onclick="app.toggleNotifications()" class="relative p-2 rounded-xl hover:bg-white/10 transition-all text-white">
+            <i class="fas fa-bell text-lg"></i>
+            <span id="notifBadge" class="absolute top-0 right-0 w-5 h-5 bg-[#EF4444] text-white text-xs rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+
+          <button onclick="app.showModal('newQuote')" class="px-4 py-2 rounded-lg gold-gradient text-black text-sm font-medium transition-all hover:shadow-lg hover:shadow-[#D6B15E]/20">
+            <i class="fas fa-plus mr-2"></i>Nouveau devis
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div id="content" class="flex-1 overflow-y-auto custom-scrollbar p-8">
+        <!-- Dynamic content loaded here -->
+      </div>
+    </main>
+  </div>
+
+  <!-- New Quote Modal -->
+  <div id="modal-newQuote" class="modal">
+    <div class="bg-[#05070E] border border-[rgba(255,255,255,0.12)] rounded-2xl w-full max-w-2xl p-6 m-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-white">Créer un devis client</h3>
+        <button onclick="app.closeModal('newQuote')" class="text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <form id="quoteForm" onsubmit="app.submitQuote(event)" class="space-y-4">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Email client *</label>
+            <input type="email" name="customerEmail" required 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white"
+                   placeholder="client@exemple.com">
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Nom complet *</label>
+            <input type="text" name="customerName" required
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white"
+                   placeholder="Jean Dupont">
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Téléphone</label>
+            <input type="tel" name="customerPhone" 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white"
+                   placeholder="06 12 34 56 78">
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Type de trajet</label>
+            <select name="tripType" class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+              <option value="oneway">Aller simple</option>
+              <option value="roundtrip">Aller-retour</option>
+              <option value="hourly">Mise à disposition</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Lieu de prise en charge *</label>
+            <input type="text" name="from" required 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white"
+                   placeholder="Aéroport CDG, Terminal 2">
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Destination *</label>
+            <input type="text" name="to" required 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white"
+                   placeholder="Paris 8ème, Hotel X">
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Date & Heure *</label>
+            <input type="datetime-local" name="datetime" required 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Véhicule</label>
+            <select name="vehicleType" class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+              <option value="berline">Berline Premium</option>
+              <option value="van">Van/MPV (7 places)</option>
+              <option value="van_plus">Van Luxe (8 places)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Passagers</label>
+            <select name="passengers" class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+              <option value="1">1 passager</option>
+              <option value="2">2 passagers</option>
+              <option value="3">3 passagers</option>
+              <option value="4">4 passagers</option>
+              <option value="5">5 passagers</option>
+              <option value="6">6 passagers</option>
+              <option value="7">7 passagers</option>
+              <option value="8">8 passagers</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Mode de prix</label>
+            <select name="pricingMode" id="pricingMode" onchange="app.updatePriceFields()" 
+                    class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+              <option value="total">Prix total</option>
+              <option value="deposit">Acompte + Solde</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Montant total (€) *</label>
+            <input type="number" name="amount" id="totalAmount" required step="0.01" min="0"
+                   class="w-full px-3 py-2 rounded-xl bg-black/50 border border-[rgba(255,255,255,0.12)] text-[#D6B15E] font-bold text-lg text-white"
+                   placeholder="0.00">
+          </div>
+        </div>
+
+        <div id="depositFields" class="grid md:grid-cols-2 gap-4 hidden">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Acompte (€)</label>
+            <input type="number" name="depositAmount" id="depositAmount" step="0.01" min="0"
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white"
+                   placeholder="0.00">
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Solde à payer (€)</label>
+            <input type="number" name="balanceAmount" id="balanceAmount" step="0.01" min="0" readonly
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] text-[#A8B0C2] text-white"
+                   placeholder="Calculé automatiquement">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs text-[#A8B0C2] mb-1">Notes / Commentaires</label>
+          <textarea name="notes" rows="3" 
+                    class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white"
+                    placeholder="Sièges bébé, animaux, bagages volumineux, vol numéro..."></textarea>
+        </div>
+
+        <div class="p-3 rounded-lg bg-[#10B981]/10 border border-[#10B981]/30">
+          <p class="text-xs text-[#10B981]">
+            <i class="fas fa-info-circle mr-1"></i>
+            Un email professionnel sera envoyé au client avec le PDF du devis et un lien de paiement sécurisé Stripe.
+          </p>
+        </div>
+
+        <div class="flex gap-3 pt-4">
+          <button type="button" onclick="app.closeModal('newQuote')" 
+                  class="flex-1 px-4 py-2 rounded-xl border border-[rgba(255,255,255,0.12)] hover:bg-white/5 transition-all text-white">
+            Annuler
+          </button>
+          <button type="submit" id="submitQuoteBtn"
+                  class="flex-1 px-4 py-2 rounded-xl gold-gradient text-black font-medium transition-all hover:shadow-lg hover:shadow-[#D6B15E]/20">
+            <i class="fas fa-paper-plane mr-2"></i>Créer et envoyer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Quote Modal -->
+  <div id="modal-viewQuote" class="modal">
+    <div class="bg-[#05070E] border border-[rgba(255,255,255,0.12)] rounded-2xl w-full max-w-2xl p-6 m-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-white">Détail du devis</h3>
+        <button onclick="app.closeModal('viewQuote')" class="text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <div id="quoteDetailContent" class="space-y-4">
+        <!-- Content loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Driver Modal -->
+  <div id="modal-driver" class="modal">
+    <div class="bg-[#05070E] border border-[rgba(255,255,255,0.12)] rounded-2xl w-full max-w-lg p-6 m-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-white" id="driver-modal-title">Nouveau chauffeur</h3>
+        <button onclick="app.closeModal('driver')" class="text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <form id="driverForm" onsubmit="app.saveDriver(event)" class="space-y-4">
+        <input type="hidden" id="driver-id">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Prénom *</label>
+            <input type="text" id="driver-firstname" required 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Nom *</label>
+            <input type="text" id="driver-lastname" required 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs text-[#A8B0C2] mb-1">Email *</label>
+          <input type="email" id="driver-email" required 
+                 class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+        </div>
+        <div>
+          <label class="block text-xs text-[#A8B0C2] mb-1">Téléphone *</label>
+          <input type="tel" id="driver-phone" required 
+                 class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+        </div>
+        <div>
+          <label class="block text-xs text-[#A8B0C2] mb-1">Code chauffeur *</label>
+          <input type="text" id="driver-code" required 
+                 class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none uppercase font-mono text-white"
+                 placeholder="SH-001">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Véhicule</label>
+            <select id="driver-vehicle" class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+              <option value="berline">Berline Premium</option>
+              <option value="van">Van/MPV</option>
+              <option value="van_plus">Van Luxe</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-[#A8B0C2] mb-1">Commission (%)</label>
+            <input type="number" id="driver-commission" min="0" max="100" value="20" 
+                   class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
+          </div>
+        </div>
+        
+        <!-- Availability -->
+        <div class="border-t border-[rgba(255,255,255,0.12)] pt-4">
+          <label class="block text-xs text-[#A8B0C2] mb-3">Disponibilités hebdomadaires</label>
+          <div class="grid grid-cols-7 gap-2 text-center text-xs" id="availabilityGrid">
+            
+          </div>
+        </div>
+
+        <div class="flex gap-3 pt-4">
+          <button type="button" onclick="app.closeModal('driver')" 
+                  class="flex-1 px-4 py-2 rounded-xl border border-[rgba(255,255,255,0.12)] hover:bg-white/5 transition-all text-white">
+            Annuler
+          </button>
+          <button type="submit" 
+                  class="flex-1 px-4 py-2 rounded-xl gold-gradient text-black font-medium transition-all">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Export Modal -->
+  <div id="modal-export" class="modal">
+    <div class="bg-[#05070E] border border-[rgba(255,255,255,0.12)] rounded-2xl w-full max-w-md p-6 m-4 shadow-2xl">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-xl font-bold text-white">Exporter les données</h3>
+        <button onclick="app.closeModal('export')" class="text-[#A8B0C2] hover:text-[#E9ECF2]">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="p-4 rounded-xl bg-black/20 cursor-pointer hover:bg-white/5 transition-all" onclick="app.exportData('payments')">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-[#10B981]/20 flex items-center justify-center text-[#10B981]">
+              <i class="fas fa-credit-card"></i>
+            </div>
+            <div>
+              <div class="font-medium text-white">Paiements</div>
+              <div class="text-xs text-[#A8B0C2]">Export CSV des transactions Stripe</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-black/20 cursor-pointer hover:bg-white/5 transition-all" onclick="app.exportData('quotes')">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-[#F59E0B]/20 flex items-center justify-center text-[#F59E0B]">
+              <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <div>
+              <div class="font-medium text-white">Devis</div>
+              <div class="text-xs text-[#A8B0C2]">Export CSV de tous les devis</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-black/20 cursor-pointer hover:bg-white/5 transition-all" onclick="app.exportData('invoices')">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
+              <i class="fas fa-file-invoice"></i>
+            </div>
+            <div>
+              <div class="font-medium text-white">Factures</div>
+              <div class="text-xs text-[#A8B0C2]">Export CSV des factures</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-black/20 cursor-pointer hover:bg-white/5 transition-all" onclick="app.exportData('full')">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-[#D6B15E]/20 flex items-center justify-center text-[#D6B15E]">
+              <i class="fas fa-database"></i>
+            </div>
+            <div>
+              <div class="font-medium text-white">Export complet</div>
+              <div class="text-xs text-[#A8B0C2]">Backup JSON de toutes les données</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script type="module" src="./js/init.js"></script>
+
+
+  <!-- Reservation Modal -->
+  <div id="modal-reservation" class="modal">
+    <div class="modal-overlay" onclick="app.closeModal('reservation')"></div>
+    <div class="modal-container glass-panel p-6 rounded-2xl w-[min(860px,92vw)]">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-white text-lg font-bold">Nouvelle réservation</h3>
+        <button class="text-[#A8B0C2] hover:text-white" onclick="app.closeModal('reservation')"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+        <input id="resClientName" class="px-4 py-2 rounded-xl bg-white/5 text-white placeholder-[#A8B0C2] outline-none" placeholder="Nom client *" />
+        <input id="resClientEmail" class="px-4 py-2 rounded-xl bg-white/5 text-white placeholder-[#A8B0C2] outline-none" placeholder="Email client *" />
+        <input id="resClientPhone" class="px-4 py-2 rounded-xl bg-white/5 text-white placeholder-[#A8B0C2] outline-none" placeholder="Téléphone client" />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <input id="resPickup" class="px-4 py-2 rounded-xl bg-white/5 text-white placeholder-[#A8B0C2] outline-none" placeholder="Pickup (adresse) *" />
+        <input id="resDropoff" class="px-4 py-2 rounded-xl bg-white/5 text-white placeholder-[#A8B0C2] outline-none" placeholder="Dropoff (adresse) *" />
+        <input id="resDatetime" type="datetime-local" class="px-4 py-2 rounded-xl bg-white/5 text-white outline-none" />
+        <select id="resVehicle" class="px-4 py-2 rounded-xl bg-white/5 text-white outline-none">
+          <option value="berline">Berline</option>
+          <option value="van">Van</option>
+          <option value="van_plus">Van+</option>
+        </select>
+        <input id="resPrice" type="number" min="1" step="1" class="px-4 py-2 rounded-xl bg-white/5 text-white placeholder-[#A8B0C2] outline-none" placeholder="Prix (€) *" />
+        <input id="resNotes" class="px-4 py-2 rounded-xl bg-white/5 text-white placeholder-[#A8B0C2] outline-none" placeholder="Notes (optionnel)" />
+      </div>
+
+      <div class="flex justify-end gap-3">
+        <button onclick="app.closeModal('reservation')" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white">Annuler</button>
+        <button onclick="app.createReservationFromModal()" class="px-4 py-2 rounded-xl gold-gradient text-black font-semibold">Créer</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

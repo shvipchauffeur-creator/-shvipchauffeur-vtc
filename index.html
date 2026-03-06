@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHVIP — Maison Privée de Chauffeurs | Paris</title>
+  <meta name="description" content="SHVIP — Maison privée de chauffeurs à Paris. Mobilité sélective et confidentielle : transferts aéroport, mise à disposition, événements." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#05070E",
+            obsidian: "#070A12",
+            gold: "#D6B15E",
+            gold2: "#B8922A",
+            pearl: "#E9ECF2",
+            muted: "#A8B0C2",
+            glass: "rgba(255,255,255,0.06)",
+            line: "rgba(255,255,255,0.12)"
+          },
+          boxShadow: { luxe: "0 24px 80px rgba(0,0,0,0.65)" },
+          fontFamily: { heading: ["Poppins","sans-serif"], body: ["Inter","sans-serif"] }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { font-family: Inter, sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family: Poppins, sans-serif; }
+    html { scroll-behavior: smooth; }
+    .phone-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111827;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+      margin-bottom: 8px;
+      z-index: 100;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .phone-btn:hover .phone-tooltip { opacity: 1; }
+  </style>
+</head>
+
+<body class="bg-ink text-pearl antialiased">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-ink/55 backdrop-blur-md border-b border-line">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full border border-line bg-white/5 flex items-center justify-center">
+            <span class="iconify text-xl text-gold" data-icon="lucide:crown"></span>
+          </div>
+          <span class="text-2xl font-extrabold tracking-tight">SH<span class="text-gold">VIP</span></span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-10 text-sm">
+          <a href="index.html" class="text-pearl">Accueil</a>
+          <a href="services.html" class="text-muted hover:text-pearl transition">Services</a>
+          <a href="flotte.html" class="text-muted hover:text-pearl transition">Flotte</a>
+          <a href="partenaires.html" class="text-muted hover:text-pearl transition">Partenaires</a>
+          <a href="contact.html" class="text-muted hover:text-pearl transition">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20faire%20une%20demande%20priv%C3%A9e"
+             target="_blank" rel="noopener"
+             class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-sm">
+            <span class="iconify text-lg text-gold" data-icon="ic:baseline-whatsapp"></span>
+            <span>WhatsApp</span>
+          </a>
+
+          <a href="tel:+33649604960"
+             class="phone-btn hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-sm relative">
+            <span class="iconify text-lg text-gold" data-icon="lucide:phone"></span>
+            <span>Appeler</span>
+            <div class="phone-tooltip">06 49 60 49 60</div>
+          </a>
+
+          <a href="contact.html#demande-privee"
+             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition">
+            <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
+            <span>Demande privée</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative z-0 min-h-screen overflow-hidden">
+    <img src="./page-de-garde.png" alt="SHVIP Private Chauffeur House"
+         class="absolute inset-0 w-full h-full object-cover -z-10" loading="eager">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/15"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(214,177,94,0.18),transparent_42%)]"></div>
+
+    <div class="relative pt-28 md:pt-32">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div class="max-w-2xl">
+            <p class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-gold/90 mb-4">
+              <span class="iconify" data-icon="lucide:sparkles"></span>
+              <span>Paris • Sélectif • Confidentiel</span>
+            </p>
+
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-5">
+              <span>Maison Privée</span>
+              <span class="text-gold">de Chauffeurs</span>
+            </h1>
+
+            <p class="text-muted text-lg leading-relaxed mb-3">
+              Mobilité discrète pour une clientèle exigeante.
+              Un réseau sélectif, discipliné, conçu pour le confort et la confidentialité.
+            </p>
+
+            <p class="text-muted/80 text-sm mb-8">
+              <span class="text-pearl/90 font-semibold">EN</span> — Private Chauffeur House — Paris. Selective mobility for exceptional clients.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <a href="contact.html#demande-privee"
+                 class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition">
+                <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
+                <span>Demande privée</span>
+              </a>
+
+              <a href="#la-maison"
+                 class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold border border-line bg-white/5 hover:bg-white/10 transition">
+                <span class="iconify text-lg text-gold" data-icon="lucide:arrow-down"></span>
+                <span>Découvrir la Maison</span>
+              </a>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3 text-xs text-muted">
+              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Transferts aéroport</span>
+              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Mise à disposition</span>
+              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Événements</span>
+              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Coordination privée</span>
+            </div>
+          </div>
+
+          <div class="hidden lg:block">
+            <div class="rounded-3xl border border-line bg-white/5 backdrop-blur p-7 shadow-luxe">
+              <div class="flex items-center justify-between">
+                <div class="text-sm text-muted">Standards SHVIP</div>
+                <span class="text-xs px-3 py-1 rounded-full border border-line bg-white/5 text-gold">Maison</span>
+              </div>
+              <ul class="mt-5 space-y-3 text-sm">
+                <li class="flex gap-3">
+                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
+                  <span>Discrétion et discipline, sans compromis.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
+                  <span>Chauffeurs sélectionnés, présentation irréprochable.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
+                  <span>Coordination privée — transferts, disposition, événements.</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
+                  <span>Expérience premium — ponctualité et fluidité.</span>
+                </li>
+              </ul>
+              <div class="mt-6 text-xs text-muted">
+                <span class="font-semibold text-pearl/90">EN</span> — Discretion, precision, long-term partnerships.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LA MAISON -->
+  <section id="la-maison" class="border-t border-line bg-obsidian">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid lg:grid-cols-2 gap-10 items-start">
+        <div>
+          <p class="text-xs uppercase tracking-[0.25em] text-gold/90">La Maison</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold mt-3">Une approche privée, structurée.</h2>
+          <p class="text-muted mt-4 leading-relaxed">
+            SHVIP n’est pas un service de transport traditionnel. C’est une maison privée opérant à Paris,
+            conçue pour une mobilité fluide, maîtrisée et confidentielle.
+          </p>
+          <p class="text-muted/80 mt-3 text-sm">
+            <span class="text-pearl/90 font-semibold">EN</span> — SHVIP is a private chauffeur house operating in Paris. Selective, disciplined and discreet.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-line bg-white/5 backdrop-blur p-7 shadow-luxe">
+          <h3 class="text-lg font-bold">Sélection & standards</h3>
+          <div class="mt-4 grid sm:grid-cols-2 gap-3 text-sm text-muted">
+            <div class="rounded-2xl border border-line bg-black/20 p-4">
+              <div class="text-pearl font-semibold">Discrétion</div>
+              <div class="mt-1">Communication maîtrisée. Zéro improvisation.</div>
+            </div>
+            <div class="rounded-2xl border border-line bg-black/20 p-4">
+              <div class="text-pearl font-semibold">Ponctualité</div>
+              <div class="mt-1">Organisation, anticipation, suivi.</div>
+            </div>
+            <div class="rounded-2xl border border-line bg-black/20 p-4">
+              <div class="text-pearl font-semibold">Présentation</div>
+              <div class="mt-1">Tenue, posture, service.</div>
+            </div>
+            <div class="rounded-2xl border border-line bg-black/20 p-4">
+              <div class="text-pearl font-semibold">Exigence</div>
+              <div class="mt-1">Qualité > volume. Partenariats long terme.</div>
+            </div>
+          </div>
+          <a href="services.html" class="inline-flex items-center gap-2 mt-6 text-sm text-gold hover:text-pearl transition">
+            <span class="iconify" data-icon="lucide:arrow-right"></span>
+            <span>Voir nos services</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-line bg-ink">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-sm text-muted">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="font-extrabold text-pearl">SH<span class="text-gold">VIP</span></div>
+
+        <div class="flex items-center gap-4">
+          <a class="hover:text-pearl transition" href="conditions-generales/index.html">Conditions générales</a>
+          <span class="opacity-40">•</span>
+          <a class="hover:text-pearl transition" href="politique-de-confidentialite/index.html">Politique de confidentialité</a>
+        </div>
+
+        <div>© 2026 SHVIP. Tous droits réservés.</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

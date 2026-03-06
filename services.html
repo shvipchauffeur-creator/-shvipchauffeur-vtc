@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHVIP — Services | Private Chauffeur House</title>
+  <meta name="description" content="SHVIP services : transferts aéroport, mise à disposition, mobilité événementielle et corporate — Paris." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:"#05070E", obsidian:"#070A12", gold:"#D6B15E", gold2:"#B8922A",
+            pearl:"#E9ECF2", muted:"#A8B0C2", glass:"rgba(255,255,255,0.06)",
+            line:"rgba(255,255,255,0.12)"
+          },
+          boxShadow:{ luxe:"0 24px 80px rgba(0,0,0,0.65)" },
+          fontFamily:{ heading:["Poppins","sans-serif"], body:["Inter","sans-serif"] }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { font-family: Inter, sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family: Poppins, sans-serif; }
+  </style>
+</head>
+
+<body class="bg-ink text-pearl antialiased">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 bg-ink/55 backdrop-blur-md border-b border-line">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full border border-line bg-white/5 flex items-center justify-center">
+            <span class="iconify text-xl text-gold" data-icon="lucide:crown"></span>
+          </div>
+          <span class="text-2xl font-extrabold tracking-tight">SH<span class="text-gold">VIP</span></span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-10 text-sm">
+          <a href="index.html" class="text-muted hover:text-pearl transition">Accueil</a>
+          <a href="services.html" class="text-pearl">Services</a>
+          <a href="flotte.html" class="text-muted hover:text-pearl transition">Flotte</a>
+          <a href="partenaires.html" class="text-muted hover:text-pearl transition">Partenaires</a>
+          <a href="contact.html" class="text-muted hover:text-pearl transition">Contact</a>
+        </div>
+
+        <a href="contact.html#demande-privee"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition">
+          <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
+          <span>Demande privée</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="pt-28">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <p class="text-xs uppercase tracking-[0.25em] text-gold/90">Services</p>
+      <h1 class="text-4xl md:text-5xl font-extrabold mt-3">Mobilité privée, maîtrisée.</h1>
+      <p class="text-muted mt-4 max-w-2xl leading-relaxed">
+        SHVIP opère à Paris avec une approche structurée : discrétion, ponctualité, coordination privée.
+      </p>
+      <p class="text-muted/80 mt-2 text-sm">
+        <span class="text-pearl/90 font-semibold">EN</span> — Private mobility in Paris: discreet, precise and selective.
+      </p>
+
+      <div class="grid lg:grid-cols-2 gap-6 mt-10">
+        <!-- Executive Airport Transfers -->
+        <div class="rounded-3xl p-7 bg-glass border border-line shadow-luxe backdrop-blur">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold">Executive Airport Transfers</h2>
+            <span class="text-xs px-3 py-1 rounded-full border border-line bg-white/5 text-gold">CDG • ORY • LBG</span>
+          </div>
+          <p class="text-muted mt-4 leading-relaxed">
+            Transferts aéroport avec coordination privée : suivi du vol, ponctualité, accueil discret.
+          </p>
+          <p class="text-muted/80 mt-2 text-sm">
+            EN — Flight tracking, discreet meet & greet, seamless coordination.
+          </p>
+          <ul class="mt-5 space-y-2 text-sm text-muted">
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Suivi vol & ajustement horaire</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Chauffeur discipliné, présentation irréprochable</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Expérience premium, sans friction</li>
+          </ul>
+        </div>
+
+        <!-- Chauffeur on Disposal -->
+        <div class="rounded-3xl p-7 bg-glass border border-line shadow-luxe backdrop-blur">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold">Chauffeur on Disposal</h2>
+            <span class="text-xs px-3 py-1 rounded-full border border-line bg-white/5 text-gold">4h • 8h • Journée</span>
+          </div>
+          <p class="text-muted mt-4 leading-relaxed">
+            Mise à disposition privée : réunions, rendez-vous, agenda multi-étapes. Coordination discrète tout au long de la journée.
+          </p>
+          <p class="text-muted/80 mt-2 text-sm">
+            EN — Multi-stop agendas, day plans, discreet continuity of service.
+          </p>
+          <ul class="mt-5 space-y-2 text-sm text-muted">
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Planification & ajustements en temps réel</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Confidentialité & maîtrise</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Service aligné sur votre rythme</li>
+          </ul>
+        </div>
+
+        <!-- Private Event Mobility -->
+        <div class="rounded-3xl p-7 bg-glass border border-line shadow-luxe backdrop-blur">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold">Private Event Mobility</h2>
+            <span class="text-xs px-3 py-1 rounded-full border border-line bg-white/5 text-gold">Fashion • Salons • Soirées</span>
+          </div>
+          <p class="text-muted mt-4 leading-relaxed">
+            Mobilité événementielle : arrivées maîtrisées, timings stricts, coordination d’équipe si nécessaire.
+          </p>
+          <p class="text-muted/80 mt-2 text-sm">
+            EN — Tight schedules, discreet arrivals, event-ready coordination.
+          </p>
+          <ul class="mt-5 space-y-2 text-sm text-muted">
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Coordination, points de rendez-vous, flux</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Discrétion totale</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Chauffeurs sélectionnés</li>
+          </ul>
+        </div>
+
+        <!-- Confidential Corporate Mobility -->
+        <div class="rounded-3xl p-7 bg-glass border border-line shadow-luxe backdrop-blur">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold">Confidential Corporate Mobility</h2>
+            <span class="text-xs px-3 py-1 rounded-full border border-line bg-white/5 text-gold">Executive</span>
+          </div>
+          <p class="text-muted mt-4 leading-relaxed">
+            Mobilité corporate : dirigeants, invités, délégations. Process clair, communication maîtrisée, confidentialité.
+          </p>
+          <p class="text-muted/80 mt-2 text-sm">
+            EN — Executive transfers with controlled communication and strict confidentiality.
+          </p>
+          <ul class="mt-5 space-y-2 text-sm text-muted">
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Coordination planning & points d’entrée</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Standards maison</li>
+            <li class="flex gap-3"><span class="iconify text-gold" data-icon="lucide:check"></span>Partenariats long terme</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-10 rounded-3xl p-7 bg-white/5 border border-line shadow-luxe backdrop-blur">
+        <h3 class="text-lg font-bold">Politique d’accès</h3>
+        <p class="text-muted mt-3 leading-relaxed">
+          L’accès aux services SHVIP se fait sur demande. Nous privilégions les relations durables, la discrétion et l’excellence.
+        </p>
+        <p class="text-muted/80 mt-2 text-sm">
+          EN — Access is granted upon request. We prioritize long-term relationships over volume.
+        </p>
+        <a href="contact.html#demande-privee"
+           class="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full font-semibold bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition">
+          <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
+          <span>Faire une demande</span>
+        </a>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="border-t border-line bg-obsidian">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-sm text-muted">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="font-extrabold text-pearl">SH<span class="text-gold">VIP</span></div>
+        <div class="flex items-center gap-4">
+          <a class="hover:text-pearl transition" href="conditions-generales/index.html">Conditions générales</a>
+          <span class="opacity-40">•</span>
+          <a class="hover:text-pearl transition" href="politique-de-confidentialite/index.html">Politique de confidentialité</a>
+        </div>
+        <div>© 2026 SHVIP. Tous droits réservés.</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

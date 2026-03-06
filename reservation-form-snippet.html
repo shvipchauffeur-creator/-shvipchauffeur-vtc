@@ -1,0 +1,46 @@
+<!-- Ajoute ce formulaire dans une page de ton site (ex: services.html) -->
+<form id="shvipReservationForm" class="max-w-xl mx-auto p-6 rounded-2xl border border-black/10">
+  <input type="text" name="client_name" placeholder="Nom *" required class="w-full p-3 rounded-xl border mb-3"/>
+  <input type="email" name="client_email" placeholder="Email *" required class="w-full p-3 rounded-xl border mb-3"/>
+  <input type="tel" name="client_phone" placeholder="Téléphone" class="w-full p-3 rounded-xl border mb-3"/>
+  <input type="text" name="pickup" placeholder="Adresse de départ *" required class="w-full p-3 rounded-xl border mb-3"/>
+  <input type="text" name="dropoff" placeholder="Adresse d'arrivée *" required class="w-full p-3 rounded-xl border mb-3"/>
+  <input type="datetime-local" name="datetime" required class="w-full p-3 rounded-xl border mb-3"/>
+  <select name="vehicle" class="w-full p-3 rounded-xl border mb-3">
+    <option value="berline">Berline</option>
+    <option value="van">Van</option>
+    <option value="van_plus">Van+</option>
+  </select>
+  <input type="number" name="price_eur" placeholder="Prix estimé (€)" class="w-full p-3 rounded-xl border mb-3"/>
+  <textarea name="notes" placeholder="Notes (optionnel)" class="w-full p-3 rounded-xl border mb-3"></textarea>
+
+  <!-- honeypot (ne pas supprimer) -->
+  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
+
+  <button type="submit" class="w-full p-3 rounded-xl bg-black text-white">Envoyer la réservation</button>
+  <div id="shvipReservationMsg" class="mt-3 text-sm"></div>
+</form>
+
+<script>
+document.getElementById('shvipReservationForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const msg = document.getElementById('shvipReservationMsg');
+  msg.textContent = "Envoi...";
+  const data = Object.fromEntries(new FormData(form).entries());
+
+  const res = await fetch('/.netlify/functions/reservation-create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  const out = await res.json().catch(()=> ({}));
+  if (!res.ok || !out.ok) {
+    msg.textContent = out.error || "Erreur, réessaie.";
+    return;
+  }
+  msg.textContent = "✅ Réservation envoyée !";
+  form.reset();
+});
+</script>
