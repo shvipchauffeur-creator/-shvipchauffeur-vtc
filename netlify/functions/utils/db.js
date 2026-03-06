@@ -1,29 +1,48 @@
+// Database connection utility for MongoDB
 const { MongoClient } = require('mongodb');
 
 let cachedClient = null;
 let cachedDb = null;
 
-async function getDb() {
-  if (cachedDb) return cachedDb;
+async function connectToDatabase() {
+  if (cachedDb) {
+    return cachedDb;
+  }
 
   const uri = process.env.MONGODB_URI;
-  const dbName = process.env.DB_NAME || 'shvip';
-
   if (!uri) {
-    throw new Error('Missing MONGODB_URI');
+    throw new Error('MONGODB_URI environment variable is not set');
   }
 
-  if (!cachedClient) {
-    cachedClient = new MongoClient(uri, {
-      maxPoolSize: 10,
-      minPoolSize: 0,
-      serverSelectionTimeoutMS: 8000,
-    });
-    await cachedClient.connect();
-  }
+  const client = new MongoClient(uri, {
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 5000,
+  });
 
-  cachedDb = cachedClient.db(dbName);
-  return cachedDb;
+  await client.connect();
+  const db = client.db('shvip');
+  
+  cachedClient = client;
+  cachedDb = db;
+  
+  return db;
 }
 
-module.exports = { getDb };
+// Verify admin token
+function verifyToken(authHeader) {
+  if (!authHeader) {
+    return false;
+  }
+  
+  const token = authHeader.replace('Bearer ', '');
+  const adminToken = process.env.ADMIN_TOKEN;
+  
+  if (!adminToken) {
+    console.error('ADMIN_TOKEN not configured');
+    return false;
+  }
+  
+  return token === adminToken;
+}
+
+module.exports = { connectToDatabase, verifyToken };

@@ -464,7 +464,14 @@
           <div>
             <label class="block text-xs text-[#A8B0C2] mb-1">Passagers</label>
             <select name="passengers" class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
-              <option value="1">1 passager</option><option value="2">2 passagers</option><option value="3">3 passagers</option><option value="4">4 passagers</option><option value="5">5 passagers</option><option value="6">6 passagers</option><option value="7">7 passagers</option><option value="8">8 passagers</option>
+              <option value="1">1 passager</option>
+              <option value="2">2 passagers</option>
+              <option value="3">3 passagers</option>
+              <option value="4">4 passagers</option>
+              <option value="5">5 passagers</option>
+              <option value="6">6 passagers</option>
+              <option value="7">7 passagers</option>
+              <option value="8">8 passagers</option>
             </select>
           </div>
         </div>
@@ -603,24 +610,7 @@
         <div class="border-t border-[rgba(255,255,255,0.12)] pt-4">
           <label class="block text-xs text-[#A8B0C2] mb-3">Disponibilités hebdomadaires</label>
           <div class="grid grid-cols-7 gap-2 text-center text-xs" id="availabilityGrid">
-            ${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map((day, i) => `
-              <div class="space-y-2">
-                <div class="text-[#A8B0C2] font-medium">${day}</div>
-                <button type="button" class="w-full py-2 rounded-lg bg-[#10B981]/20 text-[#10B981] hover:bg-[#10B981]/30 transition-all availability-toggle active" data-day="${i}">
-                  <i class="fas fa-check"></i>
-                </button>
-                <select class="w-full text-xs bg-black/30 border border-[rgba(255,255,255,0.12)] rounded px-1 py-1 text-white" data-day-start="${i}">
-                  <option value="06:00">06h</option>
-                  <option value="08:00" selected>08h</option>
-                  <option value="10:00">10h</option>
-                </select>
-                <select class="w-full text-xs bg-black/30 border border-[rgba(255,255,255,0.12)] rounded px-1 py-1 text-white" data-day-end="${i}">
-                  <option value="18:00">18h</option>
-                  <option value="20:00" selected>20h</option>
-                  <option value="22:00">22h</option>
-                </select>
-              </div>
-            `).join('')}
+            
           </div>
         </div>
 
@@ -704,11 +694,18 @@
     // Configuration
     const CONFIG = {
       get baseUrl() {
-        const hostname = window.location.hostname;
-        if (hostname.includes('localhost') || hostname.includes('127.0.0.1')) {
+        get hostname() {
+        return window.location.hostname;
+      },
+      get isLocal() {
+        const hostname = this.hostname;
+        return hostname.includes('localhost') || hostname.includes('127.0.0.1');
+      },
+      get baseUrl() {
+        if (this.isLocal) {
           return 'http://localhost:8888/.netlify/functions';
         }
-        return `https://${hostname}/.netlify/functions`;
+        return `https://${this.hostname}/.netlify/functions`;
       }
     };
 
@@ -732,6 +729,7 @@
 
     const app = {
       init() {
+        this.syncEnvironmentBadge();
         const savedToken = sessionStorage.getItem('shvip_admin_token');
         if (savedToken) {
           this.verifyToken(savedToken);
@@ -739,6 +737,18 @@
         this.setupDepositCalculation();
         this.setupAvailabilityToggles();
         this.startNotificationPolling();
+      },
+
+
+      syncEnvironmentBadge() {
+        const envIndicator = document.getElementById('envIndicator');
+        const apiStatus = document.getElementById('apiStatus');
+        const modeLabel = CONFIG.isLocal ? 'Local' : 'Production';
+        if (envIndicator) envIndicator.textContent = modeLabel;
+        if (apiStatus) {
+          apiStatus.className = `flex items-center gap-2 text-xs px-3 py-1 rounded-full ${CONFIG.isLocal ? 'bg-[#F59E0B]/20 text-[#F59E0B]' : 'bg-[#10B981]/20 text-[#10B981]'}`;
+          apiStatus.innerHTML = `<span class="w-2 h-2 rounded-full ${CONFIG.isLocal ? 'bg-[#F59E0B]' : 'bg-[#10B981]'} animate-pulse"></span>${CONFIG.isLocal ? 'API Locale' : 'API Connectée'}`;
+        }
       },
 
       setupDepositCalculation() {
@@ -769,27 +779,13 @@
       },
 
       startNotificationPolling() {
-        // Simuler des notifications en temps réel
         setInterval(() => {
           this.checkNewNotifications();
         }, 30000);
       },
 
       async checkNewNotifications() {
-        // Ici vous feriez un appel API pour vérifier les nouvelles notifications
-        // Pour l'instant, on simule
-        if (Math.random() > 0.9 && state.token) {
-          const newNotif = {
-            id: Date.now(),
-            type: 'payment',
-            message: `Nouveau paiement reçu`,
-            time: 'À l\'instant',
-            read: false
-          };
-          state.notifications.unshift(newNotif);
-          this.updateNotifications();
-          this.showToast('Nouvelle notification', 'info');
-        }
+        if (!state.token) return;
       },
 
       // AUTHENTIFICATION
@@ -862,7 +858,8 @@
           drivers: ['Chauffeurs', 'Gestion des prestataires'],
           clients: ['Clients', 'Base de données clients'],
           stats: ['Statistiques', 'Analytics et rapports'],
-          settings: ['Configuration', 'Paramètres système']
+          settings: ['Configuration', 'Paramètres système'],
+          reservations: ['Réservations', 'Gestion des réservations']
         };
         
         document.getElementById('pageTitle').textContent = titles[page][0];
@@ -1061,12 +1058,11 @@
         const today = new Date();
         const currentWeek = this.getWeekDates(state.currentWeekOffset);
         
-        // Simuler des données de réservations pour le calendrier
-        const mockReservations = [
-          { day: 1, hour: 10, client: 'Jean Dupont', from: 'CDG', to: 'Paris', status: 'confirmed' },
-          { day: 2, hour: 14, client: 'Marie Martin', from: 'Orly', to: 'Disney', status: 'pending' },
-          { day: 3, hour: 9, client: 'Pierre Bernard', from: 'Gare Lyon', to: 'Versailles', status: 'confirmed' },
-        ];
+        // Données calendrier
+        const reservationsRes = await this.apiCall('/admin-reservations-list', { method: 'GET' }).catch(() => null);
+        const reservationsData = reservationsRes ? await reservationsRes.json().catch(() => ({})) : {};
+        const weekReservationsRaw = Array.isArray(reservationsData.rows) ? reservationsData.rows : [];
+        const mockReservations = weekReservationsRaw.map(r => { const dt = new Date(r.datetime); return ({ day: dt.getDay(), hour: dt.getHours(), client: r.client_name || 'Client', from: r.pickup || '', to: r.dropoff || '', status: r.status || 'pending' }); });
 
         document.getElementById('content').innerHTML = `
           <div class="glass-panel rounded-2xl p-6 animate-fade-in">
@@ -1146,29 +1142,7 @@
             <div class="glass-panel rounded-2xl p-6">
               <h3 class="font-bold mb-4 text-white">Chauffeurs disponibles</h3>
               <div class="space-y-3">
-                ${[
-                  { name: 'Jean Dupont', status: 'available', vehicle: 'Berline', location: 'Paris Centre' },
-                  { name: 'Marie Martin', status: 'busy', vehicle: 'Van', location: 'En course' },
-                  { name: 'Pierre Bernard', status: 'offline', vehicle: 'Van Luxe', location: 'Indisponible' }
-                ].map(d => `
-                  <div class="flex items-center justify-between p-3 rounded-xl bg-black/20">
-                    <div class="flex items-center gap-3">
-                      <div class="relative">
-                        <div class="w-10 h-10 rounded-full bg-[#D6B15E] flex items-center justify-center text-black font-bold">
-                          ${d.name.charAt(0)}
-                        </div>
-                        <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#05070E] ${d.status === 'available' ? 'bg-[#10B981]' : d.status === 'busy' ? 'bg-[#F59E0B]' : 'bg-[#EF4444]'}"></span>
-                      </div>
-                      <div>
-                        <p class="font-medium text-white text-sm">${d.name}</p>
-                        <p class="text-xs text-[#A8B0C2]">${d.vehicle} • ${d.location}</p>
-                      </div>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded ${d.status === 'available' ? 'bg-[#10B981]/20 text-[#10B981]' : d.status === 'busy' ? 'bg-[#F59E0B]/20 text-[#F59E0B]' : 'bg-[#EF4444]/20 text-[#EF4444]'}">
-                      ${d.status === 'available' ? 'Disponible' : d.status === 'busy' ? 'En course' : 'Hors ligne'}
-                    </span>
-                  </div>
-                `).join('')}
+                <div id='calDriversList'><div class='text-[#A8B0C2] text-sm text-center py-4'>Chargement chauffeurs...</div></div>
               </div>
             </div>
 
@@ -1193,6 +1167,29 @@
         `;
       },
 
+
+        // Charger vrais chauffeurs dans le calendrier
+        this.apiCall('/admin-drivers').then(r => r.json()).then(data => {
+          const el = document.getElementById('calDriversList');
+          if (!el) return;
+          const drivers = data.drivers || [];
+          if (drivers.length === 0) { el.innerHTML = '<div class="text-[#A8B0C2] text-sm text-center py-4">Aucun chauffeur</div>'; return; }
+          el.innerHTML = drivers.slice(0,5).map(d => `
+            <div class="flex items-center justify-between p-3 rounded-xl bg-black/20">
+              <div class="flex items-center gap-3">
+                <div class="relative">
+                  <div class="w-10 h-10 rounded-full bg-[#D6B15E] flex items-center justify-center text-black font-bold">${(d.firstname||'?')[0]}</div>
+                  <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#05070E] ${d.status==='active'?'bg-[#10B981]':'bg-[#EF4444]'}"></span>
+                </div>
+                <div>
+                  <p class="font-medium text-white text-sm">${d.firstname} ${d.lastname}</p>
+                  <p class="text-xs text-[#A8B0C2]">${d.vehicle} • ${d.code}</p>
+                </div>
+              </div>
+              <span class="text-xs px-2 py-1 rounded ${d.status==='active'?'bg-[#10B981]/20 text-[#10B981]':'bg-[#EF4444]/20 text-[#EF4444]'}">${d.status==='active'?'Actif':'Inactif'}</span>
+            </div>`).join('');
+        }).catch(() => {});
+
       changeWeek(offset) {
         state.currentWeekOffset += offset;
         if (offset === 0) state.currentWeekOffset = 0;
@@ -1213,12 +1210,20 @@
 
       // COURSES EN DIRECT
       async loadRides() {
-        // Simuler des courses en temps réel
-        const mockRides = [
-          { id: 'RIDE-001', client: 'Jean Dupont', driver: 'Marie Martin', from: 'CDG Terminal 2', to: 'Paris 8ème', status: 'in_progress', progress: 65, eta: '12 min', price: 85 },
-          { id: 'RIDE-002', client: 'Sophie Laurent', driver: 'Jean Martin', from: 'Gare de Lyon', to: 'Orly Sud', status: 'pending', progress: 0, eta: 'En attente', price: 120 },
-          { id: 'RIDE-003', client: 'Pierre Bernard', driver: 'Lucas Petit', from: 'Disneyland', to: 'Paris Centre', status: 'completed', progress: 100, eta: 'Terminé', price: 95 },
-        ];
+        // Courses issues des réservations
+        const ridesRes = await this.apiCall('/admin-reservations-list', { method: 'GET' }).catch(() => null);
+        const ridesData = ridesRes ? await ridesRes.json().catch(() => ({})) : {};
+        const mockRides = (Array.isArray(ridesData.rows) ? ridesData.rows : []).slice(0, 10).map((r, i) => ({
+          id: r.id || `RIDE-${String(i + 1).padStart(3,'0')}`,
+          client: r.client_name || 'Client',
+          driver: r.driver_name || 'Non assigné',
+          from: r.pickup || '',
+          to: r.dropoff || '',
+          status: String(r.status || '').toLowerCase() === 'confirmed' ? 'in_progress' : (String(r.status || '').toLowerCase() === 'completed' ? 'completed' : 'pending'),
+          progress: String(r.status || '').toLowerCase() === 'completed' ? 100 : (String(r.status || '').toLowerCase() === 'confirmed' ? 65 : 0),
+          eta: String(r.status || '').toLowerCase() === 'completed' ? 'Terminé' : (String(r.status || '').toLowerCase() === 'confirmed' ? 'En cours' : 'En attente'),
+          price: Number(r.price_eur || 0)
+        }));
 
         document.getElementById('content').innerHTML = `
           <div class="space-y-6 animate-fade-in">
@@ -1328,21 +1333,39 @@
 
       // PAIEMENTS
             async loadReservations() {
-        const content = document.getElementById('content');
-        content.innerHTML = `
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
-            <div class="glass-panel p-6 rounded-2xl lg:col-span-2">
-              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-                <div>
-                  <h2 class="text-xl font-bold text-white">Réservations</h2>
-                  <p class="text-sm text-[#A8B0C2]">Demandes + réservations confirmées (Supabase)</p>
-                </div>
-                <div class="flex gap-3">
-                  <button onclick="app.refreshReservations()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white text-sm">
-                    <i class="fas fa-rotate mr-2"></i>Actualiser
-                  </button>
-                  <button onclick="app.showModal('reservation')" class="px-4 py-2 rounded-xl gold-gradient text-black text-sm font-semibold">
-                    <i class="fas fa-plus mr-2"></i>Nouvelle réservation
+    const content = document.getElementById('content');
+    content.innerHTML = `
+      <div class="space-y-6 animate-fade-in">
+
+        <!-- STATS EN HAUT (amélioration C) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="resStatsRow">
+          <div class="glass-panel rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-white" id="statTotal">—</div>
+            <div class="text-xs text-A8B0C2 mt-1">Total réservations</div>
+          </div>
+          <div class="glass-panel rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-F59E0B" id="statPending">—</div>
+            <div class="text-xs text-A8B0C2 mt-1">En attente</div>
+          </div>
+          <div class="glass-panel rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-10B981" id="statConfirmed">—</div>
+            <div class="text-xs text-A8B0C2 mt-1">Confirmées</div>
+          </div>
+          <div class="glass-panel rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-D6B15E" id="statCA">—</div>
+            <div class="text-xs text-A8B0C2 mt-1">CA total</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- TABLE PRINCIPALE -->
+          <div class="glass-panel p-6 rounded-2xl lg:col-span-2">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+              <div>
+                <h2 class="text-xl font-bold text-white">Réservations</h2>
+                <p class="text-sm text-A8B0C2">Demandes & réservations confirmées — Supabase</p>
+              </div>
+              <div class="flex gap-3">
                   </button>
                 </div>
               </div>
@@ -1450,14 +1473,14 @@
           tr.innerHTML = `
             <td class="p-3">${dt(r.datetime)}</td>
             <td class="p-3">
-              <div class="font-medium">${escapeHtml(r.client_name || '')}</div>
-              <div class="text-xs text-[#A8B0C2]">${escapeHtml(r.client_email || '')}</div>
+              <div class="font-medium">${String(r.client_name || '')}</div>
+              <div class="text-xs text-[#A8B0C2]">${String(r.client_email || '')}</div>
             </td>
             <td class="p-3">
-              <div class="font-medium">${escapeHtml(r.pickup || '')}</div>
-              <div class="text-xs text-[#A8B0C2]">→ ${escapeHtml(r.dropoff || '')}</div>
+              <div class="font-medium">${String(r.pickup || '')}</div>
+              <div class="text-xs text-[#A8B0C2]">→ ${String(r.dropoff || '')}</div>
             </td>
-            <td class="p-3">${escapeHtml(r.vehicle || 'berline')}</td>
+            <td class="p-3">${String(r.vehicle || 'berline')}</td>
             <td class="p-3 font-semibold text-[#D6B15E]">${eur(r.price_eur)}</td>
             <td class="p-3">${this.badgePay(r.payment_status)}</td>
             <td class="p-3">${this.badgeStatus(r.status)}</td>
@@ -1685,16 +1708,22 @@ async loadPayments() {
 
       // CHAUFFEURS
       async loadDrivers() {
-        // Simuler des chauffeurs
-        
-
+        document.getElementById('content').innerHTML = '<div class="flex items-center justify-center h-64"><div class="skeleton w-12 h-12 rounded-full"></div></div>';
+        let drivers = [];
+        try {
+          const res = await this.apiCall('/admin-drivers');
+          if (res.ok) { const data = await res.json(); drivers = data.drivers || []; }
+          else { this.showToast('Erreur chargement chauffeurs', 'error'); }
+        } catch(e) { this.showToast('Erreur réseau', 'error'); }
+        state.drivers = drivers;
+        const vLabel = v => v==='berline' ? 'Berline Premium' : v==='van' ? 'Van/MPV' : 'Van Luxe';
         document.getElementById('content').innerHTML = `
           <div class="glass-panel rounded-2xl p-6 animate-fade-in">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
               <div class="flex items-center gap-4">
                 <div class="relative">
                   <i class="fas fa-search absolute left-3 top-3 text-[#A8B0C2]"></i>
-                  <input type="text" placeholder="Rechercher un chauffeur..." 
+                  <input type="text" placeholder="Rechercher un chauffeur..."
                          class="pl-10 pr-4 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none w-64 text-white"
                          onkeyup="app.filterDrivers(this.value)">
                 </div>
@@ -1703,65 +1732,62 @@ async loadPayments() {
                 <i class="fas fa-plus mr-2"></i>Nouveau chauffeur
               </button>
             </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              ${mockDrivers.map(d => `
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4" id="driversGrid">
+              ${drivers.length === 0 ? \`
+                <div class="col-span-3 text-center py-12 text-[#A8B0C2]">
+                  <i class="fas fa-id-card text-4xl mb-4 opacity-30"></i>
+                  <p>Aucun chauffeur enregistré</p>
+                  <button onclick="app.showModal('driver')" class="mt-4 px-4 py-2 rounded-xl gold-gradient text-black font-medium text-sm">
+                    <i class="fas fa-plus mr-1"></i>Ajouter le premier chauffeur
+                  </button>
+                </div>\` :
+              drivers.map(d => \`
                 <div class="bg-black/20 rounded-xl p-4 border border-[rgba(255,255,255,0.08)] hover:border-[#D6B15E]/30 transition-all">
                   <div class="flex justify-between items-start mb-4">
                     <div class="flex items-center gap-3">
                       <div class="w-12 h-12 rounded-full bg-[#D6B15E] flex items-center justify-center text-black font-bold text-lg">
-                        ${d.firstname.charAt(0)}${d.lastname.charAt(0)}
+                        \${(d.firstname||'?')[0]}\${(d.lastname||'?')[0]}
                       </div>
                       <div>
-                        <div class="font-semibold text-white">${d.firstname} ${d.lastname}</div>
-                        <div class="text-xs text-[#A8B0C2] font-mono">${d.code}</div>
+                        <div class="font-semibold text-white">\${d.firstname} \${d.lastname}</div>
+                        <div class="text-xs text-[#A8B0C2] font-mono">\${d.code}</div>
                       </div>
                     </div>
-                    <span class="px-2 py-1 rounded-full text-xs ${d.status === 'active' ? 'bg-[#10B981]/20 text-[#10B981]' : 'bg-[#EF4444]/20 text-[#EF4444]'}">
-                      ${d.status === 'active' ? 'Actif' : 'Inactif'}
+                    <span class="px-2 py-1 rounded-full text-xs \${d.status==='active'?'bg-[#10B981]/20 text-[#10B981]':'bg-[#EF4444]/20 text-[#EF4444]'}">
+                      \${d.status==='active'?'Actif':'Inactif'}
                     </span>
                   </div>
-
                   <div class="grid grid-cols-3 gap-2 text-center mb-4">
                     <div class="p-2 rounded-lg bg-black/30">
-                      <div class="text-lg font-bold text-[#D6B15E]">${d.rating}</div>
+                      <div class="text-lg font-bold text-[#D6B15E]">\${d.rating ?? '—'}</div>
                       <div class="text-[10px] text-[#A8B0C2]">Note</div>
                     </div>
                     <div class="p-2 rounded-lg bg-black/30">
-                      <div class="text-lg font-bold text-white">${d.rides}</div>
+                      <div class="text-lg font-bold text-white">\${d.rides ?? 0}</div>
                       <div class="text-[10px] text-[#A8B0C2]">Courses</div>
                     </div>
                     <div class="p-2 rounded-lg bg-black/30">
-                      <div class="text-lg font-bold text-[#10B981]">${(d.revenue / 1000).toFixed(1)}k€</div>
+                      <div class="text-lg font-bold text-[#10B981]">\${((d.revenue||0)/1000).toFixed(1)}k€</div>
                       <div class="text-[10px] text-[#A8B0C2]">CA</div>
                     </div>
                   </div>
-
                   <div class="space-y-2 text-sm mb-4">
-                    <div class="flex items-center gap-2 text-[#A8B0C2]">
-                      <i class="fas fa-envelope w-4"></i>
-                      <span class="truncate">${d.email}</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[#A8B0C2]">
-                      <i class="fas fa-phone w-4"></i>
-                      <span>${d.phone}</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[#A8B0C2]">
-                      <i class="fas fa-car w-4"></i>
-                      <span>${d.vehicle === 'berline' ? 'Berline Premium' : d.vehicle === 'van' ? 'Van/MPV' : 'Van Luxe'}</span>
-                    </div>
+                    <div class="flex items-center gap-2 text-[#A8B0C2]"><i class="fas fa-envelope w-4"></i><span class="truncate">\${d.email||'—'}</span></div>
+                    <div class="flex items-center gap-2 text-[#A8B0C2]"><i class="fas fa-phone w-4"></i><span>\${d.phone||'—'}</span></div>
+                    <div class="flex items-center gap-2 text-[#A8B0C2]"><i class="fas fa-car w-4"></i><span>\${vLabel(d.vehicle)}</span></div>
                   </div>
-
                   <div class="flex gap-2 pt-3 border-t border-[rgba(255,255,255,0.08)]">
-                    <button onclick="app.editDriver(${d.id})" class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm transition-all">
+                    <button onclick="app.editDriver('\${d.id}')" class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm transition-all">
                       <i class="fas fa-edit mr-1"></i> Modifier
                     </button>
-                    <button onclick="app.toggleDriverStatus(${d.id})" class="px-3 py-2 rounded-lg ${d.status === 'active' ? 'bg-[#EF4444]/20 text-[#EF4444]' : 'bg-[#10B981]/20 text-[#10B981]'} hover:bg-opacity-30 transition-all">
+                    <button onclick="app.toggleDriverStatus('\${d.id}')" class="px-3 py-2 rounded-lg \${d.status==='active'?'bg-[#EF4444]/20 text-[#EF4444]':'bg-[#10B981]/20 text-[#10B981]'} transition-all">
                       <i class="fas fa-power-off"></i>
                     </button>
+                    <button onclick="app.deleteDriver('\${d.id}')" class="px-3 py-2 rounded-lg bg-[#EF4444]/20 text-[#EF4444] transition-all">
+                      <i class="fas fa-trash"></i>
+                    </button>
                   </div>
-                </div>
-              `).join('')}
+                </div>\`).join('')}
             </div>
           </div>
         `;
@@ -1789,84 +1815,83 @@ async loadPayments() {
 
       // STATISTIQUES
       async loadStats() {
+        document.getElementById('content').innerHTML = '<div class="flex items-center justify-center h-64"><div class="skeleton w-12 h-12 rounded-full"></div></div>';
+        let s = {};
+        try {
+          const res = await this.apiCall('/admin-stats');
+          if (res.ok) s = await res.json();
+        } catch(e) { console.error('stats error', e); }
+
+        const eur = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n || 0);
+        const evoBadge = (pct) => (pct >= 0)
+          ? '<span class="text-[#10B981]"><i class="fas fa-arrow-up"></i> +' + pct + '%</span>'
+          : '<span class="text-[#EF4444]"><i class="fas fa-arrow-down"></i> ' + pct + '%</span>';
+        const total = s.totalRepartition || 1;
+        const pct = (n) => Math.round(((n || 0) / total) * 100);
+        const caMax = Math.max(...(s.caParMois || [{ca:1}]).map(m => m.ca), 1);
+
         document.getElementById('content').innerHTML = `
           <div class="space-y-6 animate-fade-in">
             <div class="grid md:grid-cols-4 gap-4">
               <div class="glass-panel rounded-2xl p-4">
-                <div class="text-3xl font-bold text-[#D6B15E]">45,230€</div>
+                <div class="text-3xl font-bold text-[#D6B15E]">${eur(s.caTotal)}</div>
                 <div class="text-sm text-[#A8B0C2]">Chiffre d'affaires total</div>
-                <div class="text-xs text-[#10B981] mt-1"><i class="fas fa-arrow-up"></i> +23% vs mois dernier</div>
+                <div class="text-xs mt-1">${evoBadge(s.caEvolution)} <span class="text-[#A8B0C2]">vs mois dernier</span></div>
               </div>
               <div class="glass-panel rounded-2xl p-4">
-                <div class="text-3xl font-bold text-white">342</div>
+                <div class="text-3xl font-bold text-white">${s.totalCourses ?? '—'}</div>
                 <div class="text-sm text-[#A8B0C2]">Courses réalisées</div>
-                <div class="text-xs text-[#10B981] mt-1"><i class="fas fa-arrow-up"></i> +15% vs mois dernier</div>
+                <div class="text-xs mt-1">${evoBadge(s.ridesEvolution)} <span class="text-[#A8B0C2]">vs mois dernier</span></div>
               </div>
               <div class="glass-panel rounded-2xl p-4">
-                <div class="text-3xl font-bold text-[#10B981]">4.8</div>
-                <div class="text-sm text-[#A8B0C2]">Note moyenne</div>
-                <div class="text-xs text-[#A8B0C2] mt-1">Basé sur 156 avis</div>
+                <div class="text-3xl font-bold text-[#10B981]">${s.noteMoyenne ?? '—'}</div>
+                <div class="text-sm text-[#A8B0C2]">Note moyenne chauffeurs</div>
+                <div class="text-xs text-[#A8B0C2] mt-1">Depuis Supabase</div>
               </div>
               <div class="glass-panel rounded-2xl p-4">
-                <div class="text-3xl font-bold text-[#F59E0B]">68%</div>
+                <div class="text-3xl font-bold text-[#F59E0B]">${s.conversionRate ?? '—'}%</div>
                 <div class="text-sm text-[#A8B0C2]">Taux de conversion</div>
-                <div class="text-xs text-[#10B981] mt-1"><i class="fas fa-arrow-up"></i> +5% vs mois dernier</div>
+                <div class="text-xs text-[#A8B0C2] mt-1">${s.totalReservations ?? 0} réservations totales</div>
               </div>
             </div>
-
             <div class="grid lg:grid-cols-2 gap-6">
               <div class="glass-panel rounded-2xl p-6">
-                <h3 class="font-bold mb-4 text-white">Évolution du CA</h3>
-                <div class="h-64 flex items-end justify-between gap-2">
-                  ${[30, 45, 35, 50, 40, 60, 55, 70, 65, 80, 75, 90].map((h, i) => `
-                    <div class="flex-1 flex flex-col items-center gap-2">
-                      <div class="w-full bg-gradient-to-t from-[#D6B15E] to-[#D6B15E]/50 rounded-t-lg" style="height: ${h}%"></div>
-                      <span class="text-xs text-[#A8B0C2]">${['J','F','M','A','M','J','J','A','S','O','N','D'][i]}</span>
-                    </div>
-                  `).join('')}
+                <h3 class="font-bold mb-4 text-white">Évolution du CA (12 mois)</h3>
+                <div class="h-64 flex items-end justify-between gap-1">
+                  ${(s.caParMois || []).map(m => \`
+                    <div class="flex-1 flex flex-col items-center gap-1">
+                      <div class="w-full bg-gradient-to-t from-[#D6B15E] to-[#D6B15E]/40 rounded-t-lg" style="height:\${Math.round((m.ca/caMax)*100)}%"></div>
+                      <span class="text-[10px] text-[#A8B0C2]">\${m.mois}</span>
+                    </div>\`).join('') || '<div class="text-[#A8B0C2] text-sm w-full text-center self-center">Aucune donnée</div>'}
                 </div>
               </div>
-
               <div class="glass-panel rounded-2xl p-6">
-                <h3 class="font-bold mb-4 text-white">Répartition des courses</h3>
+                <h3 class="font-bold mb-4 text-white">Répartition des prises en charge</h3>
                 <div class="space-y-4">
-                  <div>
-                    <div class="flex justify-between text-sm mb-1">
-                      <span class="text-white">Aéroport CDG</span>
-                      <span class="text-[#D6B15E]">45%</span>
-                    </div>
-                    <div class="h-2 bg-black/40 rounded-full overflow-hidden">
-                      <div class="h-full bg-[#D6B15E] rounded-full" style="width: 45%"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex justify-between text-sm mb-1">
-                      <span class="text-white">Aéroport Orly</span>
-                      <span class="text-[#10B981]">30%</span>
-                    </div>
-                    <div class="h-2 bg-black/40 rounded-full overflow-hidden">
-                      <div class="h-full bg-[#10B981] rounded-full" style="width: 30%"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex justify-between text-sm mb-1">
-                      <span class="text-white">Gares Paris</span>
-                      <span class="text-[#F59E0B]">15%</span>
-                    </div>
-                    <div class="h-2 bg-black/40 rounded-full overflow-hidden">
-                      <div class="h-full bg-[#F59E0B] rounded-full" style="width: 15%"></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex justify-between text-sm mb-1">
-                      <span class="text-white">Autres destinations</span>
-                      <span class="text-[#A8B0C2]">10%</span>
-                    </div>
-                    <div class="h-2 bg-black/40 rounded-full overflow-hidden">
-                      <div class="h-full bg-[#A8B0C2] rounded-full" style="width: 10%"></div>
-                    </div>
-                  </div>
+                  ${[
+                    { label: 'Aéroport CDG', key: 'cdg', color: '#D6B15E' },
+                    { label: 'Aéroport Orly', key: 'orly', color: '#10B981' },
+                    { label: 'Gares Paris', key: 'gares', color: '#F59E0B' },
+                    { label: 'Autres', key: 'autres', color: '#A8B0C2' }
+                  ].map(item => \`
+                    <div>
+                      <div class="flex justify-between text-sm mb-1">
+                        <span class="text-white">\${item.label}</span>
+                        <span style="color:\${item.color}">\${pct(s.repartition?.[\${item.key}])}% <span class="text-[#A8B0C2] text-xs">(\${s.repartition?.[\${item.key}] ?? 0})</span></span>
+                      </div>
+                      <div class="h-2 bg-black/40 rounded-full overflow-hidden">
+                        <div class="h-full rounded-full" style="width:\${pct(s.repartition?.[\${item.key}])}%;background:\${item.color}"></div>
+                      </div>
+                    </div>\`).join('')}
                 </div>
+              </div>
+            </div>
+            <div class="glass-panel rounded-2xl p-6">
+              <div class="grid md:grid-cols-4 gap-4 text-center">
+                <div><div class="text-2xl font-bold text-white">${s.coursesAujourdhui ?? 0}</div><div class="text-xs text-[#A8B0C2]">Courses aujourd'hui</div></div>
+                <div><div class="text-2xl font-bold text-[#10B981]">${s.enCours ?? 0}</div><div class="text-xs text-[#A8B0C2]">En cours</div></div>
+                <div><div class="text-2xl font-bold text-[#F59E0B]">${s.enAttente ?? 0}</div><div class="text-xs text-[#A8B0C2]">En attente</div></div>
+                <div><div class="text-2xl font-bold text-[#D6B15E]">${eur(s.caAujourdhui)}</div><div class="text-xs text-[#A8B0C2]">CA aujourd'hui</div></div>
               </div>
             </div>
           </div>
@@ -2074,19 +2099,97 @@ async loadPayments() {
       // ACTIONS CHAUFFEURS
       saveDriver(e) {
         e.preventDefault();
-        this.showToast('Chauffeur enregistré (simulation)', 'success');
+        const drivers = JSON.parse(localStorage.getItem('shvip_drivers') || '[]');
+        const id = document.getElementById('driver-id').value;
+        const driver = {
+          id: id || Date.now().toString(),
+          firstname: document.getElementById('driver-firstname').value,
+          lastname: document.getElementById('driver-lastname').value,
+          email: document.getElementById('driver-email').value,
+          phone: document.getElementById('driver-phone').value,
+          code: document.getElementById('driver-code').value,
+          vehicle: document.getElementById('driver-vehicle').value,
+          commission: document.getElementById('driver-commission').value,
+          status: 'active'
+        };
+        if (id) {
+          const idx = drivers.findIndex(d => d.id === id);
+          if (idx > -1) drivers[idx] = driver;
+        } else {
+          drivers.push(driver);
+        }
+        localStorage.setItem('shvip_drivers', JSON.stringify(drivers));
+        this.showToast('Chauffeur enregistré avec succès', 'success');
         this.closeModal('driver');
         this.loadDrivers();
       },
 
       editDriver(id) {
+        const drivers = JSON.parse(localStorage.getItem('shvip_drivers') || '[]');
+        const d = drivers.find(d => d.id === id);
+        if (!d) return;
         document.getElementById('driver-modal-title').textContent = 'Modifier le chauffeur';
+        document.getElementById('driver-id').value = d.id;
+        document.getElementById('driver-firstname').value = d.firstname;
+        document.getElementById('driver-lastname').value = d.lastname;
+        document.getElementById('driver-email').value = d.email;
+        document.getElementById('driver-phone').value = d.phone;
+        document.getElementById('driver-code').value = d.code;
+        document.getElementById('driver-vehicle').value = d.vehicle;
+        document.getElementById('driver-commission').value = d.commission;
         this.showModal('driver');
       },
 
       toggleDriverStatus(id) {
-        this.showToast('Statut modifié (simulation)', 'success');
+        const drivers = JSON.parse(localStorage.getItem('shvip_drivers') || '[]');
+        const d = drivers.find(d => d.id === id);
+        if (d) { d.status = d.status === 'active' ? 'inactive' : 'active'; }
+        localStorage.setItem('shvip_drivers', JSON.stringify(drivers));
+        this.showToast('Statut modifié', 'success');
         this.loadDrivers();
+      },
+	  
+      deleteDriver(id) {
+        if (!confirm('Supprimer ce chauffeur ?')) return;
+        let drivers = JSON.parse(localStorage.getItem('shvip_drivers') || '[]');
+        drivers = drivers.filter(d => d.id !== id);
+        localStorage.setItem('shvip_drivers', JSON.stringify(drivers));
+        this.showToast('Chauffeur supprimé', 'success');
+        this.loadDrivers();
+      },
+
+      filterDrivers(query) {
+        const drivers = JSON.parse(localStorage.getItem('shvip_drivers') || '[]');
+        const filtered = drivers.filter(d =>
+          (d.firstname+' '+d.lastname+' '+d.code+' '+d.email).toLowerCase().includes(query.toLowerCase())
+        );
+        const grid = document.getElementById('driversGrid');
+        if (!grid) return;
+        grid.innerHTML = filtered.length === 0 ? `
+          <div class="col-span-3 text-center py-12 text-[#A8B0C2]">
+            <i class="fas fa-search text-4xl mb-4 opacity-30"></i>
+            <p>Aucun résultat pour "${query}"</p>
+          </div>` :
+          filtered.map(d => `
+            <div class="bg-black/20 rounded-xl p-4 border border-[rgba(255,255,255,0.08)]">
+              <div class="flex justify-between items-start mb-3">
+                <div>
+                  <div class="font-semibold text-white">${d.firstname} ${d.lastname}</div>
+                  <div class="text-xs font-mono text-[#D6B15E]">${d.code||''}</div>
+                </div>
+                <span class="text-xs px-2 py-1 rounded-full ${d.status==='active'?'bg-[#10B981]/20 text-[#10B981]':'bg-[#EF4444]/20 text-[#EF4444]'}">
+                  ${d.status==='active'?'Actif':'Inactif'}
+                </span>
+              </div>
+              <div class="text-sm text-[#A8B0C2] space-y-1 mb-3">
+                <div><i class="fas fa-envelope mr-2"></i>${d.email||'-'}</div>
+                <div><i class="fas fa-phone mr-2"></i>${d.phone||'-'}</div>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="app.editDriver('${d.id}')" class="flex-1 py-2 rounded-lg bg-[#D6B15E]/20 text-[#D6B15E] text-sm"><i class="fas fa-edit mr-1"></i>Modifier</button>
+                    <button onclick="app.deleteDriver('${d.id}')" class="py-2 px-3 rounded-lg bg-[#EF4444]/20 text-[#EF4444] text-sm"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>`).join('');
       },
 
       // NOTIFICATIONS
@@ -2203,6 +2306,11 @@ async loadPayments() {
         this.loadPageData(state.currentPage);
       }
     };
+     // Utilitaire escapeHtml
+      function escapeHtml(str) {
+      const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+       return String(str || '').replace(/[&<>"']/g, m => map[m]);
+    }
 
     // Démarrer
     app.init();

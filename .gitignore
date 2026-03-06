@@ -1,5 +1,4 @@
-node_modules
+node_modules/
+.netlify/
 .env
-.env.*
-desktop.ini
-.netlify
+.DS_Store

@@ -1,30 +1,50 @@
-const { buildCorsHeaders, handleOptions } = require('./utils/cors');
-const { ok, unauthorized, methodNotAllowed, serverError } = require('./utils/response');
-const { verifyAdminTokenFromEvent } = require('./utils/auth');
-const { getDb } = require('./utils/db');
-const { toPositiveInt } = require('./utils/validators');
+const Stripe = require("stripe");
+const { corsHeaders, requireAdmin, mustEnv } = require("./_utils");
+
+function isPaidSession(s) {
+  return s && (s.payment_status === "paid" || s.status === "complete");
+}
+
+function invoiceIdFromSession(s) {
+  // Stable-ish id: F-YYYYMMDD-<last6>
+  const d = new Date((s.created || Math.floor(Date.now()/1000)) * 1000);
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const da = String(d.getDate()).padStart(2,'0');
+  const tail = String(s.id || "").slice(-6).toUpperCase();
+  return `F-${y}${m}${da}-${tail}`;
+}
 
 exports.handler = async (event) => {
-  const corsHeaders = buildCorsHeaders(event.headers?.origin || event.headers?.Origin || '');
+  const origin = event.headers.origin;
+  const headers = corsHeaders(origin);
+
+  if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
+  if (event.httpMethod !== "GET") return { statusCode: 405, headers, body: JSON.stringify({ error: "Method Not Allowed" }) };
+
+  const gate = requireAdmin(event, headers);
+  if (!gate.ok) return gate.res;
 
   try {
-    if (event.httpMethod === 'OPTIONS') return handleOptions(event);
-    if (event.httpMethod !== 'GET') return methodNotAllowed(['GET'], corsHeaders);
-    verifyAdminTokenFromEvent(event);
+    const stripe = new Stripe(mustEnv("STRIPE_SECRET_KEY"), { apiVersion: "2024-06-20" });
+    const sessions = await stripe.checkout.sessions.list({ limit: 200 });
 
-    const db = await getDb();
-    const limit = toPositiveInt(event.queryStringParameters?.limit, 50);
+    const rows = sessions.data
+      .filter(isPaidSession)
+      .map(s => ({
+        invoice_id: invoiceIdFromSession(s),
+        session_id: s.id,
+        created: s.created,
+        email: s.customer_details?.email || s.customer_email || s.metadata?.customer_email || s.metadata?.email || "",
+        description: s.metadata?.description || "",
+        amount_eur: s.amount_total ? s.amount_total / 100 : 0,
+        payment_status: s.payment_status || "",
+        quote_id: s.metadata?.quote_id || "",
+      }));
 
-    const invoices = await db
-      .collection('invoices')
-      .find({})
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .toArray();
-
-    return ok({ ok: true, invoices }, corsHeaders);
-  } catch (error) {
-    if (error.statusCode === 401) return unauthorized(error.message, corsHeaders);
-    return serverError(error, corsHeaders);
+    return { statusCode: 200, headers, body: JSON.stringify({ ok: true, rows, count: rows.length }) };
+  } catch (err) {
+    console.error(err);
+    return { statusCode: 500, headers, body: JSON.stringify({ error: "Server error", details: err.message }) };
   }
 };

@@ -1,30 +1,39 @@
-const { buildCorsHeaders, handleOptions } = require('./utils/cors');
-const { ok, unauthorized, methodNotAllowed, serverError } = require('./utils/response');
-const { verifyAdminTokenFromEvent } = require('./utils/auth');
-const { getDb } = require('./utils/db');
-const { toPositiveInt } = require('./utils/validators');
+const Stripe = require("stripe");
+const { corsHeaders, requireAdmin, mustEnv } = require("./_utils");
 
 exports.handler = async (event) => {
-  const corsHeaders = buildCorsHeaders(event.headers?.origin || event.headers?.Origin || '');
+  const origin = event.headers.origin;
+  const headers = corsHeaders(origin);
+
+  if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
+  if (event.httpMethod !== "GET") return { statusCode: 405, headers, body: JSON.stringify({ error: "Method Not Allowed" }) };
+
+  const gate = requireAdmin(event, headers);
+  if (!gate.ok) return gate.res;
 
   try {
-    if (event.httpMethod === 'OPTIONS') return handleOptions(event);
-    if (event.httpMethod !== 'GET') return methodNotAllowed(['GET'], corsHeaders);
-    verifyAdminTokenFromEvent(event);
+    const stripe = new Stripe(mustEnv("STRIPE_SECRET_KEY"), { apiVersion: "2024-06-20" });
+    const sessions = await stripe.checkout.sessions.list({ limit: 200 });
 
-    const db = await getDb();
-    const limit = toPositiveInt(event.queryStringParameters?.limit, 50);
+    // Quotes are sessions created by create-quote (they have quote_id)
+    const quotes = sessions.data
+      .filter(s => s.metadata && s.metadata.quote_id)
+      .map(s => ({
+        quote_id: s.metadata.quote_id,
+        session_id: s.id,
+        created: s.created,
+        customer_name: s.metadata.customer_name || "",
+        customer_email: s.metadata.customer_email || s.customer_details?.email || s.customer_email || "",
+        description: s.metadata.description || "",
+        total_amount_eur: Number(s.metadata.total_amount_eur || 0),
+        paid_amount_eur: Number(s.metadata.paid_amount_eur || 0) || (s.amount_total ? s.amount_total / 100 : 0),
+        pay_mode: s.metadata.pay_mode || "",
+        payment_status: s.payment_status || "",
+      }));
 
-    const quotes = await db
-      .collection('quotes')
-      .find({})
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .toArray();
-
-    return ok({ ok: true, quotes }, corsHeaders);
-  } catch (error) {
-    if (error.statusCode === 401) return unauthorized(error.message, corsHeaders);
-    return serverError(error, corsHeaders);
+    return { statusCode: 200, headers, body: JSON.stringify({ ok: true, rows: quotes, count: quotes.length }) };
+  } catch (err) {
+    console.error(err);
+    return { statusCode: 500, headers, body: JSON.stringify({ error: "Server error", details: err.message }) };
   }
 };

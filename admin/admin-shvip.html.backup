@@ -1,3 +1,12 @@
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -464,7 +473,7 @@
           <div>
             <label class="block text-xs text-[#A8B0C2] mb-1">Passagers</label>
             <select name="passengers" class="w-full px-3 py-2 rounded-xl bg-black/30 border border-[rgba(255,255,255,0.12)] focus:border-[#D6B15E] focus:outline-none text-white">
-              <option value="1">1 passager</option><option value="2">2 passagers</option><option value="3">3 passagers</option><option value="4">4 passagers</option><option value="5">5 passagers</option><option value="6">6 passagers</option><option value="7">7 passagers</option><option value="8">8 passagers</option>
+              ${Array.from({length: 8}, (_, i) => `<option value="${i+1}">${i+1} passager${i > 0 ? 's' : ''}</option>`).join('')}
             </select>
           </div>
         </div>
@@ -1686,7 +1695,11 @@ async loadPayments() {
       // CHAUFFEURS
       async loadDrivers() {
         // Simuler des chauffeurs
-        
+        const mockDrivers = [
+          { id: 1, firstname: 'Jean', lastname: 'Dupont', email: 'jean@shvip.fr', phone: '06 12 34 56 78', code: 'SH-001', vehicle: 'berline', status: 'active', rating: 4.8, rides: 156, revenue: 12500 },
+          { id: 2, firstname: 'Marie', lastname: 'Martin', email: 'marie@shvip.fr', phone: '06 23 45 67 89', code: 'SH-002', vehicle: 'van', status: 'active', rating: 4.9, rides: 203, revenue: 18900 },
+          { id: 3, firstname: 'Pierre', lastname: 'Bernard', email: 'pierre@shvip.fr', phone: '06 34 56 78 90', code: 'SH-003', vehicle: 'van_plus', status: 'inactive', rating: 4.7, rides: 89, revenue: 8200 },
+        ];
 
         document.getElementById('content').innerHTML = `
           <div class="glass-panel rounded-2xl p-6 animate-fade-in">
