@@ -86,65 +86,167 @@
             <span class="block mt-1 text-muted/80">EN — Describe your request (airport, disposal, event). We reply quickly.</span>
           </p>
 
-          <form action="https://formspree.io/f/mvzbbzoq" method="POST" class="space-y-4">
-            <input type="hidden" name="type" value="Demande privée SHVIP" />
-
+          <form id="reservationForm" class="space-y-4">
+            <input type="hidden" name="type" value="Réservation SHVIP" />
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-sm font-medium text-muted mb-1">Nom</label>
-                <input type="text" name="nom" required placeholder="Votre nom"
+                <label class="block text-sm font-medium text-muted mb-1">Nom complet *</label>
+                <input type="text" name="nom" required placeholder="Jean Dupont"
                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-muted mb-1">Téléphone</label>
-                <input type="tel" name="telephone" placeholder="+33 6 .. .. .. .."
+                <label class="block text-sm font-medium text-muted mb-1">Téléphone *</label>
+                <input type="tel" name="telephone" required placeholder="+33 6 .. .. .. .."
                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
               </div>
             </div>
-
             <div>
               <label class="block text-sm font-medium text-muted mb-1">Email</label>
-              <input type="email" name="email" required placeholder="Votre email"
+              <input type="email" name="email" placeholder="email@exemple.com"
                      class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
             </div>
-
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-sm font-medium text-muted mb-1">Date</label>
-                <input type="date" name="date"
+                <label class="block text-sm font-medium text-muted mb-1">Date *</label>
+                <input type="date" name="date" required
                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
               </div>
               <div>
-                <label class="block text-sm font-medium text-muted mb-1">Heure</label>
-                <input type="time" name="heure"
+                <label class="block text-sm font-medium text-muted mb-1">Heure *</label>
+                <input type="time" name="heure" required
                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
               </div>
             </div>
-
             <div>
-              <label class="block text-sm font-medium text-muted mb-1">Départ</label>
-              <input type="text" name="depart" placeholder="Adresse de départ"
+              <label class="block text-sm font-medium text-muted mb-1">Adresse de départ *</label>
+              <input type="text" name="depart" required placeholder="Aéroport CDG Terminal 2E, adresse complète…"
                      class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
             </div>
-
             <div>
-              <label class="block text-sm font-medium text-muted mb-1">Arrivée</label>
-              <input type="text" name="arrivee" placeholder="Adresse d’arrivée"
+              <label class="block text-sm font-medium text-muted mb-1">Adresse d'arrivée *</label>
+              <input type="text" name="arrivee" required placeholder="75008 Paris, Champs-Élysées…"
                      class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold" />
             </div>
-
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-medium text-muted mb-1">Type de prestation</label>
+                <select name="prestation"
+                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold">
+                  <option>Transfert aéroport / gare</option>
+                  <option>Mise à disposition</option>
+                  <option>Événement privé</option>
+                  <option>Course longue distance</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-muted mb-1">Passagers</label>
+                <select name="nb_passagers"
+                        class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold">
+                  <option>1 passager</option>
+                  <option>2 passagers</option>
+                  <option>3 passagers</option>
+                  <option selected>4 passagers</option>
+                  <option>5 passagers</option>
+                  <option>6 passagers</option>
+                  <option>7 passagers et +</option>
+                </select>
+              </div>
+            </div>
             <div>
-              <label class="block text-sm font-medium text-muted mb-1">Message</label>
-              <textarea name="message" rows="4" required placeholder="Votre demande (CDG/Orly/Le Bourget, disposition, événement)…"
+              <label class="block text-sm font-medium text-muted mb-1">Notes / Demandes particulières</label>
+              <textarea name="notes" rows="3" placeholder="Siège bébé, accueil avec panneau, numéro de vol, eau minérale…"
                         class="w-full px-4 py-3 rounded-2xl bg-black/30 border border-line focus:outline-none focus:ring-2 focus:ring-gold"></textarea>
             </div>
-
-            <button type="submit"
+            <button type="submit" id="formBtn"
                     class="w-full py-4 rounded-2xl font-bold text-black bg-gradient-to-r from-gold to-gold2 shadow-luxe hover:opacity-90 transition flex items-center justify-center gap-2">
               <span class="iconify text-lg" data-icon="lucide:send"></span>
-              Envoyer la demande
+              <span id="formBtnText">Envoyer la demande</span>
             </button>
+            <div id="formSuccess" class="hidden px-4 py-3 rounded-2xl text-sm font-medium"
+                 style="background:rgba(26,158,106,.15);border:1px solid rgba(26,158,106,.4);color:#4ade80;">
+              ✅ Demande envoyée ! Nous vous recontactons sous 15 minutes.
+            </div>
+            <div id="formError" class="hidden px-4 py-3 rounded-2xl text-sm font-medium"
+                 style="background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.4);color:#f87171;">
+              ❌ Erreur. Contactez-nous directement par téléphone ou WhatsApp.
+            </div>
+            <p class="text-xs text-center" style="color:#A8B0C2;">* Champs obligatoires · Réponse garantie sous 15 min</p>
           </form>
+          <script>
+            // ── Config Supabase ───────────────────────────────────────────
+            const SUPABASE_URL = "https://htblfillncczsfteciyy.supabase.co";
+            const SUPABASE_KEY = "sb_publishable_yh-guGKPlaJBtqCxAtC0QA_N12x0zyA";
+            const FORMSPREE_URL = "https://formspree.io/f/mvzbbzoq";
+
+            document.getElementById('reservationForm').addEventListener('submit', async function(e) {
+              e.preventDefault();
+              const btn    = document.getElementById('formBtn');
+              const btnTxt = document.getElementById('formBtnText');
+              const ok     = document.getElementById('formSuccess');
+              const err    = document.getElementById('formError');
+              ok.classList.add('hidden');
+              err.classList.add('hidden');
+              btn.disabled = true;
+              btnTxt.textContent = 'Envoi en cours…';
+
+              // Collecter les données du formulaire
+              const fd = new FormData(this);
+              const payload = {
+                nom:          fd.get('nom'),
+                telephone:    fd.get('telephone'),
+                email:        fd.get('email') || '',
+                depart:       fd.get('depart'),
+                arrivee:      fd.get('arrivee'),
+                date_course:  fd.get('date'),
+                heure:        fd.get('heure'),
+                nb_passagers: fd.get('nb_passagers'),
+                prestation:   fd.get('prestation'),
+                notes:        fd.get('notes') || '',
+                statut:       'En attente',
+                importe:      0
+              };
+
+              let supabaseOk = false;
+              let formspreeOk = false;
+
+              // ── 1. Envoi Supabase ─────────────────────────────────────
+              try {
+                const res = await fetch(SUPABASE_URL + '/rest/v1/reservations', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type':  'application/json',
+                    'apikey':        SUPABASE_KEY,
+                    'Authorization': 'Bearer ' + SUPABASE_KEY,
+                    'Prefer':        'return=minimal'
+                  },
+                  body: JSON.stringify(payload)
+                });
+                if (res.ok || res.status === 201) supabaseOk = true;
+              } catch (e) { console.warn('Supabase error:', e); }
+
+              // ── 2. Envoi Formspree (email de secours) ─────────────────
+              try {
+                const res = await fetch(FORMSPREE_URL, {
+                  method:  'POST',
+                  body:    new FormData(document.getElementById('reservationForm')),
+                  headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) formspreeOk = true;
+              } catch (e) { console.warn('Formspree error:', e); }
+
+              // ── Résultat ──────────────────────────────────────────────
+              if (supabaseOk || formspreeOk) {
+                ok.classList.remove('hidden');
+                this.reset();
+              } else {
+                err.classList.remove('hidden');
+              }
+
+              btn.disabled = false;
+              btnTxt.textContent = 'Envoyer la demande';
+            });
+          </script>
         </div>
 
         <!-- Paiement -->
@@ -190,9 +292,9 @@
 
             <div class="mt-6 text-xs text-muted">
               En payant, vous acceptez nos
-              <a href="conditions-generales/index.html" class="underline hover:text-pearl">conditions générales</a>
+              <a href="conditions-generales.html" class="underline hover:text-pearl">conditions générales</a>
               et notre
-              <a href="politique-de-confidentialite/index.html" class="underline hover:text-pearl">politique de confidentialité</a>.
+              <a href="politique-de-confidentialite.html" class="underline hover:text-pearl">politique de confidentialité</a>.
             </div>
           </div>
 
@@ -213,9 +315,9 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center text-sm text-muted">
       <div class="inline-flex items-center gap-2 text-2xl font-bold">SH<span class="text-gold">VIP</span></div>
       <div class="mt-5 flex flex-wrap justify-center gap-4 text-sm text-muted">
-        <a href="conditions-generales/index.html" class="hover:text-pearl transition">Conditions générales</a>
+        <a href="conditions-generales.html" class="hover:text-pearl transition">Conditions générales</a>
         <span class="text-muted/60">•</span>
-        <a href="politique-de-confidentialite/index.html" class="hover:text-pearl transition">Politique de confidentialité</a>
+        <a href="politique-de-confidentialite.html" class="hover:text-pearl transition">Politique de confidentialité</a>
       </div>
       <p class="text-xs text-muted mt-8">© 2026 SHVIP. Tous droits réservés.</p>
     </div>

@@ -1,10 +1,13 @@
-const Stripe = require("stripe");
+// netlify/functions/create-checkout-session.js
+// ─────────────────────────────────────────────
+// Fonction Stripe pour S.H.vip — version corrigée
+// Sans dépendance jsonwebtoken
+// ─────────────────────────────────────────────
 
-function isValidEmail(email) {
-  return typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-}
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-exports.handler = async (event) => {
+exports.handler = async function (event) {
+  // CORS headers
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
@@ -12,100 +15,81 @@ exports.handler = async (event) => {
     "Content-Type": "application/json",
   };
 
+  // Preflight OPTIONS
   if (event.httpMethod === "OPTIONS") {
-    return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
+    return { statusCode: 200, headers, body: "" };
   }
 
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: "Method Not Allowed" }) };
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ error: "Méthode non autorisée" }),
+    };
   }
 
   try {
-    const secretKey = process.env.STRIPE_SECRET_KEY;
-    if (!secretKey) {
-      return { statusCode: 500, headers, body: JSON.stringify({ error: "STRIPE_SECRET_KEY manquante." }) };
+    // Vérifier que la clé Stripe est configurée
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error("Clé Stripe manquante dans les variables d'environnement Netlify.");
     }
 
-    const stripe = new Stripe(secretKey, { apiVersion: "2024-06-20" });
+    const body = JSON.parse(event.body || "{}");
+    const amount = Number(body.amount || 0);
+    const type   = String(body.type || "acompte").toLowerCase();
 
-    const data = JSON.parse(event.body || "{}");
-
-    const type = String(data.type || "").toLowerCase(); // "acompte" | "solde"
-    const amountEuro = Number(data.amount);
-
-    // ✅ email optionnel (mais utile pour l'email automatique)
-    const emailRaw = data.email ? String(data.email).trim() : "";
-    const email = emailRaw && isValidEmail(emailRaw) ? emailRaw : null;
-
-    if (!["acompte", "solde"].includes(type)) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: "Type invalide (acompte/solde)." }) };
+    // Validation
+    if (!amount || amount < 20) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: "Montant invalide (minimum 20€)." }),
+      };
     }
 
-    if (!Number.isFinite(amountEuro) || amountEuro <= 0) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: "Montant invalide." }) };
-    }
+    // Label du paiement
+    const label = type === "solde"
+      ? "Solde — Course S.H.vip Chauffeur Privé"
+      : "Acompte — Course S.H.vip Chauffeur Privé";
 
-    const min = 20;
-    const max = type === "acompte" ? 5000 : 20000;
-    if (amountEuro < min || amountEuro > max) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: `Montant hors limites (${min}€ - ${max}€).` }) };
-    }
-
-    const successUrl =
-      process.env.STRIPE_SUCCESS_URL ||
-      "https://shvipchauffeur-vtc.netlify.app/paiement-succes.html?session_id={CHECKOUT_SESSION_ID}";
-    const cancelUrl =
-      process.env.STRIPE_CANCEL_URL ||
-      "https://shvipchauffeur-vtc.netlify.app/paiement-annule.html";
-
-    const unitAmount = Math.round(amountEuro * 100);
-
+    // Créer la session Stripe Checkout
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
       payment_method_types: ["card"],
-
-      // ✅ Stripe affichera/collectera l'email.
-      // Et si tu le fournis, Stripe le pré-remplit.
-      ...(email ? { customer_email: email } : {}),
-
-      // ✅ optionnel : collecte tel (utile VTC)
-      phone_number_collection: { enabled: true },
-
+      mode: "payment",
       line_items: [
         {
           price_data: {
             currency: "eur",
             product_data: {
-              name: type === "acompte" ? "Acompte réservation SHVIP" : "Solde réservation SHVIP",
-              description: "Paiement sécurisé via Stripe",
+              name: label,
+              description: "S.H.vip — Maison Privée de Chauffeurs · Paris",
             },
-            unit_amount: unitAmount,
+            unit_amount: Math.round(amount * 100), // en centimes
           },
           quantity: 1,
         },
       ],
-
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-
-      // ✅ On stocke toujours dans metadata (même si email vide)
+      success_url: process.env.URL + "/paiement-succes.html?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url:  process.env.URL + "/paiement-annule.html",
       metadata: {
-        type,
-        amount_eur: String(amountEuro),
-        source: "shvip-site",
-        email: email || "",
+        type:    type,
+        montant: amount.toString(),
+        source:  "shvip-site",
       },
     });
 
-    return { statusCode: 200, headers, body: JSON.stringify({ url: session.url }) };
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ url: session.url }),
+    };
+
   } catch (err) {
+    console.error("Stripe error:", err.message);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({
-        error: "Erreur serveur Stripe/Netlify",
-        details: err?.message || String(err),
-      }),
+      body: JSON.stringify({ error: err.message || "Erreur serveur Stripe." }),
     };
   }
 };

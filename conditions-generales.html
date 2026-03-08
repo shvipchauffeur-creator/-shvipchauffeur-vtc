@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        ink:"#05070E", obsidian:"#070A12", gold:"#D6B15E", gold2:"#B8922A",
+        pearl:"#E9ECF2", muted:"#A8B0C2", line:"rgba(255,255,255,0.12)"
+      }}}
+    };
+  </script>
+  <style>body{font-family:Inter,sans-serif;}h1,h2,h3{font-family:Poppins,sans-serif;}</style>
+</head>
+<body class="bg-ink text-pearl antialiased">
+
+<header class="fixed top-0 w-full z-50 bg-ink/55 backdrop-blur-md border-b border-line">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full border border-line bg-white/5 flex items-center justify-center">
+          <span class="iconify text-xl text-gold" data-icon="lucide:crown"></span>
+        </div>
+        <span class="text-2xl font-extrabold tracking-tight">SH<span class="text-gold">VIP</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-10 text-sm">
+        <a href="index.html" class="text-muted hover:text-pearl transition">Accueil</a>
+        <a href="services.html" class="text-muted hover:text-pearl transition">Services</a>
+        <a href="flotte.html" class="text-muted hover:text-pearl transition">Flotte</a>
+        <a href="partenaires.html" class="text-muted hover:text-pearl transition">Partenaires</a>
+        <a href="contact.html" class="text-muted hover:text-pearl transition">Contact</a>
+      </div>
+      <a href="contact.html#demande-privee"
+         class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-gradient-to-r from-gold to-gold2 text-black hover:opacity-90 transition">
+        <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
+        <span>Demande privée</span>
+      </a>
+    </div>
+  </nav>
+</header>
+<main class="pt-28 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+  <p class="text-xs uppercase tracking-[0.25em] text-gold/90 mb-3">Légal</p>
+  <h1 class="text-4xl font-extrabold mb-2">Conditions générales</h1>
+  <p class="text-muted text-sm mb-8">Dernière mise à jour : <strong class="text-pearl">22/02/2026</strong></p>
+
+  <div class="rounded-2xl border border-line bg-white/5 p-5 mb-8 text-sm">
+    <p><span class="text-gold font-semibold">Prestataire</span> : SHVIP (Chauffeur privé) — SHVIP PARIS</p>
+    <p class="mt-1"><span class="text-gold font-semibold">Contact</span> :
+      <a href="mailto:s.h.vip.chauffeur@gmail.com" class="text-gold hover:underline">s.h.vip.chauffeur@gmail.com</a>
+      — <a href="tel:+33625534555" class="text-gold hover:underline">+33 6 25 53 45 55</a></p>
+  </div>
+
+  <div class="space-y-8 text-muted leading-relaxed">
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">1. Objet</h2>
+      <p>Les présentes conditions encadrent la réservation et la fourniture de prestations de chauffeur privé proposées par SHVIP, ainsi que l'utilisation des liens de paiement Stripe.</p>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">2. Réservation</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>La réservation peut être effectuée via contact direct ou via un lien de paiement.</li>
+        <li>La réservation est considérée comme confirmée après validation et/ou paiement selon la formule choisie.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">3. Tarifs</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Les tarifs sont indiqués en euros (€) TTC si applicable.</li>
+        <li>Le prix final dépend de la prestation (trajet, durée, horaires, options).</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">4. Paiement (Acompte / Solde)</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Le paiement est traité via <strong class="text-pearl">Stripe</strong>.</li>
+        <li><strong class="text-pearl">Acompte</strong> : l'acompte sert à bloquer la réservation.</li>
+        <li><strong class="text-pearl">Solde</strong> : le solde doit être réglé au plus tard 24h avant la prestation.</li>
+        <li>En cas de non-paiement du solde à temps, SHVIP se réserve le droit d'annuler la prestation.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">5. Annulation / Remboursement</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Annulation ≥ 48h avant la course : remboursement possible ou report.</li>
+        <li>Annulation &lt; 48h : l'acompte peut être conservé à titre d'indemnisation.</li>
+        <li>Annulation par SHVIP : remboursement ou solution de remplacement proposé.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">6. Retard / No-show</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>En cas de retard du client, une attente peut être facturée.</li>
+        <li>En cas de no-show, la prestation peut être considérée due en tout ou partie.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">7. Obligations du client</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Fournir des informations exactes (adresse, heure, contact).</li>
+        <li>Respecter les règles de sécurité et de comportement à bord.</li>
+        <li>Signaler toute contrainte importante (bagages volumineux, animaux, etc.).</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">8. Responsabilité</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>SHVIP s'engage à fournir la prestation avec soin et professionnalisme.</li>
+        <li>SHVIP ne saurait être tenu responsable des retards dus à des causes externes.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">9. Données personnelles</h2>
+      <p>Le traitement des données est décrit dans la
+        <a href="politique-de-confidentialite.html" class="text-gold hover:underline">Politique de confidentialité</a>.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-pearl mb-3">10. Droit applicable</h2>
+      <p>Les présentes conditions sont soumises au droit français.</p>
+    </div>
+  </div>
+</main>
+<footer class="border-t border-line bg-obsidian mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center text-sm text-muted">
+    <div class="font-extrabold text-pearl text-xl">SH<span class="text-gold">VIP</span></div>
+    <div class="mt-4 flex flex-wrap justify-center gap-4">
+      <a href="conditions-generales.html" class="hover:text-pearl transition">Conditions générales</a>
+      <span class="opacity-40">•</span>
+      <a href="politique-de-confidentialite.html" class="hover:text-pearl transition">Politique de confidentialité</a>
+    </div>
+    <p class="text-xs mt-6">© 2026 SHVIP. Tous droits réservés.</p>
+  </div>
+</footer>
+</body>
+</html>
