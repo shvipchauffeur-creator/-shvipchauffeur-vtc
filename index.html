@@ -282,6 +282,7 @@ nav.scrolled {
   transition: all 0.35s ease;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
 }
 .btn-primary::before {
   content: '';
@@ -731,15 +732,27 @@ footer {
   nav { padding: 22px 24px; }
   nav.scrolled { padding: 16px 24px; }
   .nav-links, .nav-cta { display: none; }
-  .hero-content { padding: 0 36px; }
+  .hero-content { padding: 0 28px; }
   .hero-line { left: 20px; }
-  .slide-dots { right: 24px; }
+  /* Dots en bas à droite, scroll hint centré — pas de collision */
+  .slide-dots {
+    right: 20px;
+    bottom: 32px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .dot { width: 1px; height: 22px; }
+  .scroll-hint { bottom: 32px; left: 40%; }
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .btn-primary { padding: 14px 32px; font-size: 9px; }
   .section, .services-section, .numbers-section { padding: 80px 24px; }
   .maison-grid { grid-template-columns: 1fr; gap: 56px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .numbers-grid { grid-template-columns: 1fr 1fr; }
   .cta-section { padding: 100px 24px; }
+  .cta-contacts { flex-direction: column; gap: 32px; }
   footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+  .footer-links { flex-wrap: wrap; gap: 16px; }
   .whatsapp-btn { bottom: 24px; right: 24px; }
 }
 </style>
@@ -937,7 +950,7 @@ footer {
       </div>
       <div class="cta-contact-item">
         <span class="cta-contact-label">Email</span>
-        <a href="mailto:s.h.vip.chauffeur@gmail.com" class="cta-contact-val">s.h.vip.chauffeur@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#95e6bbfdbbe3fce5bbf6fdf4e0f3f3f0e0e7d5f2f8f4fcf9bbf6faf8" class="cta-contact-val"><span class="__cf_email__" data-cfemail="daa9f4b2f4acb3aaf4b9b2bbafbcbcbfafa89abdb7bbb3b6f4b9b5b7">[email&#160;protected]</span></a>
       </div>
       <div class="cta-contact-item">
         <span class="cta-contact-label">Demande en ligne</span>
@@ -970,7 +983,7 @@ footer {
 </a>
 
 <!-- ── JAVASCRIPT ──────────────────────────────────────────── -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Nav scroll effect
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
@@ -1001,15 +1014,4 @@ setInterval(() => {
 
 // Reveal au scroll
 const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
-reveals.forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+const observer = new IntersectionObs
