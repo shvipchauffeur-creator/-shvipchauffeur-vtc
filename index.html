@@ -1,259 +1,1015 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SHVIP — Maison Privée de Chauffeurs | Paris</title>
-  <meta name="description" content="SHVIP — Maison privée de chauffeurs à Paris. Mobilité sélective et confidentielle : transferts aéroport, mise à disposition, événements." />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SHVIP — Maison Privée de Chauffeurs · Paris</title>
+<meta name="description" content="SHVIP — Maison Privée de Chauffeurs à Paris. Mobilité discrète et raffinée pour une clientèle exigeante. Transferts, mise à disposition, événements."/>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet"/>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: "#05070E",
-            obsidian: "#070A12",
-            gold: "#D6B15E",
-            gold2: "#B8922A",
-            pearl: "#E9ECF2",
-            muted: "#A8B0C2",
-            glass: "rgba(255,255,255,0.06)",
-            line: "rgba(255,255,255,0.12)"
-          },
-          boxShadow: { luxe: "0 24px 80px rgba(0,0,0,0.65)" },
-          fontFamily: { heading: ["Poppins","sans-serif"], body: ["Inter","sans-serif"] }
-        }
-      }
-    };
-  </script>
+:root {
+  --gold:   #C9A84C;
+  --gold2:  #E8C96E;
+  --gold3:  #8B6914;
+  --ink:    #05070E;
+  --ink2:   #0A0C18;
+  --white:  #F0EDE8;
+  --muted:  #6B6455;
+  --line:   rgba(201,168,76,0.18);
+  --slide-duration: 6s;
+  --fade: 1.5s;
+}
 
-  <style>
-    body { font-family: Inter, sans-serif; }
-    h1,h2,h3,h4,h5,h6 { font-family: Poppins, sans-serif; }
-    html { scroll-behavior: smooth; }
-    .phone-tooltip {
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #111827;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-      margin-bottom: 8px;
-      z-index: 100;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-    .phone-btn:hover .phone-tooltip { opacity: 1; }
-  </style>
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--gold3); }
+
+/* ── NAVIGATION ───────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 56px;
+  transition: all 0.6s ease;
+}
+nav.scrolled {
+  background: rgba(5,7,14,0.92);
+  backdrop-filter: blur(12px);
+  padding: 18px 56px;
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-cta {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 10px 24px;
+  text-decoration: none;
+  transition: all 0.35s ease;
+}
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* ── HERO : CARROUSEL ─────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+}
+
+/* Les 5 slides */
+.slides {
+  position: absolute;
+  inset: 0;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%) brightness(0.38) contrast(1.1);
+  opacity: 0;
+  transform: scale(1.06);
+  animation: slideshow calc(var(--slide-duration) * 5) infinite;
+  transition: none;
+}
+
+/* Tour Eiffel nuit */
+.slide:nth-child(1) {
+  background-image: url('https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=1800&q=80&auto=format');
+  animation-delay: 0s;
+}
+/* Louvre */
+.slide:nth-child(2) {
+  background-image: url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1800&q=80&auto=format');
+  animation-delay: calc(var(--slide-duration) * 1);
+}
+/* Notre-Dame / Seine */
+.slide:nth-child(3) {
+  background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1800&q=80&auto=format');
+  animation-delay: calc(var(--slide-duration) * 2);
+}
+/* Champs-Élysées */
+.slide:nth-child(4) {
+  background-image: url('https://images.unsplash.com/photo-1549144511-f099e773c147?w=1800&q=80&auto=format');
+  animation-delay: calc(var(--slide-duration) * 3);
+}
+/* Arc de Triomphe */
+.slide:nth-child(5) {
+  background-image: url('https://images.unsplash.com/photo-1568684664239-ae24d55a9da7?w=1800&q=80&auto=format');
+  animation-delay: calc(var(--slide-duration) * 4);
+}
+
+@keyframes slideshow {
+  0%   { opacity: 0;   transform: scale(1.06); }
+  3%   { opacity: 1;   transform: scale(1.06); }
+  17%  { opacity: 1;   transform: scale(1.0); }
+  20%  { opacity: 0;   transform: scale(1.0); }
+  100% { opacity: 0;   transform: scale(1.0); }
+}
+
+/* Overlay dégradé */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(5,7,14,0.3) 0%,
+      rgba(5,7,14,0.05) 40%,
+      rgba(5,7,14,0.05) 55%,
+      rgba(5,7,14,0.85) 100%
+    );
+  z-index: 1;
+}
+
+/* Ligne d'or verticale */
+.hero-line {
+  position: absolute;
+  left: 56px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 0;
+  background: var(--gold);
+  z-index: 2;
+  animation: line-grow 1.2s 0.8s cubic-bezier(0.76,0,0.24,1) forwards;
+}
+@keyframes line-grow {
+  to { height: 160px; }
+}
+
+/* Contenu hero */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 80px 0 80px;
+}
+
+.hero-eyebrow {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fade-up 0.9s 1.0s ease forwards;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(52px, 7vw, 96px);
+  line-height: 1.0;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 8px;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fade-up 1s 1.2s ease forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(18px, 2.5vw, 28px);
+  color: rgba(240,237,232,0.65);
+  letter-spacing: 0.06em;
+  margin-bottom: 52px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fade-up 0.9s 1.5s ease forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fade-up 0.9s 1.8s ease forwards;
+}
+
+.btn-primary {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 16px 40px;
+  text-decoration: none;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold2);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.7);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(201,168,76,0.4);
+  transition: all 0.3s;
+}
+.btn-secondary:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* Indicateurs slides */
+.slide-dots {
+  position: absolute;
+  bottom: 44px;
+  right: 56px;
+  z-index: 3;
+  display: flex;
+  gap: 10px;
+}
+.dot {
+  width: 28px;
+  height: 1px;
+  background: rgba(201,168,76,0.3);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.dot.active { background: var(--gold); }
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fade-up 1s 2.5s ease forwards;
+}
+.scroll-hint span {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.4);
+}
+.scroll-line {
+  width: 1px;
+  height: 0;
+  background: var(--gold);
+  animation: scroll-grow 1.5s 3s ease infinite;
+}
+@keyframes scroll-grow {
+  0%   { height: 0;   opacity: 1; }
+  60%  { height: 40px; opacity: 1; }
+  100% { height: 40px; opacity: 0; }
+}
+
+@keyframes fade-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── BANDE DORÉE : STANDARDS ──────────────────────────────── */
+.standards-bar {
+  background: var(--gold);
+  padding: 0;
+  overflow: hidden;
+}
+.standards-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  animation: marquee 22s linear infinite;
+  white-space: nowrap;
+}
+.standards-bar:hover .standards-track { animation-play-state: paused; }
+.std-item {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 14px 48px;
+  flex-shrink: 0;
+}
+.std-sep {
+  color: rgba(5,7,14,0.35);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── SECTION : LA MAISON ─────────────────────────────────── */
+.section {
+  padding: 120px 56px;
+}
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(36px, 4.5vw, 60px);
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  margin-bottom: 32px;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+/* Maison layout */
+.maison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+.maison-text p {
+  font-size: 15px;
+  line-height: 1.9;
+  color: rgba(240,237,232,0.65);
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+.maison-text p strong {
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.maison-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+}
+.pillar {
+  background: var(--ink2);
+  padding: 36px 32px;
+  transition: background 0.3s;
+}
+.pillar:hover { background: rgba(201,168,76,0.05); }
+.pillar-icon {
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+.pillar-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.pillar-desc {
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(240,237,232,0.5);
+  font-weight: 300;
+}
+
+/* ── SERVICES ─────────────────────────────────────────────── */
+.services-section {
+  background: var(--ink2);
+  padding: 120px 56px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 64px;
+}
+.service-card {
+  background: var(--ink2);
+  padding: 48px 36px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: background 0.4s;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+.service-card:hover { background: rgba(201,168,76,0.04); }
+.service-card:hover::before { transform: scaleX(1); }
+
+.service-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: rgba(201,168,76,0.12);
+  line-height: 1;
+  margin-bottom: 24px;
+}
+.service-title {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.service-desc {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(240,237,232,0.55);
+  font-weight: 300;
+}
+
+/* ── CHIFFRES ─────────────────────────────────────────────── */
+.numbers-section {
+  padding: 100px 56px;
+  background:
+    linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 60%);
+}
+.numbers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  max-width: 900px;
+  margin: 64px auto 0;
+}
+.number-item {
+  background: var(--ink);
+  padding: 48px 32px;
+  text-align: center;
+}
+.number-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.number-label {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.4);
+  font-weight: 300;
+}
+
+/* ── CTA FINAL ───────────────────────────────────────────── */
+.cta-section {
+  position: relative;
+  padding: 160px 56px;
+  overflow: hidden;
+  text-align: center;
+}
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=1800&q=80&auto=format');
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%) brightness(0.22) contrast(1.15);
+  transform: scale(1.02);
+}
+.cta-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5,7,14,0.55);
+}
+.cta-content {
+  position: relative;
+  z-index: 1;
+}
+.cta-section .section-title {
+  font-size: clamp(40px, 5vw, 72px);
+  margin-bottom: 24px;
+}
+.cta-section p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: rgba(240,237,232,0.6);
+  margin-bottom: 56px;
+  letter-spacing: 0.04em;
+}
+.cta-contacts {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.cta-contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.cta-contact-label {
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.cta-contact-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.cta-contact-val:hover { color: var(--gold2); }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+  padding: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+.footer-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.35);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-copy {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: rgba(240,237,232,0.2);
+}
+
+/* WhatsApp flottant */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 36px;
+  right: 36px;
+  z-index: 90;
+  width: 52px;
+  height: 52px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(37,211,102,0.35);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 32px rgba(37,211,102,0.5);
+}
+.whatsapp-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: white;
+}
+
+/* ── REVEAL AU SCROLL ─────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.22s; }
+.reveal-delay-3 { transition-delay: 0.34s; }
+.reveal-delay-4 { transition-delay: 0.46s; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 22px 24px; }
+  nav.scrolled { padding: 16px 24px; }
+  .nav-links, .nav-cta { display: none; }
+  .hero-content { padding: 0 36px; }
+  .hero-line { left: 20px; }
+  .slide-dots { right: 24px; }
+  .section, .services-section, .numbers-section { padding: 80px 24px; }
+  .maison-grid { grid-template-columns: 1fr; gap: 56px; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .numbers-grid { grid-template-columns: 1fr 1fr; }
+  .cta-section { padding: 100px 24px; }
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+  .whatsapp-btn { bottom: 24px; right: 24px; }
+}
+</style>
 </head>
 
-<body class="bg-ink text-pearl antialiased">
+<body>
 
-  <!-- HEADER -->
-  <header class="fixed top-0 w-full z-50 bg-ink/55 backdrop-blur-md border-b border-line">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="h-20 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full border border-line bg-white/5 flex items-center justify-center">
-            <span class="iconify text-xl text-gold" data-icon="lucide:crown"></span>
-          </div>
-          <span class="text-2xl font-extrabold tracking-tight">SH<span class="text-gold">VIP</span></span>
-        </a>
+<!-- ── NAVIGATION ─────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="/" class="nav-logo">SHVIP</a>
+  <ul class="nav-links">
+    <li><a href="/services">Services</a></li>
+    <li><a href="/flotte">Flotte</a></li>
+    <li><a href="/partenaires">Partenaires</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <a href="/contact#demande-privee" class="nav-cta">Demande privée</a>
+</nav>
 
-        <div class="hidden md:flex items-center gap-10 text-sm">
-          <a href="index.html" class="text-pearl">Accueil</a>
-          <a href="services.html" class="text-muted hover:text-pearl transition">Services</a>
-          <a href="flotte.html" class="text-muted hover:text-pearl transition">Flotte</a>
-          <a href="partenaires.html" class="text-muted hover:text-pearl transition">Partenaires</a>
-          <a href="contact.html" class="text-muted hover:text-pearl transition">Contact</a>
-        </div>
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="slides">
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-line"></div>
 
-        <div class="flex items-center gap-3">
-          <a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20faire%20une%20demande%20priv%C3%A9e"
-             target="_blank" rel="noopener"
-             class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-sm">
-            <span class="iconify text-lg text-gold" data-icon="ic:baseline-whatsapp"></span>
-            <span>WhatsApp</span>
-          </a>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Paris &nbsp;·&nbsp; Sélectif &nbsp;·&nbsp; Confidentiel</p>
+    <h1 class="hero-title">
+      Maison Privée<br/>
+      <em>de Chauffeurs</em>
+    </h1>
+    <p class="hero-subtitle">Mobilité discrète pour une clientèle exigeante</p>
+    <div class="hero-actions">
+      <a href="/contact#demande-privee" class="btn-primary"><span>Demande privée</span></a>
+      <a href="#la-maison" class="btn-secondary">Découvrir la Maison</a>
+    </div>
+  </div>
 
-          <a href="tel:+33649604960"
-             class="phone-btn hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-sm relative">
-            <span class="iconify text-lg text-gold" data-icon="lucide:phone"></span>
-            <span>Appeler</span>
-            <div class="phone-tooltip">06 49 60 49 60</div>
-          </a>
+  <div class="slide-dots">
+    <div class="dot active" data-index="0"></div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+    <div class="dot" data-index="3"></div>
+    <div class="dot" data-index="4"></div>
+  </div>
 
-          <a href="contact.html#demande-privee"
-             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition">
-            <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
-            <span>Demande privée</span>
-          </a>
-        </div>
+  <div class="scroll-hint">
+    <span>Défiler</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── BANDE STANDARDS ─────────────────────────────────────── -->
+<div class="standards-bar">
+  <div class="standards-track">
+    <!-- Répété 2× pour boucle seamless -->
+    <span class="std-item">Discrétion absolue</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Ponctualité irréprochable</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Présentation premium</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Transferts & mise à disposition</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Événements privés</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Coordination sur-mesure</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Discrétion absolue</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Ponctualité irréprochable</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Présentation premium</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Transferts & mise à disposition</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Événements privés</span>
+    <span class="std-sep">◆</span>
+    <span class="std-item">Coordination sur-mesure</span>
+    <span class="std-sep">◆</span>
+  </div>
+</div>
+
+<!-- ── LA MAISON ──────────────────────────────────────────── -->
+<section class="section" id="la-maison">
+  <div class="section-inner">
+    <div class="maison-grid">
+      <div class="maison-text reveal">
+        <p class="section-label">La Maison</p>
+        <h2 class="section-title">Une approche<br/><em>privée, structurée.</em></h2>
+        <p>SHVIP n'est pas un service de transport traditionnel. C'est une <strong>maison privée</strong> opérant à Paris, conçue pour une mobilité fluide, maîtrisée et confidentielle.</p>
+        <p>Chaque déplacement est pensé en amont. Chaque chauffeur est sélectionné selon des critères stricts de <strong>présentation, de discrétion et de discipline</strong>. Zéro improvisation.</p>
+        <p>Nos partenariats s'inscrivent dans la durée. Nous travaillons avec des professionnels, des familles et des entreprises qui valorisent <strong>la qualité sur le volume</strong>.</p>
       </div>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section class="relative z-0 min-h-screen overflow-hidden">
-    <img src="./page-de-garde.png" alt="SHVIP Private Chauffeur House"
-         class="absolute inset-0 w-full h-full object-cover -z-10" loading="eager">
-    <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/15"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(214,177,94,0.18),transparent_42%)]"></div>
-
-    <div class="relative pt-28 md:pt-32">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div class="max-w-2xl">
-            <p class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-gold/90 mb-4">
-              <span class="iconify" data-icon="lucide:sparkles"></span>
-              <span>Paris • Sélectif • Confidentiel</span>
-            </p>
-
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-5">
-              <span>Maison Privée</span>
-              <span class="text-gold">de Chauffeurs</span>
-            </h1>
-
-            <p class="text-muted text-lg leading-relaxed mb-3">
-              Mobilité discrète pour une clientèle exigeante.
-              Un réseau sélectif, discipliné, conçu pour le confort et la confidentialité.
-            </p>
-
-            <p class="text-muted/80 text-sm mb-8">
-              <span class="text-pearl/90 font-semibold">EN</span> — Private Chauffeur House — Paris. Selective mobility for exceptional clients.
-            </p>
-
-            <div class="flex flex-wrap gap-3">
-              <a href="contact.html#demande-privee"
-                 class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition">
-                <span class="iconify text-lg" data-icon="lucide:shield-check"></span>
-                <span>Demande privée</span>
-              </a>
-
-              <a href="#la-maison"
-                 class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold border border-line bg-white/5 hover:bg-white/10 transition">
-                <span class="iconify text-lg text-gold" data-icon="lucide:arrow-down"></span>
-                <span>Découvrir la Maison</span>
-              </a>
-            </div>
-
-            <div class="mt-8 flex flex-wrap gap-3 text-xs text-muted">
-              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Transferts aéroport</span>
-              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Mise à disposition</span>
-              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Événements</span>
-              <span class="px-3 py-1 rounded-full border border-line bg-white/5">Coordination privée</span>
-            </div>
-          </div>
-
-          <div class="hidden lg:block">
-            <div class="rounded-3xl border border-line bg-white/5 backdrop-blur p-7 shadow-luxe">
-              <div class="flex items-center justify-between">
-                <div class="text-sm text-muted">Standards SHVIP</div>
-                <span class="text-xs px-3 py-1 rounded-full border border-line bg-white/5 text-gold">Maison</span>
-              </div>
-              <ul class="mt-5 space-y-3 text-sm">
-                <li class="flex gap-3">
-                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
-                  <span>Discrétion et discipline, sans compromis.</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
-                  <span>Chauffeurs sélectionnés, présentation irréprochable.</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
-                  <span>Coordination privée — transferts, disposition, événements.</span>
-                </li>
-                <li class="flex gap-3">
-                  <span class="iconify text-gold" data-icon="lucide:check-circle-2"></span>
-                  <span>Expérience premium — ponctualité et fluidité.</span>
-                </li>
-              </ul>
-              <div class="mt-6 text-xs text-muted">
-                <span class="font-semibold text-pearl/90">EN</span> — Discretion, precision, long-term partnerships.
-              </div>
-            </div>
-          </div>
-
+      <div class="maison-pillars reveal reveal-delay-2">
+        <div class="pillar">
+          <div class="pillar-icon">◈</div>
+          <div class="pillar-title">Discrétion</div>
+          <div class="pillar-desc">Communication maîtrisée. Confidentialité absolue. Zéro improvisation.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">◇</div>
+          <div class="pillar-title">Ponctualité</div>
+          <div class="pillar-desc">Organisation rigoureuse, anticipation de chaque trajet, suivi en temps réel.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">◉</div>
+          <div class="pillar-title">Présentation</div>
+          <div class="pillar-desc">Tenue irréprochable, posture professionnelle, service discret et attentionné.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">◐</div>
+          <div class="pillar-title">Exigence</div>
+          <div class="pillar-desc">Qualité constante avant le volume. Partenariats long terme privilégiés.</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- LA MAISON -->
-  <section id="la-maison" class="border-t border-line bg-obsidian">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="grid lg:grid-cols-2 gap-10 items-start">
-        <div>
-          <p class="text-xs uppercase tracking-[0.25em] text-gold/90">La Maison</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold mt-3">Une approche privée, structurée.</h2>
-          <p class="text-muted mt-4 leading-relaxed">
-            SHVIP n’est pas un service de transport traditionnel. C’est une maison privée opérant à Paris,
-            conçue pour une mobilité fluide, maîtrisée et confidentielle.
-          </p>
-          <p class="text-muted/80 mt-3 text-sm">
-            <span class="text-pearl/90 font-semibold">EN</span> — SHVIP is a private chauffeur house operating in Paris. Selective, disciplined and discreet.
-          </p>
-        </div>
-
-        <div class="rounded-3xl border border-line bg-white/5 backdrop-blur p-7 shadow-luxe">
-          <h3 class="text-lg font-bold">Sélection & standards</h3>
-          <div class="mt-4 grid sm:grid-cols-2 gap-3 text-sm text-muted">
-            <div class="rounded-2xl border border-line bg-black/20 p-4">
-              <div class="text-pearl font-semibold">Discrétion</div>
-              <div class="mt-1">Communication maîtrisée. Zéro improvisation.</div>
-            </div>
-            <div class="rounded-2xl border border-line bg-black/20 p-4">
-              <div class="text-pearl font-semibold">Ponctualité</div>
-              <div class="mt-1">Organisation, anticipation, suivi.</div>
-            </div>
-            <div class="rounded-2xl border border-line bg-black/20 p-4">
-              <div class="text-pearl font-semibold">Présentation</div>
-              <div class="mt-1">Tenue, posture, service.</div>
-            </div>
-            <div class="rounded-2xl border border-line bg-black/20 p-4">
-              <div class="text-pearl font-semibold">Exigence</div>
-              <div class="mt-1">Qualité > volume. Partenariats long terme.</div>
-            </div>
-          </div>
-          <a href="services.html" class="inline-flex items-center gap-2 mt-6 text-sm text-gold hover:text-pearl transition">
-            <span class="iconify" data-icon="lucide:arrow-right"></span>
-            <span>Voir nos services</span>
-          </a>
-        </div>
+<!-- ── SERVICES ───────────────────────────────────────────── -->
+<section class="services-section" id="services">
+  <div class="section-inner">
+    <p class="section-label reveal">Prestations</p>
+    <h2 class="section-title reveal reveal-delay-1">Nos <em>services</em></h2>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-title">Transferts Aéroport</div>
+        <div class="service-desc">Roissy-CDG, Orly, Beauvais. Accueil personnalisé, suivi des vols, prise en charge bagages.</div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-title">Mise à Disposition</div>
+        <div class="service-desc">Chauffeur dédié à l'heure ou à la journée. Disponibilité et réactivité permanentes.</div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-title">Événements Privés</div>
+        <div class="service-desc">Dîners, réceptions, mariages, soirées. Coordination discrète de bout en bout.</div>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">04</div>
+        <div class="service-title">Coordination Privée</div>
+        <div class="service-desc">Gestion de flotte multi-véhicules, déplacements d'équipe, accompagnements VIP.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-line bg-ink">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-sm text-muted">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div class="font-extrabold text-pearl">SH<span class="text-gold">VIP</span></div>
-
-        <div class="flex items-center gap-4">
-          <a class="hover:text-pearl transition" href="conditions-generales.html">Conditions générales</a>
-          <span class="opacity-40">•</span>
-          <a class="hover:text-pearl transition" href="politique-de-confidentialite.html">Politique de confidentialité</a>
-        </div>
-
-        <div>© 2026 SHVIP. Tous droits réservés.</div>
+<!-- ── CHIFFRES ───────────────────────────────────────────── -->
+<section class="numbers-section">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label reveal" style="justify-content:center;">En chiffres</p>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">La <em>confiance</em>, mesurée</h2>
+    <div class="numbers-grid">
+      <div class="number-item reveal">
+        <div class="number-val">100%</div>
+        <div class="number-label">Ponctualité</div>
+      </div>
+      <div class="number-item reveal reveal-delay-1">
+        <div class="number-val">24/7</div>
+        <div class="number-label">Disponibilité</div>
+      </div>
+      <div class="number-item reveal reveal-delay-2">
+        <div class="number-val">Paris</div>
+        <div class="number-label">& Région</div>
+      </div>
+      <div class="number-item reveal reveal-delay-3">
+        <div class="number-val">VIP</div>
+        <div class="number-label">Clientèle privée</div>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
+<!-- ── CTA FINAL ──────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content reveal">
+    <p class="section-label" style="justify-content:center; margin-bottom:24px;">Contact</p>
+    <h2 class="section-title">Votre <em>prochaine course</em><br/>commence ici</h2>
+    <p>Demande discrète, réponse dans l'heure.</p>
+    <div class="cta-contacts">
+      <div class="cta-contact-item">
+        <span class="cta-contact-label">WhatsApp & Téléphone</span>
+        <a href="tel:+33649604960" class="cta-contact-val">06 49 60 49 60</a>
+      </div>
+      <div class="cta-contact-item">
+        <span class="cta-contact-label">Email</span>
+        <a href="mailto:s.h.vip.chauffeur@gmail.com" class="cta-contact-val">s.h.vip.chauffeur@gmail.com</a>
+      </div>
+      <div class="cta-contact-item">
+        <span class="cta-contact-label">Demande en ligne</span>
+        <a href="/contact#demande-privee" class="cta-contact-val" style="font-size:16px; letter-spacing:0.2em; text-transform:uppercase; font-family:'Raleway',sans-serif; font-weight:400; color:var(--gold);">Formulaire →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">SHVIP</div>
+  <ul class="footer-links">
+    <li><a href="/services">Services</a></li>
+    <li><a href="/flotte">Flotte</a></li>
+    <li><a href="/partenaires">Partenaires</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/conditions-generales">CGV</a></li>
+    <li><a href="/politique-de-confidentialite">Confidentialité</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</span>
+</footer>
+
+<!-- ── BOUTON WHATSAPP FLOTTANT ───────────────────────────── -->
+<a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20faire%20une%20demande%20priv%C3%A9e"
+   class="whatsapp-btn" target="_blank" aria-label="WhatsApp SHVIP">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- ── JAVASCRIPT ──────────────────────────────────────────── -->
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Dots carrousel
+const TOTAL   = 5;
+const DUR_MS  = 6000;
+const dots    = document.querySelectorAll('.dot');
+let current   = 0;
+
+function setDot(i) {
+  dots.forEach(d => d.classList.remove('active'));
+  dots[i].classList.add('active');
+}
+dots.forEach(d => {
+  d.addEventListener('click', () => {
+    current = parseInt(d.dataset.index);
+    setDot(current);
+  });
+});
+
+setInterval(() => {
+  current = (current + 1) % TOTAL;
+  setDot(current);
+}, DUR_MS);
+
+// Reveal au scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
