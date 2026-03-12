@@ -1174,7 +1174,7 @@ footer {
       </div>
       <div class="cta-contact-item">
         <span class="cta-contact-label">Email</span>
-        <a href="/cdn-cgi/l/email-protection#95e6bbfdbbe3fce5bbf6fdf4e0f3f3f0e0e7d5f2f8f4fcf9bbf6faf8" class="cta-contact-val"><span class="__cf_email__" data-cfemail="daa9f4b2f4acb3aaf4b9b2bbafbcbcbfafa89abdb7bbb3b6f4b9b5b7">[email&#160;protected]</span></a>
+        <a href="mailto:s.h.vip.chauffeur@gmail.com" class="cta-contact-val">s.h.vip.chauffeur@gmail.com</a>
       </div>
       <div class="cta-contact-item">
         <span class="cta-contact-label">Demande en ligne</span>
@@ -1238,4 +1238,20 @@ setInterval(() => {
 
 // Reveal au scroll
 const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObs
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.12,
+  rootMargin: '0px 0px -40px 0px'
+});
+
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
