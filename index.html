@@ -996,6 +996,7 @@ footer {
   </div>
 </section>
 
+
 <!-- ── CERTIFICATIONS ──────────────────────────────────────── -->
 <section class="certif-section">
   <div class="section-inner">
@@ -1024,7 +1025,6 @@ footer {
     </div>
   </div>
 </section>
-
 <!-- ── CTA FINAL ──────────────────────────────────────────── -->
 <section class="cta-section">
   <div class="cta-bg"></div>
@@ -1104,10 +1104,4 @@ setInterval(() => {
 
 // Reveal au scroll
 const reveals = document.querySelectorAll('.reveal');
-// Trigger reveal immediately for elements already in view
-reveals.forEach(el => {
-  if (el.getBoundingClientRect().top < window.innerHeight) {
-    el.classList.add('visible');
-  }
-});
 const observer = new IntersectionObs
