@@ -583,6 +583,62 @@ nav.scrolled {
   font-weight: 300;
 }
 
+/* ── CERTIFICATIONS ──────────────────────────────────────── */
+.certif-section {
+  background: var(--ink2);
+  padding: 100px 56px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.certif-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.certif-item {
+  background: var(--ink2);
+  padding: 44px 28px;
+  position: relative;
+  transition: background 0.3s;
+  cursor: default;
+}
+.certif-item:hover { background: rgba(201,168,76,0.04); }
+.certif-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.4s ease;
+}
+.certif-item:hover::after { transform: scaleX(1); }
+.certif-icon {
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: block;
+}
+.certif-name {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+.certif-desc {
+  font-size: 12px;
+  line-height: 1.8;
+  color: rgba(240,237,232,0.45);
+  font-weight: 300;
+}
+
 /* ── CTA FINAL ───────────────────────────────────────────── */
 .cta-section {
   position: relative;
@@ -747,6 +803,7 @@ footer {
   .btn-primary { padding: 14px 32px; font-size: 9px; }
   .section, .services-section, .numbers-section { padding: 80px 24px; }
   .maison-grid { grid-template-columns: 1fr; gap: 56px; }
+  .certif-grid { grid-template-columns: 1fr 1fr; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .numbers-grid { grid-template-columns: 1fr 1fr; }
   .cta-section { padding: 100px 24px; }
@@ -916,20 +973,49 @@ footer {
     <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">La <em>confiance</em>, mesurée</h2>
     <div class="numbers-grid">
       <div class="number-item reveal">
-        <div class="number-val">100%</div>
-        <div class="number-label">Ponctualité</div>
+        <div class="number-val">500+</div>
+        <div class="number-label">Courses réalisées</div>
       </div>
       <div class="number-item reveal reveal-delay-1">
+        <div class="number-val">100%</div>
+        <div class="number-label">Satisfaction client</div>
+      </div>
+      <div class="number-item reveal reveal-delay-2">
         <div class="number-val">24/7</div>
         <div class="number-label">Disponibilité</div>
       </div>
-      <div class="number-item reveal reveal-delay-2">
-        <div class="number-val">Paris</div>
-        <div class="number-label">& Région</div>
-      </div>
       <div class="number-item reveal reveal-delay-3">
-        <div class="number-val">VIP</div>
-        <div class="number-label">Clientèle privée</div>
+        <div class="number-val">3</div>
+        <div class="number-label">Véhicules premium</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CERTIFICATIONS ──────────────────────────────────────── -->
+<section class="certif-section">
+  <div class="section-inner">
+    <p class="section-label reveal" style="justify-content:center; margin-bottom:48px;">Agréments & Certifications</p>
+    <div class="certif-grid">
+      <div class="certif-item reveal">
+        <div class="certif-icon">◈</div>
+        <div class="certif-name">Carte VTC</div>
+        <div class="certif-desc">Autorisation officielle d'exercice délivrée par le Ministère des Transports</div>
+      </div>
+      <div class="certif-item reveal reveal-delay-1">
+        <div class="certif-icon">◆</div>
+        <div class="certif-name">Grande Remise</div>
+        <div class="certif-desc">Licence professionnelle — standard le plus élevé du transport privé en France</div>
+      </div>
+      <div class="certif-item reveal reveal-delay-2">
+        <div class="certif-icon">◉</div>
+        <div class="certif-name">Assurance RC Pro</div>
+        <div class="certif-desc">Responsabilité civile professionnelle couvrant chaque déplacement</div>
+      </div>
+      <div class="certif-item reveal reveal-delay-3">
+        <div class="certif-icon">◇</div>
+        <div class="certif-name">SIRET Enregistré</div>
+        <div class="certif-desc">Entreprise légalement constituée et enregistrée au Registre du Commerce</div>
       </div>
     </div>
   </div>
