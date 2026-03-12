@@ -712,6 +712,74 @@ footer {
   fill: white;
 }
 
+/* ── TÉMOIGNAGES ─────────────────────────────────────────── */
+.temoignages-section {
+  padding: 120px 56px;
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+}
+.temoignages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 64px;
+}
+.temoignage-card {
+  background: var(--ink2);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.temoignage-card:hover { background: rgba(201,168,76,0.04); }
+.temoignage-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.temoignage-card:hover::before { opacity: 1; }
+.temoignage-stars {
+  display: flex; gap: 5px;
+  color: var(--gold); font-size: 12px;
+}
+.temoignage-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px; font-weight: 300;
+  line-height: 1.75;
+  color: rgba(240,237,232,0.8);
+  letter-spacing: 0.02em;
+  flex: 1;
+}
+.temoignage-quote::before { content: '«\00a0'; color: var(--gold); }
+.temoignage-quote::after  { content: '\00a0»'; color: var(--gold); }
+.temoignage-author {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.temoignage-name {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; letter-spacing: 0.2em;
+  color: var(--gold);
+}
+.temoignage-meta {
+  font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.3); font-weight: 300;
+}
+@media (max-width: 900px) {
+  .temoignages-section { padding: 80px 24px; }
+  .temoignages-grid { grid-template-columns: 1fr; }
+}
+
 /* ── REVEAL AU SCROLL ─────────────────────────────────────── */
 .reveal {
   opacity: 0;
@@ -1025,6 +1093,72 @@ footer {
     </div>
   </div>
 </section>
+<!-- ── TÉMOIGNAGES ─────────────────────────────────────────── -->
+<section class="temoignages-section">
+  <div class="section-inner">
+    <p class="section-label reveal" style="justify-content:center;">Expériences clients</p>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">Ils nous font <em>confiance</em></h2>
+
+    <div class="temoignages-grid">
+
+      <div class="temoignage-card reveal">
+        <div class="temoignage-stars">★★★★★</div>
+        <p class="temoignage-quote">Ponctuel, discret, impeccable. Mon chauffeur attendait à la sortie du terminal avec mon nom, voiture propre, aucun mot de trop. Exactement ce que j'attendais.</p>
+        <div class="temoignage-author">
+          <div class="temoignage-name">Alexandre M.</div>
+          <div class="temoignage-meta">Directeur · Transfert CDG</div>
+        </div>
+      </div>
+
+      <div class="temoignage-card reveal reveal-delay-1">
+        <div class="temoignage-stars">★★★★★</div>
+        <p class="temoignage-quote">J'utilise SHVIP pour tous mes déplacements professionnels à Paris. La réactivité est remarquable — une demande à minuit, prise en charge à 6h le lendemain, sans la moindre friction.</p>
+        <div class="temoignage-author">
+          <div class="temoignage-name">Sophie L.</div>
+          <div class="temoignage-meta">Avocate · Mise à disposition</div>
+        </div>
+      </div>
+
+      <div class="temoignage-card reveal reveal-delay-2">
+        <div class="temoignage-stars">★★★★★</div>
+        <p class="temoignage-quote">Service d'une discrétion totale pour notre réception privée. Coordination parfaite avec notre équipe, les invités ont été impressionnés. Je recommande sans réserve.</p>
+        <div class="temoignage-author">
+          <div class="temoignage-name">Famille Al-R.</div>
+          <div class="temoignage-meta">Événement privé · Paris</div>
+        </div>
+      </div>
+
+      <div class="temoignage-card reveal reveal-delay-1">
+        <div class="temoignage-stars">★★★★★</div>
+        <p class="temoignage-quote">Un vrai professionnel. La Classe S était immaculée, le chauffeur en costume, discret mais attentionné. Mes clients ont été enchantés. On renouvelle à chaque visite.</p>
+        <div class="temoignage-author">
+          <div class="temoignage-name">Pierre D.</div>
+          <div class="temoignage-meta">Conciergerie hôtel · Partenaire</div>
+        </div>
+      </div>
+
+      <div class="temoignage-card reveal reveal-delay-2">
+        <div class="temoignage-stars">★★★★★</div>
+        <p class="temoignage-quote">Transfert Orly à 5h du matin, véhicule à l'heure, chauffeur souriant et professionnel. Le Van était parfait pour notre famille de 6. Prix fixe annoncé, aucune mauvaise surprise.</p>
+        <div class="temoignage-author">
+          <div class="temoignage-name">Isabelle &amp; Marc T.</div>
+          <div class="temoignage-meta">Famille · Transfert Orly</div>
+        </div>
+      </div>
+
+      <div class="temoignage-card reveal reveal-delay-3">
+        <div class="temoignage-stars">★★★★★</div>
+        <p class="temoignage-quote">Nous faisons appel à SHVIP pour nos délégations étrangères. Sérieux, confidentialité garantie, facturation claire. Un partenaire sur lequel on peut compter les yeux fermés.</p>
+        <div class="temoignage-author">
+          <div class="temoignage-name">Agence Lumière</div>
+          <div class="temoignage-meta">Corporate · Partenaire DMC</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ── CTA FINAL ──────────────────────────────────────────── -->
 <section class="cta-section">
   <div class="cta-bg"></div>
