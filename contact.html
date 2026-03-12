@@ -650,8 +650,26 @@
     <div class="form-card">
       <p class="form-section-title">01 — Choisissez votre <span>prestation</span></p>
 
-      <div class="prestation-grid" id="prestGrid">
-        <div class="prestation-card" data-prest="Transfert Aéroport / Gare" onclick="selectPrest(this)">
+      <div class="prestation-grid" id="prestGrid" style="grid-template-columns: repeat(2,1fr)">
+        <div class="prestation-card" data-prest="Paris — Orly" onclick="selectPrest(this)">
+          <div class="check-mark">✓</div>
+          <span class="prestation-icon">✈️</span>
+          <div class="prestation-name">Paris — Orly</div>
+          <div class="prestation-desc">~27 min · 20 km · Prix fixe TTC<br>Business 130€ · Prestige 195€ · Van 154€</div>
+        </div>
+        <div class="prestation-card" data-prest="Paris — Roissy CDG" onclick="selectPrest(this)">
+          <div class="check-mark">✓</div>
+          <span class="prestation-icon">🛫</span>
+          <div class="prestation-name">Paris — Roissy CDG</div>
+          <div class="prestation-desc">~40 min · 35 km · Prix fixe TTC<br>Business 162€ · Prestige 243€ · Van 192€</div>
+        </div>
+        <div class="prestation-card" data-prest="Paris — Disneyland" onclick="selectPrest(this)">
+          <div class="check-mark">✓</div>
+          <span class="prestation-icon">🏰</span>
+          <div class="prestation-name">Paris — Disneyland</div>
+          <div class="prestation-desc">~45 min · 45 km · Prix fixe TTC<br>Business 182€ · Prestige 273€ · Van 215€</div>
+        </div>
+        <div class="prestation-card" data-prest="Mise à Disposition" onclick="selectPrest(this)">
           <div class="check-mark">✓</div>
           <span class="prestation-icon">✈️</span>
           <div class="prestation-name">Aéroport / Gare</div>
@@ -661,19 +679,7 @@
           <div class="check-mark">✓</div>
           <span class="prestation-icon">🕐</span>
           <div class="prestation-name">Mise à Disposition</div>
-          <div class="prestation-desc">Chauffeur dédié à l'heure ou à la journée. Disponibilité et réactivité permanentes.</div>
-        </div>
-        <div class="prestation-card" data-prest="Événement Privé" onclick="selectPrest(this)">
-          <div class="check-mark">✓</div>
-          <span class="prestation-icon">🥂</span>
-          <div class="prestation-name">Événement Privé</div>
-          <div class="prestation-desc">Dîners, réceptions, mariages, soirées. Coordination discrète de bout en bout.</div>
-        </div>
-        <div class="prestation-card" data-prest="Longue Distance" onclick="selectPrest(this)">
-          <div class="check-mark">✓</div>
-          <span class="prestation-icon">🛣️</span>
-          <div class="prestation-name">Longue Distance</div>
-          <div class="prestation-desc">Trajets interurbains, transferts Province, Monaco, Genève. Confort sur toute la route.</div>
+          <div class="prestation-desc">À partir d'1 heure · Prix fixe TTC<br>Business 100€/h · Prestige 150€/h · Van 120€/h</div>
         </div>
       </div>
 
@@ -815,7 +821,7 @@
       <div class="tarif-header">Détail tarifaire</div>
       <div class="tarif-lines">
         <div class="tarif-line">
-          <span class="tarif-line-label">Prestation de base</span>
+          <span class="tarif-line-label" id="tBaseLabel">Prestation · Prix fixe TTC</span>
           <span class="tarif-line-val" id="tBase">— €</span>
         </div>
         <div class="tarif-line">
@@ -829,6 +835,10 @@
         <div class="tarif-line">
           <span class="tarif-line-label">TVA (20%)</span>
           <span class="tarif-line-val" id="tTVA">— €</span>
+        </div>
+        <div class="tarif-line" style="opacity:0.6; font-size:0.6rem;">
+          <span class="tarif-line-label">⚠️ Péages facturés séparément · Carburant inclus</span>
+          <span class="tarif-line-val"></span>
         </div>
       </div>
       <div class="tarif-total">
@@ -964,26 +974,67 @@
     }
   }
 
-  // ---- TARIFICATION SIMPLIFIÉE (demo) ----
-  const tarifBase = {
-    'Transfert Aéroport / Gare': 100,
-    'Mise à Disposition':        280,
-    'Événement Privé':           250,
-    'Longue Distance':           280,
+  // ---- TARIFICATION SHVIP (Prix fixes TTC, carburant inclus) ----
+  // Structure : tarifs[prestation][vehicule] = prix TTC
+  const tarifs = {
+    'Transfert Aéroport / Gare': {
+      // Orly (tarif par défaut pour aéroport)
+      'Mercedes Classe E': 130,
+      'Mercedes Classe S': 195,
+      'Mercedes Classe V': 154,
+    },
+    'Paris — Orly': {
+      'Mercedes Classe E': 130,
+      'Mercedes Classe S': 195,
+      'Mercedes Classe V': 154,
+    },
+    'Paris — Roissy CDG': {
+      'Mercedes Classe E': 162,
+      'Mercedes Classe S': 243,
+      'Mercedes Classe V': 192,
+    },
+    'Paris — Disneyland': {
+      'Mercedes Classe E': 182,
+      'Mercedes Classe S': 273,
+      'Mercedes Classe V': 215,
+    },
+    'Mise à Disposition': {
+      // Tarif à l'heure
+      'Mercedes Classe E': 100,
+      'Mercedes Classe S': 150,
+      'Mercedes Classe V': 120,
+    },
+    'Événement Privé': {
+      'Mercedes Classe E': 100,
+      'Mercedes Classe S': 150,
+      'Mercedes Classe V': 120,
+    },
+    'Longue Distance': {
+      'Mercedes Classe E': 162,
+      'Mercedes Classe S': 243,
+      'Mercedes Classe V': 192,
+    },
   };
-  const tarifVehicle = {
-    'Mercedes Classe E': 0,
-    'Mercedes Classe S': 100,
-    'Mercedes Classe V': 50,
+
+  // Labels descriptifs pour l'affichage dans le récap
+  const tarifLabels = {
+    'Transfert Aéroport / Gare': 'Transfert fixe · Carburant inclus',
+    'Paris — Orly':              'Paris → Orly · 20 km · ~27 min',
+    'Paris — Roissy CDG':        'Paris → CDG · 35 km · ~40 min',
+    'Paris — Disneyland':        'Paris → Disneyland · 45 km · ~45 min',
+    'Mise à Disposition':        'Mise à dispo · 1 heure minimum',
+    'Événement Privé':           'Événement · Tarif à l\'heure',
+    'Longue Distance':           'Longue distance · Sur devis',
   };
 
   function computePrice() {
-    const base = tarifBase[selectedPrest] || 80;
-    const veh  = tarifVehicle[selectedVehicle] !== undefined ? tarifVehicle[selectedVehicle] : 0;
-    const ht   = base + veh;
-    const tva  = Math.round(ht * 0.2);
-    const ttc  = ht + tva;
-    return { base, veh, tva, ttc };
+    // Récupère le tarif TTC direct (prix fixe, tout inclus sauf péages)
+    const prestTarifs = tarifs[selectedPrest];
+    if (!prestTarifs) return { ttcFixed: true, ttc: 0, label: '' };
+
+    const ttc = prestTarifs[selectedVehicle] || 0;
+    const label = tarifLabels[selectedPrest] || '';
+    return { ttcFixed: true, ttc, label };
   }
 
   // ---- STEP 1 → STEP 2 ----
@@ -1012,11 +1063,15 @@
     document.getElementById('recapDep').textContent     = dep;
     document.getElementById('recapArr').textContent     = arr;
 
-    // Tarifs
+    // Tarifs — prix fixes TTC, carburant inclus
     const p = computePrice();
-    document.getElementById('tBase').textContent    = p.base + ' €';
-    document.getElementById('tVehicle').textContent = p.veh > 0 ? ('+' + p.veh + ' €') : 'Inclus';
-    document.getElementById('tTVA').textContent     = p.tva + ' €';
+    const ht  = Math.round(p.ttc / 1.2);
+    const tva = p.ttc - ht;
+    if (document.getElementById('tBaseLabel'))
+      document.getElementById('tBaseLabel').textContent = p.label || 'Prestation · Prix fixe TTC';
+    document.getElementById('tBase').textContent    = ht + ' € HT';
+    document.getElementById('tVehicle').textContent = 'Inclus';
+    document.getElementById('tTVA').textContent     = tva + ' €';
     document.getElementById('tTotal').textContent   = p.ttc;
 
     const acompte = Math.round(p.ttc * 0.30);
