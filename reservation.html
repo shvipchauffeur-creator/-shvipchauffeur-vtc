@@ -3,108 +3,235 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Réservation SHVIP | Chauffeur privé Paris</title>
-  <meta name="description" content="Réservez votre chauffeur privé SHVIP à Paris. Demande luxe, estimation automatique et réservation rapide pour CDG, Orly, Disneyland et mise à disposition." />
-  <meta name="keywords" content="réservation chauffeur privé paris, devis chauffeur privé paris, prix transfert cdg paris, réservation vtc luxe paris" />
-  <meta name="robots" content="index,follow" />
-  <link rel="canonical" href="https://shvip-paris.fr/reservation" />
-  <meta property="og:title" content="Réservation SHVIP | Chauffeur privé Paris" />
-  <meta property="og:description" content="Réservez votre chauffeur privé premium à Paris avec estimation rapide et demande immédiate via WhatsApp." />
+  <title>Réservation Chauffeur Privé Paris | SHVIP</title>
+  <meta name="description" content="Réservez votre chauffeur privé à Paris avec SHVIP. Estimation immédiate, paiement sécurisé et service premium pour CDG, Orly, Disneyland, business et événements." />
+  <meta name="keywords" content="réservation chauffeur privé paris, chauffeur privé paris, transfert CDG, transfert Orly, chauffeur luxe paris" />
+  <meta property="og:title" content="Réservation Chauffeur Privé Paris | SHVIP" />
+  <meta property="og:description" content="Obtenez votre tarif, choisissez votre véhicule et finalisez votre réservation premium avec SHVIP." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://shvip-paris.fr/reservation" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#06070c;
-      --bg2:#0d1018;
-      --panel:#10131d;
-      --gold:#c9a96e;
-      --gold2:#ead7b0;
-      --text:#f5f0e8;
-      --muted:#9b9488;
-      --line:rgba(201,169,110,.18);
-      --green:#25D366;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #111111;
+      --bg-3: #171717;
+      --gold: #c9a96e;
+      --gold-soft: #e7d4b0;
+      --text: #f5f0e8;
+      --muted: #9b9287;
+      --line: rgba(201,169,110,0.18);
+      --ok: #1f9d55;
+      --danger: #c94b4b;
     }
-    body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;font-weight:300;min-height:100vh}
-    a{text-decoration:none}
-    nav{
-      position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
-      padding:24px 40px;background:rgba(6,7,12,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)
+    html { scroll-behavior: smooth; }
+    body {
+      background: radial-gradient(circle at top, rgba(201,169,110,0.08), transparent 28%), var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
     }
-    .logo{font-family:'Cormorant Garamond',serif;font-size:28px;letter-spacing:.16em;color:var(--gold)}
-    .nav-links{display:flex;gap:28px;list-style:none}
-    .nav-links a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,232,.72)}
-    .nav-links a:hover,.nav-links a.active{color:var(--gold)}
-    .hero{
-      padding:110px 24px 56px;text-align:center;
-      background:radial-gradient(circle at top, rgba(201,169,110,.08), transparent 40%);
-      border-bottom:1px solid var(--line)
+    nav {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 32px;
+      background: rgba(10,10,10,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
     }
-    .eyebrow{font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
-    h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,86px);font-weight:300;line-height:1.02}
-    h1 em{font-style:italic;color:var(--gold2)}
-    .hero p{max-width:760px;margin:18px auto 0;color:rgba(245,240,232,.62);line-height:1.9;font-size:15px}
-    .wrap{max-width:1240px;margin:0 auto;padding:56px 24px 96px}
-    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px}
-    .card,.aside-card{background:var(--panel);border:1px solid var(--line)}
-    .card{padding:32px}
-    .aside-card{padding:28px;position:sticky;top:104px;height:fit-content}
-    .label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
-    .section-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;line-height:1.1;margin-bottom:10px}
-    .section-title em{color:var(--gold2);font-style:italic}
-    .muted{color:rgba(245,240,232,.58);line-height:1.8;font-size:14px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
-    .field{display:flex;flex-direction:column;gap:8px}
-    .field.full{grid-column:1/-1}
-    .field label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.72)}
-    .field input,.field select,.field textarea{
-      width:100%;padding:16px 16px;background:#0b0e16;border:1px solid var(--line);color:var(--text);
-      font:inherit;outline:none
+    .logo {
+      text-decoration: none; color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; letter-spacing: 0.16em;
     }
-    .field textarea{min-height:120px;resize:vertical}
-    .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(201,169,110,.55)}
-    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .chip{
-      border:1px solid var(--line);padding:10px 14px;font-size:12px;color:rgba(245,240,232,.72);cursor:pointer;background:#0b0e16
+    .nav-links { list-style: none; display: flex; gap: 28px; }
+    .nav-links a {
+      color: rgba(245,240,232,0.75); text-decoration: none;
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
     }
-    .chip.active{border-color:var(--gold);color:var(--gold);background:rgba(201,169,110,.06)}
-    .estimation{
-      display:grid;gap:14px;margin-top:22px;padding:22px;background:#0b0e16;border:1px solid var(--line)
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    .hero {
+      padding: 88px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
     }
-    .est-line{display:flex;justify-content:space-between;gap:16px;font-size:14px}
-    .est-line strong{color:var(--gold)}
-    .price-big{
-      font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--gold2);line-height:1;margin-top:6px
+    .hero-label {
+      color: var(--gold); font-size: 0.7rem; letter-spacing: 0.34em; text-transform: uppercase;
+      margin-bottom: 18px;
     }
-    .btn-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
-    .btn-primary,.btn-secondary{
-      display:inline-flex;align-items:center;justify-content:center;padding:16px 24px;font-size:11px;letter-spacing:.22em;text-transform:uppercase
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 6vw, 4.9rem);
+      line-height: 1.04; font-weight: 300;
+      margin-bottom: 14px;
     }
-    .btn-primary{background:var(--gold);color:#111}
-    .btn-secondary{border:1px solid var(--line);color:var(--text)}
-    .aside-list{display:grid;gap:12px;margin-top:18px}
-    .aside-item{padding:14px 0;border-bottom:1px solid var(--line)}
-    .aside-item:last-child{border-bottom:none}
-    .aside-item h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-    .aside-item p{font-size:13px;line-height:1.7;color:rgba(245,240,232,.6)}
-    .table{width:100%;border-collapse:collapse;margin-top:18px}
-    .table th,.table td{padding:13px 0;border-bottom:1px solid var(--line);text-align:left;font-size:13px}
-    .table th{color:rgba(245,240,232,.45);text-transform:uppercase;letter-spacing:.18em;font-weight:400;font-size:11px}
-    .table td:last-child{color:var(--gold)}
-    .foot{padding:32px 24px;border-top:1px solid var(--line);text-align:center;color:rgba(245,240,232,.34);font-size:11px;letter-spacing:.12em}
-    .float-wa{
-      position:fixed;right:24px;bottom:24px;width:58px;height:58px;border-radius:50%;background:var(--green);
-      color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 12px 28px rgba(0,0,0,.32)
+    h1 em { color: var(--gold); font-style: italic; }
+    .hero-sub {
+      max-width: 760px; margin: 0 auto;
+      color: var(--muted); line-height: 1.9; font-size: 0.95rem;
     }
-    @media (max-width:980px){
-      nav{padding:18px 18px}
-      .nav-links{display:none}
-      .grid{grid-template-columns:1fr}
-      .aside-card{position:static}
-      .form-grid{grid-template-columns:1fr}
+
+    .wrapper {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 24px;
+    }
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border: 1px solid var(--line);
+      padding: 28px;
+    }
+    .panel-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300;
+      color: var(--gold-soft);
+      margin-bottom: 6px;
+    }
+    .panel-sub {
+      color: var(--muted); font-size: 0.85rem; line-height: 1.8; margin-bottom: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+    label {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    input, select, textarea {
+      width: 100%;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 15px 14px;
+      font: inherit;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: rgba(201,169,110,0.55); }
+    textarea { min-height: 110px; resize: vertical; }
+
+    .radio-row {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .chip {
+      flex: 1 1 180px;
+      border: 1px solid var(--line);
+      background: var(--bg-2);
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+    .chip:hover { transform: translateY(-1px); border-color: rgba(201,169,110,0.55); }
+    .chip input { display: none; }
+    .chip.active { border-color: var(--gold); background: rgba(201,169,110,0.08); }
+    .chip strong {
+      display: block; color: var(--gold-soft);
+      font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400;
+      margin-bottom: 2px;
+    }
+    .chip span { color: var(--muted); font-size: 0.78rem; }
+
+    .actions {
+      display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px;
+    }
+    .btn {
+      border: 1px solid var(--gold);
+      padding: 15px 22px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: .25s ease;
+      background: transparent;
+      color: var(--gold);
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { filter: brightness(1.05); }
+
+    .summary {
+      position: sticky; top: 92px;
+      height: fit-content;
+    }
+    .price-box {
+      background: linear-gradient(180deg, rgba(201,169,110,0.08), rgba(201,169,110,0.02));
+      border: 1px solid rgba(201,169,110,0.3);
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .mini-label {
+      color: var(--gold); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .price-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 4px;
+    }
+    .price-value {
+      font-family: 'Cormorant Garamond', serif; font-size: 3rem; line-height: 1; color: var(--gold-soft);
+      margin: 10px 0 12px;
+    }
+    .price-note {
+      color: var(--muted); line-height: 1.8; font-size: 0.86rem;
+    }
+    .details {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .detail-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(201,169,110,0.08);
+      font-size: 0.84rem;
+    }
+    .detail-row:last-child { border-bottom: 0; }
+    .detail-row span:first-child { color: var(--muted); }
+    .detail-row span:last-child { text-align: right; }
+
+    .status {
+      margin-top: 14px; padding: 12px 14px; border: 1px solid var(--line); font-size: 0.84rem;
+      line-height: 1.7; color: var(--muted);
+    }
+    .status.ok { border-color: rgba(31,157,85,0.45); color: #b8f0cf; background: rgba(31,157,85,0.08); }
+    .status.err { border-color: rgba(201,75,75,0.45); color: #ffd1d1; background: rgba(201,75,75,0.08); }
+
+    .seo-copy {
+      margin-top: 24px; color: var(--muted); font-size: 0.84rem; line-height: 1.9;
+    }
+
+    .wa-float {
+      position: fixed; right: 24px; bottom: 24px; z-index: 30;
+      width: 56px; height: 56px; border-radius: 50%; background: #25D366;
+      display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;
+      font-size: 27px; box-shadow: 0 8px 24px rgba(37,211,102,0.35);
+    }
+
+    @media (max-width: 980px) {
+      .wrapper { grid-template-columns: 1fr; }
+      .summary { position: static; }
+    }
+    @media (max-width: 760px) {
+      nav { padding: 18px 16px; }
+      .nav-links { display: none; }
+      .wrapper, .hero { padding-left: 16px; padding-right: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; }
+      .btn { width: 100%; text-align: center; }
     }
   </style>
 </head>
@@ -112,267 +239,374 @@
   <nav>
     <a href="/" class="logo">SHVIP</a>
     <ul class="nav-links">
-      <li><a href="/">Accueil</a></li>
-      <li><a href="/flotte">Flotte</a></li>
       <li><a href="/services">Services</a></li>
-      <li><a href="/contact">Contact</a></li>
+      <li><a href="/flotte">Flotte</a></li>
       <li><a href="/reservation" class="active">Réservation</a></li>
+      <li><a href="/contact">Contact</a></li>
     </ul>
   </nav>
 
   <section class="hero">
-    <div class="eyebrow">Réservation · Chauffeur privé Paris</div>
-    <h1>Réservation <em>privée</em></h1>
-    <p>
-      Demande premium, estimation rapide et coordination discrète pour vos transferts aéroport, rendez-vous business,
-      mises à disposition et événements privés à Paris.
-    </p>
+    <p class="hero-label">Chauffeur privé Paris · Réservation</p>
+    <h1>Préparez votre <em>déplacement</em></h1>
+    <p class="hero-sub">Renseignez votre trajet et choisissez votre véhicule pour obtenir une estimation immédiate. Les transferts standards peuvent reprendre vos tarifs fixes, et les trajets personnalisés peuvent être calculés en temps réel selon distance et durée.</p>
   </section>
 
-  <main class="wrap">
-    <div class="grid">
-      <section class="card">
-        <div class="label">Estimation & demande</div>
-        <h2 class="section-title">Calculez une base tarifaire,<br><em>puis réservez.</em></h2>
-        <p class="muted">
-          L'estimation ci-dessous sert de base immédiate pour vos trajets les plus fréquents. Pour les demandes sur-mesure,
-          le message WhatsApp se remplit automatiquement avec toutes vos informations.
-        </p>
+  <main class="wrapper">
+    <section class="panel">
+      <h2 class="panel-title">Obtenir mon tarif</h2>
+      <p class="panel-sub">Réservation premium SHVIP. Renseignez les informations essentielles puis cliquez sur <strong style="color:var(--gold-soft);font-weight:500;">Obtenir mon tarif</strong>.</p>
 
-        <div class="chips" id="serviceChips">
-          <button class="chip active" type="button" data-service="airport">Transfert aéroport</button>
-          <button class="chip" type="button" data-service="disney">Disneyland</button>
-          <button class="chip" type="button" data-service="hourly">Mise à disposition</button>
-          <button class="chip" type="button" data-service="custom">Demande personnalisée</button>
-        </div>
-
-        <form id="reservationForm">
-          <div class="form-grid">
-            <div class="field">
-              <label for="vehicule">Véhicule</label>
-              <select id="vehicule" name="vehicule">
-                <option value="classeE">Classe E — Business</option>
-                <option value="classeS">Classe S — Prestige</option>
-                <option value="classeV">Classe V — Van VIP</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="trajet">Trajet</label>
-              <select id="trajet" name="trajet">
-                <option value="orly">Paris → Orly</option>
-                <option value="cdg">Paris → Roissy CDG</option>
-                <option value="disney">Paris → Disneyland</option>
-                <option value="custom">Autre demande</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="date">Date</label>
-              <input type="date" id="date" name="date" />
-            </div>
-
-            <div class="field">
-              <label for="heure">Heure</label>
-              <input type="time" id="heure" name="heure" />
-            </div>
-
-            <div class="field">
-              <label for="passagers">Passagers</label>
-              <input type="number" id="passagers" name="passagers" min="1" max="7" value="1" />
-            </div>
-
-            <div class="field">
-              <label for="duree">Durée (heures)</label>
-              <input type="number" id="duree" name="duree" min="4" value="4" />
-            </div>
-
-            <div class="field full">
-              <label for="details">Détails de la demande</label>
-              <textarea id="details" name="details" placeholder="Adresse de départ, destination, numéro de vol, nombre de bagages, demande spéciale..."></textarea>
-            </div>
-          </div>
-
-          <div class="estimation">
-            <div class="est-line"><span>Service sélectionné</span><strong id="estService">Transfert aéroport</strong></div>
-            <div class="est-line"><span>Base tarifaire</span><strong id="estBase">130 € TTC</strong></div>
-            <div class="est-line"><span>Information</span><span id="estInfo">Péages facturés séparément selon le trajet.</span></div>
-            <div>
-              <div class="muted" style="font-size:12px;">Estimation instantanée</div>
-              <div class="price-big" id="estPrice">130 €</div>
-            </div>
-          </div>
-
-          <div class="btn-row">
-            <a id="whatsappLink" class="btn-primary" href="https://wa.me/33649604960" target="_blank">Réserver via WhatsApp</a>
-            <a href="mailto:s.h.vip.chauffeur@gmail.com?subject=Demande%20de%20r%C3%A9servation%20SHVIP" class="btn-secondary">Réserver par email</a>
-          </div>
-        </form>
-      </section>
-
-      <aside class="aside-card">
-        <div class="label">Réservation premium</div>
-        <h2 class="section-title" style="font-size:34px;">Un parcours clair,<br><em>sans friction.</em></h2>
-        <div class="aside-list">
-          <div class="aside-item">
-            <h3>Réponse rapide</h3>
-            <p>WhatsApp direct, email ou demande privée avec traitement discret.</p>
-          </div>
-          <div class="aside-item">
-            <h3>Transferts les plus demandés</h3>
-            <table class="table">
-              <thead>
-                <tr><th>Trajet</th><th>À partir de</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Paris → Orly</td><td>130 €</td></tr>
-                <tr><td>Paris → Roissy CDG</td><td>162 €</td></tr>
-                <tr><td>Paris → Disneyland</td><td>182 €</td></tr>
-                <tr><td>Mise à disposition 4h</td><td>400 €</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="aside-item">
-            <h3>Contact</h3>
-            <p>06 49 60 49 60<br/>s.h.vip.chauffeur@gmail.com</p>
+      <form id="bookingForm" class="grid">
+        <div class="field full">
+          <label>Type de prestation</label>
+          <div class="radio-row" id="serviceTypeRow">
+            <label class="chip active">
+              <input type="radio" name="serviceType" value="transfer" checked />
+              <strong>Transfert</strong>
+              <span>Prix fixe ou calcul réel</span>
+            </label>
+            <label class="chip">
+              <input type="radio" name="serviceType" value="hourly" />
+              <strong>Mise à disposition</strong>
+              <span>Minimum 4 heures</span>
+            </label>
           </div>
         </div>
-      </aside>
-    </div>
+
+        <div class="field">
+          <label for="pickup">Adresse de départ</label>
+          <input id="pickup" name="pickup" type="text" placeholder="Ex : Paris 8e, Hôtel Plaza Athénée" required />
+        </div>
+
+        <div class="field">
+          <label for="dropoff">Adresse d’arrivée</label>
+          <input id="dropoff" name="dropoff" type="text" placeholder="Ex : Aéroport CDG Terminal 2E" />
+        </div>
+
+        <div class="field">
+          <label for="vehicle">Véhicule</label>
+          <select id="vehicle" name="vehicle" required>
+            <option value="E">Classe E — Business</option>
+            <option value="S">Classe S — Prestige</option>
+            <option value="V">Classe V — Van VIP</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="hours">Durée (mise à disposition)</label>
+          <select id="hours" name="hours" disabled>
+            <option value="4">4 heures</option>
+            <option value="5">5 heures</option>
+            <option value="6">6 heures</option>
+            <option value="8">8 heures</option>
+            <option value="10">10 heures</option>
+            <option value="12">12 heures</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" required />
+        </div>
+
+        <div class="field">
+          <label for="time">Heure</label>
+          <input id="time" name="time" type="time" required />
+        </div>
+
+        <div class="field">
+          <label for="passengers">Passagers</label>
+          <select id="passengers" name="passengers">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="details">Détails complémentaires</label>
+          <textarea id="detailsText" name="details" placeholder="Vol, bagages, siège bébé, plusieurs arrêts, nom du passager, demande particulière..."></textarea>
+        </div>
+
+        <div class="field full">
+          <div class="actions">
+            <button type="button" class="btn btn-primary" id="calcBtn">Obtenir mon tarif</button>
+            <a href="/contact" class="btn">Continuer la réservation</a>
+            <button type="button" class="btn" id="whatsBtn">Envoyer sur WhatsApp</button>
+          </div>
+        </div>
+      </form>
+
+      <p class="seo-copy">SHVIP propose un service de chauffeur privé à Paris pour transferts CDG, Orly, Disneyland, déplacements business, événements privés et mise à disposition avec chauffeur. Les trajets courants peuvent reprendre des tarifs fixes, tandis que les trajets personnalisés peuvent être calculés selon la distance et la durée réelles.</p>
+    </section>
+
+    <aside class="summary">
+      <div class="price-box">
+        <div class="mini-label">Votre tarif estimé</div>
+        <div class="price-title">Simulation premium</div>
+        <div class="price-value" id="priceValue">—</div>
+        <p class="price-note" id="priceNote">Remplissez le formulaire puis cliquez sur <strong style="color:var(--gold-soft);font-weight:500;">Obtenir mon tarif</strong>. Les transferts fixes utilisent vos tarifs publiés. Les trajets sur-mesure peuvent utiliser un calcul réel via l’API Google Routes côté serveur.</p>
+        <div id="statusBox" class="status">Aucune estimation calculée pour le moment.</div>
+      </div>
+
+      <div class="details">
+        <div class="mini-label">Récapitulatif</div>
+        <div class="detail-row"><span>Prestation</span><span id="sumService">—</span></div>
+        <div class="detail-row"><span>Véhicule</span><span id="sumVehicle">—</span></div>
+        <div class="detail-row"><span>Trajet</span><span id="sumRoute">—</span></div>
+        <div class="detail-row"><span>Distance</span><span id="sumDistance">—</span></div>
+        <div class="detail-row"><span>Durée</span><span id="sumDuration">—</span></div>
+        <div class="detail-row"><span>Date / heure</span><span id="sumDate">—</span></div>
+      </div>
+
+      <div class="details">
+        <div class="mini-label">Paiement</div>
+        <div class="detail-row"><span>Acompte</span><span>30% sur /contact</span></div>
+        <div class="detail-row"><span>Total</span><span>Paiement complet possible</span></div>
+        <div class="detail-row"><span>Mode</span><span>Stripe sécurisé</span></div>
+      </div>
+    </aside>
   </main>
 
-  <footer class="foot">© 2026 SHVIP · Paris · Chauffeur privé premium</footer>
-
-  <a class="float-wa" href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20r%C3%A9server%20un%20chauffeur%20priv%C3%A9" target="_blank" aria-label="WhatsApp SHVIP">✆</a>
+  <a class="wa-float" href="https://wa.me/33649604960?text=Bonjour%20SHVIP" target="_blank" aria-label="WhatsApp SHVIP">✆</a>
 
   <script>
-    const pricing = {
-      airport: {
-        orly: { classeE: 130, classeS: 195, classeV: 154, label: 'Paris → Orly' },
-        cdg: { classeE: 162, classeS: 243, classeV: 192, label: 'Paris → Roissy CDG' },
-        disney: { classeE: 182, classeS: 273, classeV: 215, label: 'Paris → Disneyland' }
-      },
-      hourly: {
-        baseHours: 4,
-        classeE: 400,
-        classeS: 600,
-        classeV: 480,
-        extraPerHour: { classeE: 100, classeS: 150, classeV: 120 }
-      }
+    const VEHICLES = {
+      E: { name: 'Classe E — Business', hourly: 100, base: 24, perKm: 2.65, perMin: 0.95 },
+      S: { name: 'Classe S — Prestige', hourly: 150, base: 36, perKm: 3.95, perMin: 1.35 },
+      V: { name: 'Classe V — Van VIP', hourly: 120, base: 28, perKm: 3.05, perMin: 1.05 }
     };
 
-    const chips = document.querySelectorAll('.chip');
-    const trajet = document.getElementById('trajet');
-    const vehicule = document.getElementById('vehicule');
-    const duree = document.getElementById('duree');
-    const passagers = document.getElementById('passagers');
-    const dateInput = document.getElementById('date');
-    const heure = document.getElementById('heure');
-    const details = document.getElementById('details');
-    const estService = document.getElementById('estService');
-    const estBase = document.getElementById('estBase');
-    const estInfo = document.getElementById('estInfo');
-    const estPrice = document.getElementById('estPrice');
-    const whatsappLink = document.getElementById('whatsappLink');
-    let currentService = 'airport';
-
-    function setService(service) {
-      currentService = service;
-      chips.forEach(ch => ch.classList.toggle('active', ch.dataset.service === service));
-      if (service === 'hourly') {
-        trajet.value = 'custom';
-        trajet.disabled = true;
-        duree.disabled = false;
-      } else if (service === 'custom') {
-        trajet.value = 'custom';
-        trajet.disabled = false;
-        duree.disabled = false;
-      } else if (service === 'disney') {
-        trajet.value = 'disney';
-        trajet.disabled = true;
-        duree.disabled = true;
-      } else {
-        if (trajet.value === 'custom') trajet.value = 'orly';
-        trajet.disabled = false;
-        duree.disabled = true;
+    const FIXED_ROUTES = [
+      {
+        keys: ['paris','orly'],
+        prices: { E: 130, S: 195, V: 154 },
+        distance: '—',
+        duration: '~27 min',
+        label: 'Paris → Orly'
+      },
+      {
+        keys: ['paris','cdg'],
+        prices: { E: 162, S: 243, V: 192 },
+        distance: '—',
+        duration: '~40 min',
+        label: 'Paris → Roissy CDG'
+      },
+      {
+        keys: ['paris','roissy'],
+        prices: { E: 162, S: 243, V: 192 },
+        distance: '—',
+        duration: '~40 min',
+        label: 'Paris → Roissy CDG'
+      },
+      {
+        keys: ['paris','disneyland'],
+        prices: { E: 182, S: 273, V: 215 },
+        distance: '—',
+        duration: '~45 min',
+        label: 'Paris → Disneyland'
       }
-      updateEstimate();
-    }
+    ];
 
-    function currency(v) {
+    const form = document.getElementById('bookingForm');
+    const calcBtn = document.getElementById('calcBtn');
+    const whatsBtn = document.getElementById('whatsBtn');
+    const serviceTypeRow = document.getElementById('serviceTypeRow');
+    const hoursSelect = document.getElementById('hours');
+
+    const statusBox = document.getElementById('statusBox');
+    const priceValue = document.getElementById('priceValue');
+    const priceNote = document.getElementById('priceNote');
+    const sumService = document.getElementById('sumService');
+    const sumVehicle = document.getElementById('sumVehicle');
+    const sumRoute = document.getElementById('sumRoute');
+    const sumDistance = document.getElementById('sumDistance');
+    const sumDuration = document.getElementById('sumDuration');
+    const sumDate = document.getElementById('sumDate');
+
+    let lastQuote = null;
+
+    function euro(v) {
       return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
     }
 
-    function updateEstimate() {
-      let price = 0;
-      let baseLabel = '';
-      let info = 'Péages facturés séparément selon le trajet.';
-      const car = vehicule.value;
-
-      if (currentService === 'hourly') {
-        const h = Math.max(parseInt(duree.value || '4', 10), 4);
-        const base = pricing.hourly[car];
-        const extra = pricing.hourly.extraPerHour[car] * Math.max(h - pricing.hourly.baseHours, 0);
-        price = base + extra;
-        baseLabel = `Mise à disposition ${h}h`;
-        estService.textContent = 'Mise à disposition';
-        estBase.textContent = `${currency(price)} TTC`;
-        info = 'Base 4h incluse. Heures supplémentaires ajoutées automatiquement.';
-      } else if (currentService === 'custom' && trajet.value === 'custom') {
-        price = pricing.airport.orly[car];
-        baseLabel = 'Demande personnalisée';
-        estService.textContent = 'Demande personnalisée';
-        estBase.textContent = 'Sur devis';
-        info = 'Une base tarifaire s’affiche à titre indicatif. Le prix final sera confirmé par SHVIP.';
-      } else {
-        const key = trajet.value === 'custom' ? 'orly' : trajet.value;
-        const route = pricing.airport[key];
-        price = route[car];
-        baseLabel = route.label;
-        estService.textContent = key === 'disney' ? 'Disneyland' : 'Transfert aéroport';
-        estBase.textContent = `${baseLabel} · ${currency(price)} TTC`;
-      }
-
-      estPrice.textContent = currentService === 'custom' && trajet.value === 'custom' ? 'Sur devis' : currency(price);
-      estInfo.textContent = info;
-
-      const message = [
-        'Bonjour SHVIP, je souhaite réserver un chauffeur privé.',
-        `Service : ${estService.textContent}`,
-        `Véhicule : ${vehicule.options[vehicule.selectedIndex].text}`,
-        `Trajet : ${baseLabel}`,
-        `Passagers : ${passagers.value}`,
-        dateInput.value ? `Date : ${dateInput.value}` : '',
-        heure.value ? `Heure : ${heure.value}` : '',
-        currentService === 'hourly' ? `Durée : ${duree.value}h` : '',
-        details.value ? `Détails : ${details.value}` : '',
-        currentService === 'custom' && trajet.value === 'custom' ? 'Merci de m’envoyer un devis personnalisé.' : `Estimation affichée : ${estPrice.textContent}`
-      ].filter(Boolean).join('\n');
-
-      whatsappLink.href = 'https://wa.me/33649604960?text=' + encodeURIComponent(message);
+    function getFormData() {
+      return {
+        serviceType: form.serviceType.value,
+        pickup: form.pickup.value.trim(),
+        dropoff: form.dropoff.value.trim(),
+        vehicle: form.vehicle.value,
+        hours: Number(form.hours.value),
+        date: form.date.value,
+        time: form.time.value,
+        passengers: form.passengers.value,
+        details: form.details.value.trim()
+      };
     }
 
-    chips.forEach(chip => chip.addEventListener('click', () => setService(chip.dataset.service)));
-    [trajet, vehicule, duree, passagers, dateInput, heure, details].forEach(el => el.addEventListener('input', updateEstimate));
+    function setStatus(message, type = '') {
+      statusBox.className = 'status' + (type ? ' ' + type : '');
+      statusBox.textContent = message;
+    }
 
-    duree.disabled = true;
-    updateEstimate();
+    function normalize(s) {
+      return (s || '').toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/aeroport/g, '')
+        .replace(/airport/g, '')
+        .trim();
+    }
+
+    function matchFixedRoute(pickup, dropoff) {
+      const source = normalize(`${pickup} ${dropoff}`);
+      return FIXED_ROUTES.find(route => route.keys.every(k => source.includes(k)));
+    }
+
+    function updateSummary(data, quote) {
+      sumService.textContent = data.serviceType === 'hourly' ? 'Mise à disposition' : 'Transfert';
+      sumVehicle.textContent = VEHICLES[data.vehicle].name;
+      sumRoute.textContent = data.serviceType === 'hourly' ? `${data.pickup || 'Adresse à définir'} · ${data.hours}h` : `${data.pickup || '—'} → ${data.dropoff || '—'}`;
+      sumDistance.textContent = quote?.distanceText || (data.serviceType === 'hourly' ? 'Non applicable' : '—');
+      sumDuration.textContent = quote?.durationText || (data.serviceType === 'hourly' ? `${data.hours}h minimum` : '—');
+      sumDate.textContent = data.date && data.time ? `${data.date} · ${data.time}` : '—';
+    }
+
+    function setChipState() {
+      document.querySelectorAll('.chip').forEach(chip => {
+        const input = chip.querySelector('input');
+        chip.classList.toggle('active', input.checked);
+      });
+      const hourly = form.serviceType.value === 'hourly';
+      hoursSelect.disabled = !hourly;
+      document.getElementById('dropoff').disabled = hourly;
+      document.getElementById('dropoff').placeholder = hourly ? 'Non requis pour la mise à disposition' : 'Ex : Aéroport CDG Terminal 2E';
+    }
+
+    serviceTypeRow.addEventListener('change', setChipState);
+    setChipState();
+
+    async function computeQuote() {
+      const data = getFormData();
+
+      if (!data.pickup) {
+        setStatus('Merci de renseigner l’adresse de départ.', 'err');
+        return;
+      }
+      if (data.serviceType === 'transfer' && !data.dropoff) {
+        setStatus('Merci de renseigner l’adresse d’arrivée pour un transfert.', 'err');
+        return;
+      }
+
+      const vehicle = VEHICLES[data.vehicle];
+
+      if (data.serviceType === 'hourly') {
+        const total = vehicle.hourly * Math.max(4, data.hours);
+        lastQuote = {
+          total,
+          distanceText: 'Sur demande',
+          durationText: `${Math.max(4, data.hours)}h`,
+          mode: 'hourly',
+          note: 'Mise à disposition calculée sur la base de votre tarif horaire avec un minimum de 4 heures.'
+        };
+        priceValue.textContent = euro(total);
+        priceNote.textContent = lastQuote.note;
+        setStatus('Tarif calculé à partir du tarif horaire SHVIP.', 'ok');
+        updateSummary(data, lastQuote);
+        return;
+      }
+
+      const fixed = matchFixedRoute(data.pickup, data.dropoff);
+      if (fixed) {
+        const total = fixed.prices[data.vehicle];
+        lastQuote = {
+          total,
+          distanceText: fixed.distance,
+          durationText: fixed.duration,
+          mode: 'fixed',
+          note: `Tarif fixe SHVIP appliqué pour ${fixed.label}.`
+        };
+        priceValue.textContent = euro(total);
+        priceNote.textContent = lastQuote.note;
+        setStatus('Tarif fixe reconnu à partir de votre grille actuelle.', 'ok');
+        updateSummary(data, lastQuote);
+        return;
+      }
+
+      setStatus('Calcul en cours via le moteur de cotation...', '');
+
+      try {
+        const res = await fetch('/.netlify/functions/shvip-real-quote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pickup: data.pickup,
+            dropoff: data.dropoff,
+            vehicle: data.vehicle
+          })
+        });
+
+        const json = await res.json();
+        if (!res.ok || !json.ok) throw new Error(json.error || 'Impossible de calculer le trajet.');
+
+        lastQuote = {
+          total: json.total,
+          distanceText: json.distanceText,
+          durationText: json.durationText,
+          mode: 'live',
+          note: 'Estimation calculée à partir de la distance et du temps de trajet remontés par le moteur Google Routes côté serveur.'
+        };
+        priceValue.textContent = euro(json.total);
+        priceNote.textContent = lastQuote.note;
+        setStatus('Calcul temps réel effectué avec succès.', 'ok');
+        updateSummary(data, lastQuote);
+      } catch (err) {
+        priceValue.textContent = '—';
+        priceNote.textContent = 'Le calcul en temps réel nécessite une fonction serveur configurée avec une clé Google Maps Routes API.';
+        setStatus(err.message, 'err');
+        updateSummary(data, null);
+      }
+    }
+
+    calcBtn.addEventListener('click', computeQuote);
+
+    whatsBtn.addEventListener('click', () => {
+      const data = getFormData();
+      const serviceLabel = data.serviceType === 'hourly' ? 'Mise à disposition' : 'Transfert';
+      const msg = [
+        'Bonjour SHVIP,',
+        `Je souhaite ${lastQuote ? 'confirmer ma demande' : 'obtenir un devis'} :`,
+        `• Prestation : ${serviceLabel}`,
+        `• Véhicule : ${VEHICLES[data.vehicle].name}`,
+        data.serviceType === 'hourly'
+          ? `• Durée : ${Math.max(4, data.hours)}h`
+          : `• Trajet : ${data.pickup || '—'} → ${data.dropoff || '—'}`,
+        `• Date : ${data.date || '—'}`,
+        `• Heure : ${data.time || '—'}`,
+        `• Passagers : ${data.passengers || '—'}`,
+        lastQuote ? `• Tarif estimé : ${euro(lastQuote.total)}` : null,
+        data.details ? `• Détails : ${data.details}` : null
+      ].filter(Boolean).join('\n');
+
+      window.open(`https://wa.me/33649604960?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    document.getElementById('date').min = new Date().toISOString().slice(0, 10);
   </script>
 
   <script type="application/ld+json">
   {
-    "@context":"https://schema.org",
-    "@type":"Service",
-    "name":"Réservation SHVIP Chauffeur privé Paris",
-    "provider":{
-      "@type":"LocalBusiness",
-      "name":"SHVIP",
-      "telephone":"+33649604960",
-      "email":"s.h.vip.chauffeur@gmail.com",
-      "address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"}
-    },
-    "serviceType":"Chauffeur privé Paris",
-    "areaServed":["Paris","Île-de-France","CDG","Orly","Disneyland Paris"]
+    "@context": "https://schema.org",
+    "@type": "TaxiService",
+    "name": "SHVIP Chauffeur Privé Paris",
+    "url": "https://shvip-paris.fr/reservation",
+    "telephone": "+33649604960",
+    "areaServed": ["Paris", "Île-de-France", "Aéroport CDG", "Aéroport Orly"],
+    "description": "Service de chauffeur privé à Paris avec réservation premium, transferts aéroport, business et événements privés."
   }
   </script>
 </body>
