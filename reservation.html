@@ -545,7 +545,6 @@
 
     let mode = 'transfer';
     let map, directionsService, directionsRenderer, autocompleteDepart, autocompleteArrivee;
-    let lastQuote = { totalNumeric: null, totalText: '—', distanceText: '', durationText: '', prestationLabel: '', source: '', canContinue: false };
 
     const els = {
       depart: document.getElementById('depart'),
@@ -592,7 +591,6 @@
       if (next === 'dispo') {
         els.arrivee.value = '';
       }
-      lastQuote = { totalNumeric: null, totalText: '—', distanceText: '', durationText: '', prestationLabel: '', source: '', canContinue: false };
       updateSummaryPlaceholders();
     }
 
@@ -688,7 +686,6 @@
       els.sumDuration.textContent = `${hours} h`;
       els.sumTrip.textContent = `${els.depart.value || 'Point de prise en charge à confirmer'} · ${hours} h`;
       updateQuote(priceText, status, 'ok');
-      lastQuote = { totalNumeric: total, totalText: priceText, distanceText: '', durationText: `${hours} h`, prestationLabel: 'Mise à Disposition', source: 'fixed', canContinue: true };
       updateWhatsApp(priceText, '', `${hours} h`);
       clearRoute();
     }
@@ -709,7 +706,6 @@
         els.sumDistance.textContent = 'Trajet fixe';
         els.sumDuration.textContent = 'Selon trafic';
         updateQuote(priceText, `Tarif fixe SHVIP détecté pour ${fixed.label}.`, 'ok');
-        lastQuote = { totalNumeric: price, totalText: priceText, distanceText: 'Trajet fixe', durationText: 'Selon trafic', prestationLabel: fixed.label, source: 'fixed', canContinue: true };
         updateWhatsApp(priceText, 'Trajet fixe', 'Selon trafic');
         renderRoute(from, to);
         return;
@@ -719,7 +715,6 @@
         els.sumDistance.textContent = '—';
         els.sumDuration.textContent = '—';
         updateQuote('Sur devis', 'Google Maps n’est pas disponible. Merci de poursuivre votre demande sur WhatsApp.', 'error');
-        lastQuote = { totalNumeric: null, totalText: 'Sur devis', distanceText: '', durationText: '', prestationLabel: 'Transfert personnalisé', source: 'custom', canContinue: true };
         updateWhatsApp('Sur devis');
         return;
       }
@@ -735,7 +730,6 @@
           els.sumDistance.textContent = '—';
           els.sumDuration.textContent = '—';
           updateQuote('Sur devis', 'Impossible de calculer ce trajet automatiquement. SHVIP vous proposera un tarif personnalisé.', 'error');
-          lastQuote = { totalNumeric: null, totalText: 'Sur devis', distanceText: '', durationText: '', prestationLabel: 'Transfert personnalisé', source: 'custom', canContinue: true };
           updateWhatsApp('Sur devis');
           return;
         }
@@ -753,7 +747,6 @@
         els.sumDuration.textContent = durationText;
         els.sumTrip.textContent = `${from} → ${to}`;
         updateQuote(priceText, 'Estimation calculée automatiquement selon la distance et le véhicule sélectionné.', 'ok');
-        lastQuote = { totalNumeric: rounded, totalText: priceText, distanceText, durationText, prestationLabel: 'Transfert personnalisé', source: 'dynamic', canContinue: true };
         updateWhatsApp(priceText, distanceText, durationText);
         renderRoute(from, to);
       });
@@ -770,46 +763,50 @@
 
     function continueToContact(event) {
       if (event) event.preventDefault();
-      updateSummaryPlaceholders();
+
+      const quoteAmount = (els.prixAffiche.textContent || '').trim();
+      const quoteDistance = (els.sumDistance.textContent || '').trim();
+      const quoteDuration = (els.sumDuration.textContent || '').trim();
+      const quoteTrip = (els.sumTrip.textContent || '').trim();
+      const quoteStatus = (els.quoteStatus.textContent || '').trim();
+      const fixedRoute = mode === 'transfer' ? detectFixedRoute(els.depart.value.trim(), els.arrivee.value.trim()) : null;
+      const quoteSource = mode === 'dispo'
+        ? 'dispo'
+        : fixedRoute
+          ? 'fixed'
+          : (quoteAmount && quoteAmount !== '—' && quoteAmount.toLowerCase() !== 'sur devis' ? 'dynamic' : 'devis');
 
       if (!els.depart.value.trim()) {
-        alert('Merci de renseigner l'adresse de départ.');
+        alert('Veuillez renseigner votre adresse de départ.');
         return;
       }
       if (mode === 'transfer' && !els.arrivee.value.trim()) {
-        alert('Merci de renseigner l'adresse d'arrivée.');
+        alert('Veuillez renseigner votre adresse d\'arrivée.');
         return;
       }
-      if (!els.date.value || !els.heure.value) {
-        alert('Merci de renseigner la date et l'heure.');
+      if (!quoteAmount || quoteAmount === '—') {
+        alert('Veuillez d\'abord cliquer sur « Obtenir mon tarif » pour calculer votre devis.');
         return;
       }
-
-      const vehicleLabel = {
-        business: 'Mercedes Classe E',
-        prestige: 'Mercedes Classe S',
-        van: 'Mercedes Classe V'
-      }[els.vehicule.value] || '';
-
-      const prestationLabel = lastQuote.prestationLabel || (mode === 'transfer' ? 'Transfert personnalisé' : 'Mise à Disposition');
 
       const params = new URLSearchParams({
-        prestation: prestationLabel,
-        vehicule: vehicleLabel,
+        prestation: mode === 'transfer'
+          ? (fixedRoute?.label || 'Transfert personnalisé')
+          : `Mise à disposition (${els.dureeDispo.value || '4'} h)`,
+        vehicule: els.vehicule.value || '',
         depart: els.depart.value || '',
         arrivee: mode === 'transfer' ? (els.arrivee.value || '') : '',
         date: els.date.value || '',
         heure: els.heure.value || '',
         passagers: els.passagers.value || '',
         details: els.details.value || '',
-        autoquote: '1',
-        quoteTotal: lastQuote.totalNumeric != null ? String(lastQuote.totalNumeric) : '',
-        quoteText: lastQuote.totalText || '',
-        quoteDistance: lastQuote.distanceText || '',
-        quoteDuration: lastQuote.durationText || '',
-        quoteSource: lastQuote.source || '',
-        quoteVehicleLabel: vehicleLabel,
-        quoteMode: mode
+        quote_amount: quoteAmount,
+        quote_distance: quoteDistance,
+        quote_duration: quoteDuration,
+        quote_trip: quoteTrip,
+        quote_status: quoteStatus,
+        quote_source: quoteSource,
+        autoquote: '1'
       });
       window.location.href = '/contact?' + params.toString() + '#demande-privee';
     }
