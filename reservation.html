@@ -463,6 +463,7 @@
 
       <div class="actions">
         <button class="btn btn-primary" id="calcBtn" type="button">Obtenir mon tarif</button>
+        <a class="btn btn-secondary" id="continueBtn" href="#" onclick="continueToContact(event)">Continuer la réservation</a>
         <a class="btn btn-secondary" id="whatsBtn" target="_blank" rel="noopener">Réserver sur WhatsApp</a>
       </div>
 
@@ -760,6 +761,22 @@
       }
     }
 
+    function continueToContact(event) {
+      if (event) event.preventDefault();
+      const params = new URLSearchParams({
+        prestation: mode === 'transfer' ? (detectFixedRoute(els.depart.value.trim(), els.arrivee.value.trim())?.label || 'Transfert personnalisé') : 'Mise à disposition',
+        vehicule: els.vehicule.value || '',
+        depart: els.depart.value || '',
+        arrivee: mode === 'transfer' ? (els.arrivee.value || '') : '',
+        date: els.date.value || '',
+        heure: els.heure.value || '',
+        passagers: els.passagers.value || '',
+        details: els.details.value || '',
+        autoquote: '1'
+      });
+      window.location.href = '/contact?' + params.toString() + '#demande-privee';
+    }
+
     function initAutocomplete() {
       if (!(window.google && google.maps)) {
         updateQuote('Sur devis', 'Google Maps n’a pas pu être chargé. Vérifiez la clé API ou les APIs activées.', 'error');
@@ -816,6 +833,6 @@
   </script>
 
   <!-- Remplace YOUR_GOOGLE_MAPS_API_KEY par ta vraie clé API -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key= AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec&libraries=places&callback=initAutocomplete"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec&libraries=places&callback=initAutocomplete"></script>
 </body>
 </html>
