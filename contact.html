@@ -614,7 +614,6 @@
   <ul class="nav-links">
     <li><a href="/services">Services</a></li>
     <li><a href="/flotte">Flotte</a></li>
-    <li><a href="/reservation">Réservation</a></li>
     <li><a href="/partenaires">Partenaires</a></li>
     <li><a href="/contact" class="active">Contact</a></li>
   </ul>
@@ -647,6 +646,7 @@
 
 <!-- ================================== STEP 1 ================================== -->
 <div id="step1">
+  <div id="demande-privee"></div>
   <div class="section-container anim-3">
     <div class="form-card">
       <p class="form-section-title">01 — Choisissez votre <span>prestation</span></p>
@@ -933,6 +933,7 @@
   <div class="footer-links">
     <a href="/services">Services</a>
     <a href="/flotte">Flotte</a>
+    <a href="/reservation">Réservation</a>
     <a href="/partenaires">Partenaires</a>
     <a href="/conditions-generales">CGV</a>
     <a href="/politique-de-confidentialite">Confidentialité</a>
@@ -1108,6 +1109,53 @@
     if (document.getElementById('conn2'))
       document.getElementById('conn2').classList.toggle('done', n >= 3);
   }
+
+  // ---- PREFILL DEPUIS /reservation ----
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const prestation = params.get('prestation') || '';
+    const vehicule = params.get('vehicule') || '';
+    const depart = params.get('depart') || '';
+    const arrivee = params.get('arrivee') || '';
+    const date = params.get('date') || '';
+    const heure = params.get('heure') || '';
+    const passagers = params.get('passagers') || '';
+    const details = params.get('details') || '';
+
+    if (date && document.getElementById('fdate')) document.getElementById('fdate').value = date;
+    if (heure && document.getElementById('ftime')) document.getElementById('ftime').value = heure;
+    if (depart && document.getElementById('fdep')) document.getElementById('fdep').value = depart;
+    if (arrivee && document.getElementById('farr')) document.getElementById('farr').value = arrivee;
+    if (details && document.getElementById('fnotes')) document.getElementById('fnotes').value = details;
+    if (passagers && document.getElementById('fpass')) document.getElementById('fpass').value = passagers + (passagers === '1' ? ' passager' : ' passagers');
+
+    if (prestation) {
+      document.querySelectorAll('.prestation-card').forEach(card => {
+        card.classList.remove('selected');
+        if (card.dataset.prest && card.dataset.prest.toLowerCase() === prestation.toLowerCase()) {
+          card.classList.add('selected');
+          selectedPrest = card.dataset.prest;
+        }
+      });
+    }
+
+    if (vehicule) {
+      const mappedVehicle = ({ business: 'Mercedes Classe E', prestige: 'Mercedes Classe S', van: 'Mercedes Classe V' })[vehicule] || vehicule;
+      document.querySelectorAll('.vehicle-card').forEach(card => {
+        card.classList.remove('selected');
+        if (card.dataset.vehicle && card.dataset.vehicle.toLowerCase().includes(mappedVehicle.toLowerCase())) {
+          card.classList.add('selected');
+          selectedVehicle = card.dataset.vehicle;
+        }
+      });
+    }
+
+    const autoQuote = params.get('autoquote');
+    if (autoQuote === '1' && selectedPrest && selectedVehicle && depart && date && heure) {
+      try { goToStep2(); } catch (e) { console.warn('Prefill quote failed', e); }
+    }
+  });
+
 </script>
 </body>
 </html>
