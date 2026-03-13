@@ -623,7 +623,7 @@
 <div class="hero anim">
   <p class="hero-label">Contact · Demande privée</p>
   <h1>Votre prochain trajet,<br><em>sur mesure</em></h1>
-  <p class="hero-sub">Choisissez votre prestation, recevez votre tarif, confirmez votre réservation. Simple, rapide et discret.</p>
+  <p class="hero-sub">Préparez votre trajet, obtenez votre tarif immédiat, puis confirmez votre réservation avec paiement sécurisé.</p>
 </div>
 
 <!-- STEPS INDICATOR -->
@@ -646,6 +646,7 @@
 
 <!-- ================================== STEP 1 ================================== -->
 <div id="step1">
+  <div id="demande-privee"></div>
   <div class="section-container anim-3">
     <div class="form-card">
       <p class="form-section-title">01 — Choisissez votre <span>prestation</span></p>
@@ -840,6 +841,10 @@
         <div class="tarif-total-price"><sup>€ </sup><span id="tTotal">—</span></div>
       </div>
     </div>
+
+    <p style="margin-top:2rem; font-size:0.72rem; color:var(--gris); letter-spacing:0.06em; line-height:1.8;">
+      Votre paiement est traité via Stripe. Vous pouvez choisir un acompte de 30% ou régler la totalité de la course.
+    </p>
 
     <!-- CHOIX PAIEMENT -->
     <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:300; color:var(--or-pale); margin: 2.5rem 0 1.2rem; letter-spacing:0.03em;">
@@ -1107,6 +1112,10 @@
     if (document.getElementById('conn2'))
       document.getElementById('conn2').classList.toggle('done', n >= 3);
   }
+
+  // Initialisation
+  selectPay('acompte');
+  setStep(1);
 </script>
 </body>
 </html>
