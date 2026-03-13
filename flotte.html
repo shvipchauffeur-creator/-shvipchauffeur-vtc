@@ -1,190 +1,434 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Flotte & Tarifs | SHVIP Chauffeur privé Paris</title>
-<meta name="description" content="Découvrez la flotte SHVIP à Paris : Classe E Business, Classe S Prestige et Classe V Van VIP, avec tarifs fixes TTC pour transferts aéroport et mise à disposition."/>
-<link rel="canonical" href="https://shvip-paris.fr/flotte"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#C9A84C;--gold2:#E8C96E;--ink:#05070E;--ink2:#0A0C18;--white:#F0EDE8;--line:rgba(201,168,76,0.18)}
-html{scroll-behavior:smooth;background:var(--ink)}
-body{background:var(--ink);color:var(--white);font-family:'Raleway',sans-serif;font-weight:300;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 56px;background:rgba(5,7,14,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav-logo{font-family:'Cinzel',serif;font-size:18px;letter-spacing:.3em;color:var(--gold);text-decoration:none}.nav-links{display:flex;gap:34px;list-style:none}.nav-links a,.nav-cta{font-size:10px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none}.nav-links a{color:rgba(240,237,232,.65)}.nav-cta{color:var(--gold);border:1px solid var(--gold);padding:10px 22px}
-.hero{min-height:78vh;padding:150px 56px 90px;background:linear-gradient(180deg,rgba(5,7,14,.25),rgba(5,7,14,.92)),url('https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=1800&q=80&auto=format') center/cover no-repeat;border-bottom:1px solid var(--line)}
-.hero-inner{max-width:1200px;margin:0 auto}.eyebrow{font-size:10px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:26px}.title{font-family:'Cormorant Garamond',serif;font-size:clamp(54px,7vw,96px);font-weight:300;line-height:1.02;letter-spacing:.03em}.title em{font-style:italic;color:var(--gold2)}.subtitle{max-width:720px;margin-top:22px;font-size:17px;line-height:1.9;color:rgba(240,237,232,.7)}.hero-actions{display:flex;gap:18px;margin-top:42px;flex-wrap:wrap}.btn-primary,.btn-secondary{display:inline-block;text-decoration:none;text-transform:uppercase;font-size:10px;letter-spacing:.28em;padding:15px 32px}.btn-primary{background:var(--gold);color:var(--ink)}.btn-secondary{border:1px solid rgba(201,168,76,.55);color:var(--gold)}
-.section{padding:110px 56px}.section-inner{max-width:1200px;margin:0 auto}.section-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,66px);font-weight:300;line-height:1.08;margin-bottom:26px}.section-title em{font-style:italic;color:var(--gold2)}
-.intro-grid,.fleet-grid,.experience-grid{display:grid;gap:1px;background:var(--line)}.intro-grid{grid-template-columns:1.05fr .95fr}.intro-copy,.intro-aside,.vehicle-card,.exp-card{background:var(--ink2)}.intro-copy,.intro-aside{padding:52px 46px}.intro-copy p,.intro-aside p{font-size:15px;line-height:1.9;color:rgba(240,237,232,.62)}.aside-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.fleet-grid{grid-template-columns:repeat(3,1fr);margin-top:56px}.vehicle-card{padding:38px 34px}.vehicle-kicker{font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:rgba(240,237,232,.42);margin-bottom:14px}.vehicle-name{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--white);margin-bottom:12px}.vehicle-name em{font-style:italic;color:var(--gold2)}.vehicle-desc{font-size:14px;line-height:1.85;color:rgba(240,237,232,.58);margin-bottom:24px}.vehicle-list{display:grid;gap:10px}.vehicle-list div{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,237,232,.46)}
-.table-wrap{margin-top:56px;border:1px solid var(--line);overflow:auto}.tarifs-head{padding:26px 28px;border-bottom:1px solid var(--line);background:rgba(201,168,76,.03)}.tarifs-head h3{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300}.tarifs-head em{font-style:italic;color:var(--gold2)}.tarifs-note{margin-top:8px;color:rgba(240,237,232,.46);font-size:14px}.tarifs-table{width:100%;border-collapse:collapse;min-width:760px}.tarifs-table th,.tarifs-table td{text-align:left;padding:24px 26px;border-bottom:1px solid var(--line)}.tarifs-table th{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(240,237,232,.62);font-weight:400;background:rgba(255,255,255,.01)}.tarifs-table td{font-size:16px;color:rgba(240,237,232,.88)}.tarifs-table td.price{color:var(--gold2)}.tarifs-foot{padding:16px 26px;color:rgba(240,237,232,.36);font-size:12px}
-.experience-grid{grid-template-columns:repeat(4,1fr);margin-top:50px}.exp-card{padding:34px 28px}.exp-card h3{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}.exp-card p{font-size:13px;line-height:1.8;color:rgba(240,237,232,.52)}
-.cta{padding:120px 56px;text-align:center;border-top:1px solid var(--line);background:linear-gradient(135deg,rgba(201,168,76,.05),transparent)}.cta p{max-width:760px;margin:0 auto 36px;color:rgba(240,237,232,.62);line-height:1.9}.cta-contacts{display:flex;justify-content:center;gap:22px;flex-wrap:wrap}
-footer{padding:44px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer-copy{font-size:10px;letter-spacing:.18em;color:rgba(240,237,232,.28)}
-@media(max-width:900px){nav{padding:18px 24px}.nav-links,.nav-cta{display:none}.hero,.section,.cta{padding-left:24px;padding-right:24px}.intro-grid,.fleet-grid,.experience-grid{grid-template-columns:1fr}.intro-copy,.intro-aside,.vehicle-card,.exp-card{padding:32px 24px}.title{font-size:58px}.section-title{font-size:46px}footer{padding:34px 24px}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flotte SHVIP | Chauffeur privé Paris | Mercedes Classe E, S et V</title>
+  <meta name="description" content="Découvrez la flotte SHVIP à Paris : Mercedes Classe E, Classe S et Classe V avec chauffeur privé premium. Tarifs fixes pour CDG, Orly, Disneyland et mise à disposition." />
+  <meta name="keywords" content="flotte chauffeur privé paris, mercedes classe s chauffeur paris, van vip paris, prix chauffeur privé paris, transfert cdg paris prix" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://shvip-paris.fr/flotte" />
+  <meta property="og:title" content="Flotte SHVIP | Chauffeur privé Paris" />
+  <meta property="og:description" content="Mercedes Classe E, Classe S et Classe V avec chauffeur privé à Paris. Consultez la flotte premium SHVIP et ses tarifs fixes." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shvip-paris.fr/flotte" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --noir:    #0a0a0a;
+      --noir-2:  #111111;
+      --noir-3:  #1a1a1a;
+      --or:      #c9a96e;
+      --or-pale: #e8d5b0;
+      --blanc:   #f5f0e8;
+      --gris:    #888888;
+      --gris-2:  #444444;
+      --border:  rgba(201,169,110,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--noir);
+      color: var(--blanc);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 3rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      backdrop-filter: blur(4px);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; letter-spacing: 0.15em;
+      color: var(--or); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--blanc);
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      opacity: 0.7; transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--or); }
+
+    /* HERO */
+    .hero {
+      padding: 14rem 3rem 6rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 80%, rgba(201,169,110,0.05), transparent);
+      pointer-events: none;
+    }
+    .hero-label {
+      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 1.5rem; opacity: 0.9;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300; line-height: 1.1;
+    }
+    .hero h1 em { font-style: italic; color: var(--or); }
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 0.78rem; letter-spacing: 0.1em;
+      color: var(--gris); max-width: 480px; margin-inline: auto;
+      line-height: 1.9;
+    }
+
+    /* CONTENT */
+    .page-content {
+      max-width: 1000px; margin: 0 auto;
+      padding: 5rem 3rem 7rem;
+    }
+
+    /* VEHICLE CARDS */
+    .fleet-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px; background: var(--border);
+    }
+    .fleet-card {
+      background: var(--noir-2);
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .fleet-card:hover { background: var(--noir-3); }
+    .fleet-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--or), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .fleet-card:hover::before { opacity: 1; }
+    .fleet-img {
+      width: 100%; height: 220px;
+      object-fit: cover; display: block;
+      border-bottom: 1px solid var(--border);
+      filter: grayscale(20%);
+      transition: filter 0.4s;
+    }
+    .fleet-card:hover .fleet-img { filter: grayscale(0%); }
+    .fleet-img-placeholder {
+      width: 100%; height: 220px;
+      background: var(--noir-3);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; opacity: 0.3;
+    }
+    .fleet-body { padding: 2rem 1.8rem 2.2rem; }
+    .fleet-tag {
+      display: inline-block;
+      font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--or); border: 1px solid var(--border);
+      padding: 0.3rem 0.9rem; margin-bottom: 1rem;
+    }
+    .fleet-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300; color: var(--or-pale);
+      margin-bottom: 0.3rem;
+    }
+    .fleet-cat {
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 1rem;
+    }
+    .fleet-desc {
+      font-size: 0.7rem; color: var(--gris);
+      line-height: 1.9; letter-spacing: 0.05em;
+      margin-bottom: 1.4rem;
+    }
+    .fleet-specs {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .fleet-specs li {
+      font-size: 0.62rem; letter-spacing: 0.1em; color: var(--gris);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .fleet-specs li::before {
+      content: '◆'; color: var(--or); font-size: 0.4rem; flex-shrink: 0;
+    }
+
+    /* TARIFS BLOCK */
+    .tarifs-block {
+      margin-top: 1.5px;
+      background: var(--noir-2);
+      border-top: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .tarifs-block::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--or), transparent);
+    }
+    .tarifs-header {
+      padding: 2.5rem 2.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .tarifs-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 300; color: var(--or-pale);
+    }
+    .tarifs-header h3 em { font-style: italic; color: var(--or); }
+    .tarifs-header p {
+      font-size: 0.68rem; color: var(--gris); letter-spacing: 0.08em;
+      margin-top: 0.5rem; line-height: 1.7;
+    }
+    .tarifs-table {
+      width: 100%; border-collapse: collapse;
+    }
+    .tarifs-table th, .tarifs-table td {
+      padding: 1rem 2.5rem;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .tarifs-table th {
+      color: var(--gris); text-transform: uppercase; letter-spacing: 0.2em;
+      font-weight: 400;
+      background: var(--noir-3);
+    }
+    .tarifs-table td { color: var(--blanc); }
+    .tarifs-table td.price { color: var(--or); font-weight: 500; }
+    .tarifs-table tr:last-child td { border-bottom: none; }
+    .tarifs-note {
+      padding: 1.2rem 2.5rem;
+      font-size: 0.6rem; color: var(--gris-2); letter-spacing: 0.1em;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--or); font-size: 1.2rem; letter-spacing: 0.15em;
+      text-decoration: none;
+    }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      text-decoration: none; font-size: 0.6rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gris); transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--or); }
+    .footer-copy { font-size: 0.6rem; color: var(--gris-2); letter-spacing: 0.08em; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim   { animation: fadeUp 0.6s ease both; }
+    .anim-2 { animation: fadeUp 0.6s ease 0.1s both; }
+    .anim-3 { animation: fadeUp 0.6s ease 0.2s both; }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 10rem 1.5rem 4rem; }
+      .page-content { padding: 3rem 1.5rem 5rem; }
+      .fleet-grid { grid-template-columns: 1fr; }
+      .tarifs-table th, .tarifs-table td { padding: 0.8rem 1.2rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo">SHVIP</a>
+  <a href="/" class="logo">SHVIP</a>
   <ul class="nav-links">
     <li><a href="/services">Services</a></li>
-    <li><a href="/flotte">Flotte</a></li>
+    <li><a href="/flotte" class="active">Flotte</a></li>
     <li><a href="/partenaires">Partenaires</a></li>
     <li><a href="/contact">Contact</a></li>
+    <li><a href="/reservation">Réservation</a></li>
   </ul>
-  <a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20faire%20une%20demande%20priv%C3%A9e" class="nav-cta">Réserver</a>
 </nav>
-<section class="hero">
-  <div class="hero-inner">
-    <p class="eyebrow">Flotte privée · Paris · Signature SHVIP</p>
-    <h1 class="title">Flotte & <em>tarifs</em></h1>
-    <p class="subtitle">Une sélection de berlines et vans premium pensée pour les transferts aéroport, rendez-vous business, mises à disposition et événements privés à Paris.</p>
-    <div class="hero-actions">
-      <a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20r%C3%A9server%20un%20chauffeur" class="btn-primary">Réserver maintenant</a>
-      <a href="#tarifs" class="btn-secondary">Voir les tarifs</a>
-    </div>
-  </div>
-</section>
-<section class="section">
-  <div class="section-inner">
-    <p class="section-label">L'esprit de la flotte</p>
-    <h2 class="section-title">Sobriété, confort et <em>présence</em></h2>
-    <div class="intro-grid">
-      <div class="intro-copy">
-        <p>Chez SHVIP, la flotte n'est pas pensée comme un catalogue volumineux, mais comme une sélection cohérente de véhicules adaptés à des usages précis : rendez-vous d'affaires, transferts aéroport, accueil de délégations et transport d'invités.</p>
-        <p>Chaque véhicule s'inscrit dans une même promesse : une expérience premium, discrète et parfaitement exécutée, avec un niveau de présentation conforme à l'image de la maison.</p>
+
+<!-- HERO -->
+<div class="hero anim">
+  <p class="hero-label">Flotte · Véhicules Premium</p>
+  <h1>Trois véhicules,<br><em>un standard.</em></h1>
+  <p class="hero-sub">Chaque véhicule est sélectionné pour le confort, l'élégance et la discrétion. Entretien rigoureux, présentation irréprochable.</p>
+  <p class="hero-sub" style="margin-top:1rem;max-width:760px;">
+    Notre flotte Mercedes accompagne vos besoins de <strong style="color:var(--or-pale);font-weight:400;">chauffeur privé à Paris</strong>,
+    vos transferts <strong style="color:var(--or-pale);font-weight:400;">CDG et Orly</strong>, vos déplacements business et vos événements privés.
+  </p>
+</div>
+
+<!-- CONTENU -->
+<div class="page-content anim-2">
+
+  <div class="fleet-grid">
+
+    <div class="fleet-card">
+      <img src="/CLASSE-E.png" alt="Mercedes Classe E" class="fleet-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="fleet-img-placeholder" style="display:none">🚗</div>
+      <div class="fleet-body">
+        <div class="fleet-tag">Business</div>
+        <div class="fleet-name">Classe E</div>
+        <div class="fleet-cat">Mercedes · 3 passagers</div>
+        <p class="fleet-desc">Confort premium pour vos déplacements quotidiens. L'équilibre parfait entre élégance et efficacité.</p>
+        <ul class="fleet-specs">
+          <li>Climatisation 4 zones</li>
+          <li>Cuir Nappa, sièges chauffants</li>
+          <li>Wifi & chargeurs à bord</li>
+          <li>Eau minérale offerte</li>
+        </ul>
       </div>
-      <div class="intro-aside">
-        <div class="aside-title">Ce que vous retrouvez à bord</div>
-        <p>Habitacle soigné, arrivée ponctuelle, tenue professionnelle, conduite souple, accueil bagages et coordination selon les exigences de votre planning.</p>
+    </div>
+
+    <div class="fleet-card">
+      <img src="/CLASSE-S.png" alt="Mercedes Classe S" class="fleet-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="fleet-img-placeholder" style="display:none">🚘</div>
+      <div class="fleet-body">
+        <div class="fleet-tag">Prestige</div>
+        <div class="fleet-name">Classe S</div>
+        <div class="fleet-cat">Mercedes · 3 passagers</div>
+        <p class="fleet-desc">Le summum de l'excellence Mercedes. Pour les clients qui exigent le meilleur en toutes circonstances.</p>
+        <ul class="fleet-specs">
+          <li>Massage & ventilation sièges</li>
+          <li>Éclairage ambiance 64 couleurs</li>
+          <li>Insonorisation renforcée</li>
+          <li>Tablettes passagers arrière</li>
+        </ul>
       </div>
     </div>
-    <div class="fleet-grid">
-      <article class="vehicle-card">
-        <div class="vehicle-kicker">Berline</div>
-        <h3 class="vehicle-name">Classe E <em>Business</em></h3>
-        <p class="vehicle-desc">Le choix idéal pour les déplacements professionnels et transferts élégants dans Paris, avec une présence sobre et un confort premium.</p>
-        <div class="vehicle-list">
-          <div>Jusqu'à 3 passagers</div>
-          <div>2 grandes valises</div>
-          <div>Transferts & business</div>
-        </div>
-      </article>
-      <article class="vehicle-card">
-        <div class="vehicle-kicker">Berline prestige</div>
-        <h3 class="vehicle-name">Classe S <em>Prestige</em></h3>
-        <p class="vehicle-desc">Une berline de représentation pensée pour les clients VIP, dirigeants et prises en charge à forte valeur d'image.</p>
-        <div class="vehicle-list">
-          <div>Jusqu'à 3 passagers</div>
-          <div>2 grandes valises</div>
-          <div>Image & représentation</div>
-        </div>
-      </article>
-      <article class="vehicle-card">
-        <div class="vehicle-kicker">Van premium</div>
-        <h3 class="vehicle-name">Classe V <em>Van VIP</em></h3>
-        <p class="vehicle-desc">La solution idéale pour les familles, petits groupes et accompagnements nécessitant davantage d'espace sans compromis sur le standing.</p>
-        <div class="vehicle-list">
-          <div>Jusqu'à 7 passagers</div>
-          <div>Bagages volumineux</div>
-          <div>Familles & délégations</div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-<section class="section" id="tarifs">
-  <div class="section-inner">
-    <p class="section-label">Tarifs fixes TTC</p>
-    <h2 class="section-title">Repères de <em>tarification</em></h2>
-    <div class="table-wrap">
-      <div class="tarifs-head">
-        <h3>Tarifs <em>fixes</em> TTC</h3>
-        <p class="tarifs-note">Prix carburant inclus · Péages facturés séparément · Paiement CB ou virement</p>
+
+    <div class="fleet-card">
+      <img src="/CLASSE-V.png" alt="Mercedes Classe V" class="fleet-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="fleet-img-placeholder" style="display:none">🚐</div>
+      <div class="fleet-body">
+        <div class="fleet-tag">Van VIP</div>
+        <div class="fleet-name">Classe V</div>
+        <div class="fleet-cat">Mercedes · 7 passagers</div>
+        <p class="fleet-desc">Espace et prestance pour groupes et familles. Idéal pour les délégations, transferts famille ou événements.</p>
+        <ul class="fleet-specs">
+          <li>7 places en configuration VIP</li>
+          <li>Grand volume bagages</li>
+          <li>Tables & sièges pivotants</li>
+          <li>Climatisation indépendante</li>
+        </ul>
       </div>
-      <table class="tarifs-table" aria-label="Tarifs SHVIP">
-        <thead>
-          <tr>
-            <th>Trajet</th>
-            <th>Classe E — Business</th>
-            <th>Classe S — Prestige</th>
-            <th>Classe V — Van VIP</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Paris → Orly (~27 min)</td>
-            <td class="price">130 €</td>
-            <td class="price">195 €</td>
-            <td class="price">154 €</td>
-          </tr>
-          <tr>
-            <td>Paris → Roissy CDG (~40 min)</td>
-            <td class="price">162 €</td>
-            <td class="price">243 €</td>
-            <td class="price">192 €</td>
-          </tr>
-          <tr>
-            <td>Paris → Disneyland (~45 min)</td>
-            <td class="price">182 €</td>
-            <td class="price">273 €</td>
-            <td class="price">215 €</td>
-          </tr>
-          <tr>
-            <td>Mise à disposition (min. 4h)</td>
-            <td class="price">400 €</td>
-            <td class="price">600 €</td>
-            <td class="price">480 €</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="tarifs-foot">△ Péages facturés séparément selon le trajet · Tarifs TTC toutes charges comprises</div>
+    </div>
+
+  </div>
+
+  <!-- TARIFS -->
+  <div class="tarifs-block anim-3">
+    <div class="tarifs-header">
+      <h3>Tarifs <em>fixes</em> TTC</h3>
+      <p>Prix carburant inclus · Péages facturés séparément · Paiement CB ou virement</p>
+    </div>
+    <table class="tarifs-table">
+      <thead>
+        <tr>
+          <th>Trajet</th>
+          <th>Classe E — Business</th>
+          <th>Classe S — Prestige</th>
+          <th>Classe V — Van VIP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Paris → Orly (~27 min)</td>
+          <td class="price">130 €</td>
+          <td class="price">195 €</td>
+          <td class="price">154 €</td>
+        </tr>
+        <tr>
+          <td>Paris → Roissy CDG (~40 min)</td>
+          <td class="price">162 €</td>
+          <td class="price">243 €</td>
+          <td class="price">192 €</td>
+        </tr>
+        <tr>
+          <td>Paris → Disneyland (~45 min)</td>
+          <td class="price">182 €</td>
+          <td class="price">273 €</td>
+          <td class="price">215 €</td>
+        </tr>
+        <tr>
+          <td>Mise à disposition (min. 4h)</td>
+          <td class="price">400 €</td>
+          <td class="price">600 €</td>
+          <td class="price">480 €</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tarifs-note">⚠ Péages facturés séparément selon le trajet · Tarifs TTC toutes charges comprises</div>
+
+  <div style="text-align:center; padding:2.2rem 2rem 2.8rem; border-top:1px solid var(--border); background:linear-gradient(to bottom, rgba(201,169,110,0.03), transparent);">
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="/reservation" style="display:inline-block; background:var(--or); color:var(--noir); padding:16px 34px; text-decoration:none; letter-spacing:0.18em; text-transform:uppercase; font-size:0.68rem; font-weight:500;">Réserver maintenant</a>
+      <a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20r%C3%A9server%20un%20chauffeur%20priv%C3%A9" target="_blank" style="display:inline-block; border:1px solid var(--border); color:var(--or); padding:16px 34px; text-decoration:none; letter-spacing:0.18em; text-transform:uppercase; font-size:0.68rem;">WhatsApp direct</a>
+      <a href="mailto:s.h.vip.chauffeur@gmail.com" style="display:inline-block; border:1px solid var(--border); color:var(--blanc); padding:16px 34px; text-decoration:none; letter-spacing:0.18em; font-size:0.68rem;">s.h.vip.chauffeur@gmail.com</a>
     </div>
   </div>
-</section>
-<section class="section">
-  <div class="section-inner">
-    <p class="section-label">Expérience client</p>
-    <h2 class="section-title">Une page flotte pensée comme une <em>maison de service</em></h2>
-    <div class="experience-grid">
-      <div class="exp-card"><h3>Accueil maîtrisé</h3><p>Suivi de vol, message de confirmation, ponctualité et prise en charge sans friction.</p></div>
-      <div class="exp-card"><h3>Lisibilité</h3><p>Tarifs clairs, catégories lisibles et parcours simple vers WhatsApp ou devis privé.</p></div>
-      <div class="exp-card"><h3>Confort</h3><p>Choix du véhicule selon le niveau de représentation, le nombre de passagers et les bagages.</p></div>
-      <div class="exp-card"><h3>Crédibilité</h3><p>Une page dédiée à la flotte renforce la perception premium tout en évitant de surcharger l'accueil.</p></div>
-    </div>
+
   </div>
-</section>
-<section class="cta">
-  <div class="section-inner">
-    <p class="section-label" style="justify-content:center">Réservation</p>
-    <h2 class="section-title" style="text-align:center">Choisissez le véhicule adapté à votre <em>demande</em></h2>
-    <p>Pour un transfert aéroport, une mise à disposition ou un déplacement business à Paris, contactez SHVIP directement par WhatsApp, téléphone ou email.</p>
-    <div class="cta-contacts">
-      <a class="btn-primary" href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20faire%20une%20demande%20priv%C3%A9e">WhatsApp</a>
-      <a class="btn-secondary" href="tel:+33649604960">06 49 60 49 60</a>
-      <a class="btn-secondary" href="mailto:s.h.vip.chauffeur@gmail.com">Email</a>
-    </div>
-  </div>
-</section>
+
+</div>
+
+<!-- FOOTER -->
 <footer>
-  <a href="/" class="nav-logo">SHVIP</a>
+  <a href="/" class="footer-logo">SHVIP</a>
+  <div class="footer-links">
+    <a href="/services">Services</a>
+    <a href="/flotte">Flotte</a>
+    <a href="/partenaires">Partenaires</a>
+    <a href="/reservation">Réservation</a>
+    <a href="/conditions-generales">CGV</a>
+    <a href="/politique-de-confidentialite">Confidentialité</a>
+  </div>
   <div class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</div>
 </footer>
+
+
+<a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20faire%20une%20demande%20de%20r%C3%A9servation"
+   aria-label="WhatsApp SHVIP"
+   style="position:fixed;right:24px;bottom:24px;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:22px;box-shadow:0 12px 30px rgba(0,0,0,0.35);z-index:999;">✆</a>
+
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "SHVIP Flotte & Tarifs",
-  "provider": {"@type": "LocalBusiness", "name": "SHVIP", "telephone": "+33649604960"},
-  "areaServed": ["Paris", "Île-de-France"],
-  "serviceType": "Chauffeur privé premium",
-  "url": "https://shvip-paris.fr/flotte"
+  "@context":"https://schema.org",
+  "@type":"Service",
+  "name":"Flotte SHVIP Chauffeur privé Paris",
+  "provider":{
+    "@type":"LocalBusiness",
+    "name":"SHVIP",
+    "telephone":"+33649604960",
+    "email":"s.h.vip.chauffeur@gmail.com",
+    "address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"}
+  },
+  "areaServed":["Paris","Île-de-France","CDG","Orly","Disneyland Paris"],
+  "serviceType":"Chauffeur privé Paris",
+  "offers":[
+    {"@type":"Offer","name":"Paris → Orly Classe E","price":"130","priceCurrency":"EUR"},
+    {"@type":"Offer","name":"Paris → Roissy CDG Classe E","price":"162","priceCurrency":"EUR"},
+    {"@type":"Offer","name":"Paris → Disneyland Classe E","price":"182","priceCurrency":"EUR"}
+  ]
 }
 </script>
+
 </body>
 </html>
