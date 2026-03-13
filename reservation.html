@@ -242,6 +242,7 @@
       <li><a href="/services">Services</a></li>
       <li><a href="/flotte">Flotte</a></li>
       <li><a href="/reservation" class="active">Réservation</a></li>
+      <li><a href="/partenaires">Partenaires</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
   </nav>
@@ -249,7 +250,7 @@
   <section class="hero">
     <p class="hero-label">Chauffeur privé Paris · Réservation</p>
     <h1>Préparez votre <em>déplacement</em></h1>
-    <p class="hero-sub">Renseignez votre trajet et choisissez votre véhicule pour obtenir une estimation immédiate. Choisissez votre trajet et votre véhicule pour obtenir immédiatement votre tarif fixe SHVIP sur les trajets principaux.</p>
+    <p class="hero-sub">Renseignez votre trajet et choisissez votre véhicule pour obtenir une estimation immédiate. Les transferts standards peuvent reprendre vos tarifs fixes, et les trajets personnalisés peuvent être calculés en temps réel selon distance et durée.</p>
   </section>
 
   <main class="wrapper">
@@ -264,7 +265,7 @@
             <label class="chip active">
               <input type="radio" name="serviceType" value="transfer" checked />
               <strong>Transfert</strong>
-              <span>Tarifs fixes SHVIP</span>
+              <span>Prix fixe ou calcul réel</span>
             </label>
             <label class="chip">
               <input type="radio" name="serviceType" value="hourly" />
@@ -342,7 +343,7 @@
         </div>
       </form>
 
-      <p class="seo-copy">SHVIP propose un service de chauffeur privé à Paris pour transferts CDG, Orly, Disneyland, déplacements business, événements privés et mise à disposition avec chauffeur. Les transferts standards reprennent vos tarifs fixes SHVIP. Pour un trajet sur mesure, vous pourrez envoyer votre demande via WhatsApp ou poursuivre sur la page contact.</p>
+      <p class="seo-copy">SHVIP propose un service de chauffeur privé à Paris pour transferts CDG, Orly, Disneyland, déplacements business, événements privés et mise à disposition avec chauffeur. Les trajets courants peuvent reprendre des tarifs fixes, tandis que les trajets personnalisés peuvent être calculés selon la distance et la durée réelles.</p>
     </section>
 
     <aside class="summary">
@@ -350,7 +351,7 @@
         <div class="mini-label">Votre tarif estimé</div>
         <div class="price-title">Simulation premium</div>
         <div class="price-value" id="priceValue">—</div>
-        <p class="price-note" id="priceNote">Remplissez le formulaire puis cliquez sur <strong style="color:var(--gold-soft);font-weight:500;">Obtenir mon tarif</strong>. Les transferts fixes utilisent vos tarifs publiés. Pour un trajet sur mesure hors grille, utilisez WhatsApp ou la page contact pour une validation personnalisée.</p>
+        <p class="price-note" id="priceNote">Remplissez le formulaire puis cliquez sur <strong style="color:var(--gold-soft);font-weight:500;">Obtenir mon tarif</strong>. Les transferts fixes utilisent vos tarifs publiés. Les trajets sur-mesure peuvent utiliser un calcul réel via l’API Google Routes côté serveur.</p>
         <div id="statusBox" class="status">Aucune estimation calculée pour le moment.</div>
       </div>
 
@@ -537,14 +538,39 @@
         return;
       }
 
-      lastQuote = null;
-      priceValue.textContent = 'Sur demande';
-      priceNote.textContent = 'Ce trajet sur mesure nécessite une validation personnalisée. Utilisez WhatsApp ou la page contact pour recevoir votre tarif SHVIP.';
-      setStatus('Trajet hors grille fixe : demande personnalisée à confirmer.', 'ok');
-      updateSummary(data, {
-        distanceText: 'Sur demande',
-        durationText: 'Sur demande'
-      });
+      setStatus('Calcul en cours via le moteur de cotation...', '');
+
+      try {
+        const res = await fetch('/.netlify/functions/shvip-real-quote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pickup: data.pickup,
+            dropoff: data.dropoff,
+            vehicle: data.vehicle
+          })
+        });
+
+        const json = await res.json();
+        if (!res.ok || !json.ok) throw new Error(json.error || 'Impossible de calculer le trajet.');
+
+        lastQuote = {
+          total: json.total,
+          distanceText: json.distanceText,
+          durationText: json.durationText,
+          mode: 'live',
+          note: 'Estimation calculée à partir de la distance et du temps de trajet remontés par le moteur Google Routes côté serveur.'
+        };
+        priceValue.textContent = euro(json.total);
+        priceNote.textContent = lastQuote.note;
+        setStatus('Calcul temps réel effectué avec succès.', 'ok');
+        updateSummary(data, lastQuote);
+      } catch (err) {
+        priceValue.textContent = '—';
+        priceNote.textContent = 'Le calcul en temps réel nécessite une fonction serveur configurée avec une clé Google Maps Routes API.';
+        setStatus(err.message, 'err');
+        updateSummary(data, null);
+      }
     }
 
     calcBtn.addEventListener('click', computeQuote);
