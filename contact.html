@@ -3,69 +3,259 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SHVIP — Finalisation | Chauffeur privé Paris</title>
-  <meta name="description" content="Finalisez votre réservation SHVIP. Vérifiez votre devis, choisissez acompte ou paiement total, puis transmettez votre demande pour recevoir votre lien de paiement sécurisé." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>SHVIP — Finaliser la réservation</title>
+  <meta name="description" content="Finalisez votre réservation SHVIP et transmettez votre demande pour validation et envoi d'un lien de paiement sécurisé." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:#060606; --bg2:#0f0f0f; --bg3:#151515;
-      --gold:#c9a96e; --gold-soft:#e8d5b0; --text:#f5f0e8; --muted:#a79b8c;
-      --line:rgba(201,169,110,.18); --ok:#2fd36a; --error:#d35a5a;
-      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --bg: #070707;
+      --bg2: #111111;
+      --bg3: #151515;
+      --gold: #c9a96e;
+      --gold-soft: #ead7b5;
+      --text: #f5efe7;
+      --muted: #aa9f90;
+      --line: rgba(201,169,110,.20);
+      --ok: #3ad17c;
+      --err: #d96262;
     }
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Montserrat,sans-serif;font-weight:300}
-    nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 42px;background:rgba(6,6,6,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-    .logo{text-decoration:none;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.8rem;letter-spacing:.18em}
-    .nav-links{display:flex;gap:2rem;list-style:none;margin:0;padding:0}
-    .nav-links a{text-decoration:none;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:rgba(244,239,231,.82)}
-    .nav-links a.active,.nav-links a:hover{color:var(--gold)}
-    .hero{padding:86px 42px 26px;border-bottom:1px solid var(--line);background:radial-gradient(circle at 15% 10%, rgba(201,169,110,.08), transparent 30%), radial-gradient(circle at 85% 0%, rgba(201,169,110,.05), transparent 25%), linear-gradient(180deg,#090909 0%,#060606 100%)}
-    .hero-inner,.main,.footer{max-width:1320px;margin:0 auto}
-    .eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;margin-bottom:18px}
-    h1{margin:0;font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,5.2rem);line-height:1.02;font-weight:300}
-    h1 em{color:var(--gold);font-style:italic}
-    .hero-sub{max-width:830px;margin-top:14px;color:var(--muted);line-height:1.9}
-    .main{padding:34px 42px 70px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:34px}
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,0));border:1px solid var(--line);box-shadow:var(--shadow)}
-    .section{padding:30px}
-    .section h2{margin:0 0 8px;font-family:'Cormorant Garamond',serif;font-size:2.3rem;font-weight:300;color:var(--gold-soft)}
-    .section p.lead{margin:0 0 24px;color:var(--muted);line-height:1.8}
-    .mini{color:var(--gold);text-transform:uppercase;letter-spacing:.28em;font-size:.75rem;margin-bottom:14px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field.full{grid-column:1/-1}
-    label{display:block;color:var(--gold);text-transform:uppercase;font-size:.78rem;letter-spacing:.22em;margin-bottom:10px}
-    input, textarea {width:100%;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:15px 16px;font:inherit;outline:none}
-    textarea{min-height:100px;resize:vertical}
-    input:focus, textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.08)}
-    .summary-list{display:grid;gap:12px}
-    .summary-row{display:grid;grid-template-columns:140px 1fr;gap:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.05)}
-    .summary-key{color:var(--muted)} .summary-val{text-align:right}
-    .price-card{padding:28px}
-    .price-main{font-family:'Cormorant Garamond',serif;font-size:3.3rem;line-height:1;color:var(--text);margin:0 0 10px}
-    .status{margin:0;color:var(--muted);line-height:1.8}
-    .status.ok{color:#ccebd7}.status.error{color:#f0b7b7}
-    .payment-options{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
-    .payment-opt{border:1px solid var(--line);background:var(--bg2);padding:18px;cursor:pointer;position:relative}
-    .payment-opt.selected{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
-    .payment-opt-title{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-    .payment-opt-amount{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold-soft);margin-top:8px}
-    .payment-opt-desc{color:var(--muted);font-size:.9rem;line-height:1.7;margin-top:8px}
-    .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
-    .btn{appearance:none;border:1px solid var(--gold);padding:15px 22px;text-transform:uppercase;letter-spacing:.22em;font-size:.78rem;cursor:pointer;text-decoration:none;transition:.2s ease;background:transparent;color:var(--gold)}
-    .btn-primary{background:var(--gold);color:#111}
-    .btn:hover{filter:brightness(1.04)}
-    .alert{margin-top:18px;padding:14px 16px;border:1px solid var(--line);background:var(--bg2);color:var(--muted);line-height:1.7}
-    .alert.ok{border-color:rgba(47,211,106,.3);color:#d8f5e2}
-    .alert.error{border-color:rgba(211,90,90,.3);color:#f5d6d6}
-    .footer{padding:0 42px 50px;color:rgba(255,255,255,.45);font-size:.88rem}
-    .hidden{display:none!important}
-    @media (max-width:980px){
-      nav{padding:18px 20px}.nav-links{display:none}.hero{padding:68px 20px 24px}
-      .main{padding:24px 20px 60px;grid-template-columns:1fr}.section,.price-card{padding:22px}
-      .grid,.payment-options{grid-template-columns:1fr}.summary-row{grid-template-columns:1fr}.summary-val{text-align:left}.footer{padding:0 20px 36px}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 42px;
+      background: rgba(7,7,7,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      letter-spacing: .18em;
+    }
+    .nav-links { display:flex; gap:2rem; list-style:none; margin:0; padding:0; }
+    .nav-links a {
+      color: rgba(245,239,231,.84);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .72rem;
+      letter-spacing: .18em;
+    }
+    .nav-links a.active, .nav-links a:hover { color: var(--gold); }
+
+    .hero {
+      padding: 72px 42px 26px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(201,169,110,.08), transparent 25%),
+        linear-gradient(180deg, #0b0b0b 0%, #070707 100%);
+    }
+    .hero-inner { max-width: 1280px; margin: 0 auto; }
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .34em;
+      font-size: .72rem;
+      margin-bottom: 16px;
+    }
+    h1 {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300;
+      line-height: 1.03;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+    .hero-sub {
+      max-width: 780px;
+      margin-top: 14px;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 42px 72px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 28px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.015), rgba(255,255,255,0));
+    }
+    .box { padding: 30px; }
+    .side-box { padding: 26px; }
+    .label {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      font-size: .76rem;
+      margin-bottom: 14px;
+    }
+    .title {
+      margin: 0 0 8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.45rem;
+      font-weight: 300;
+      color: var(--gold-soft);
+    }
+    .muted { color: var(--muted); line-height: 1.8; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .field.full { grid-column: 1 / -1; }
+    .field label {
+      display: block;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: .78rem;
+      margin-bottom: 10px;
+    }
+    .input, .textarea, .select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 15px 16px;
+      font: inherit;
+      outline: none;
+    }
+    .input:focus, .textarea:focus, .select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,169,110,.08);
+    }
+    .textarea { min-height: 110px; resize: vertical; }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .price-card {
+      border: 1px solid var(--line);
+      background: var(--bg2);
+      padding: 22px;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+    .price-card.active {
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px var(--gold);
+    }
+    .price-card h3 {
+      margin: 0 0 10px;
+      font-size: .88rem;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      color: var(--gold-soft);
+      font-weight: 400;
+    }
+    .amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .small { color: var(--muted); line-height: 1.7; font-size: .92rem; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 26px;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--gold);
+      padding: 15px 22px;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: .78rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: .2s ease;
+      background: transparent;
+      color: var(--gold);
+    }
+    .btn.primary {
+      background: var(--gold);
+      color: #111;
+    }
+    .btn:hover { filter: brightness(1.05); }
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: var(--bg2);
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .status.ok { border-color: rgba(58,209,124,.4); color: #dff6e7; }
+    .status.err { border-color: rgba(217,98,98,.4); color: #ffd0d0; }
+
+    .summary-list { display:grid; gap:12px; }
+    .row {
+      display:grid;
+      grid-template-columns: 145px 1fr;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .key { color: var(--muted); }
+    .val { text-align: right; }
+    .total-line {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding: 18px 0 8px;
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 1.05rem;
+    }
+    .total-line strong {
+      color: var(--gold-soft);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+    }
+
+    @media (max-width: 960px) {
+      nav { padding: 18px 20px; }
+      .nav-links { display:none; }
+      .hero { padding: 60px 20px 22px; }
+      .main { padding: 24px 20px 52px; grid-template-columns: 1fr; }
+      .grid, .pricing { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+      .val { text-align:left; }
+      .box, .side-box { padding: 22px; }
     }
   </style>
 </head>
@@ -81,264 +271,308 @@
     </ul>
   </nav>
 
-  <section class="hero" id="finalisation">
+  <section class="hero" id="demande-privee">
     <div class="hero-inner">
-      <div class="eyebrow">Finalisation · Devis · Paiement sécurisé</div>
-      <h1>Finalisez votre<br><em>réservation.</em></h1>
-      <p class="hero-sub">Vérifiez votre devis SHVIP, choisissez acompte ou règlement total, puis transmettez votre demande. Votre dashboard pourra ensuite envoyer le devis et le lien de paiement Stripe au client.</p>
+      <div class="eyebrow">Finalisation · Demande privée</div>
+      <h1>Finalisez votre <em>réservation</em></h1>
+      <p class="hero-sub">Confirmez vos coordonnées, choisissez acompte ou paiement total, puis transmettez la demande à votre système SHVIP. Le dashboard récupérera la réservation via Supabase et vous permettra d'envoyer le devis et le lien de paiement au client.</p>
     </div>
   </section>
 
   <main class="main">
-    <section class="panel section">
-      <div class="mini">Étape 1</div>
-      <h2>Coordonnées client</h2>
-      <p class="lead">Cette page ne refait pas le calcul. Elle reprend le devis de la page réservation et sert uniquement à finaliser la commande proprement.</p>
+    <section class="panel box">
+      <div class="label">Coordonnées client</div>
+      <h2 class="title">Dernière étape</h2>
+      <p class="muted">Cette page ne recalcule pas le devis : elle reprend le montant déjà établi depuis la page réservation et l'envoie vers votre flux SHVIP.</p>
 
       <div class="grid">
         <div class="field">
-          <label for="clientName">Nom complet</label>
-          <input id="clientName" type="text" placeholder="Nom et prénom" />
+          <label for="nom">Nom complet</label>
+          <input class="input" id="nom" type="text" placeholder="Nom et prénom" />
         </div>
         <div class="field">
-          <label for="clientPhone">Téléphone</label>
-          <input id="clientPhone" type="tel" placeholder="06 00 00 00 00" />
+          <label for="telephone">Téléphone</label>
+          <input class="input" id="telephone" type="tel" placeholder="06 00 00 00 00" />
         </div>
         <div class="field full">
-          <label for="clientEmail">Email client</label>
-          <input id="clientEmail" type="email" placeholder="client@email.com" />
+          <label for="email">Email client</label>
+          <input class="input" id="email" type="email" placeholder="client@email.com" />
+        </div>
+
+        <div class="field">
+          <label for="prestation">Prestation</label>
+          <input class="input" id="prestation" type="text" readonly />
+        </div>
+        <div class="field">
+          <label for="vehicule">Véhicule</label>
+          <input class="input" id="vehicule" type="text" readonly />
         </div>
         <div class="field full">
-          <label for="clientNotes">Notes complémentaires</label>
-          <textarea id="clientNotes" placeholder="Bagages, vol, siège bébé, nom sur pancarte, demande spéciale..."></textarea>
+          <label for="depart">Départ</label>
+          <input class="input" id="depart" type="text" readonly />
+        </div>
+        <div class="field full">
+          <label for="arrivee">Arrivée</label>
+          <input class="input" id="arrivee" type="text" readonly />
+        </div>
+        <div class="field">
+          <label for="dateCourse">Date</label>
+          <input class="input" id="dateCourse" type="text" readonly />
+        </div>
+        <div class="field">
+          <label for="heure">Heure</label>
+          <input class="input" id="heure" type="text" readonly />
+        </div>
+        <div class="field">
+          <label for="passagers">Passagers</label>
+          <input class="input" id="passagers" type="text" readonly />
+        </div>
+        <div class="field full">
+          <label for="notes">Notes</label>
+          <textarea class="textarea" id="notes" placeholder="Informations complémentaires..." readonly></textarea>
+        </div>
+      </div>
+
+      <div class="pricing">
+        <div class="price-card active" id="cardAcompte" data-mode="acompte">
+          <h3>Acompte — 30%</h3>
+          <div class="amount" id="amtAcompte">—</div>
+          <div class="small">Pour réserver dès maintenant. Le solde sera réglé selon votre process habituel.</div>
+        </div>
+        <div class="price-card" id="cardTotal" data-mode="total">
+          <h3>Paiement total</h3>
+          <div class="amount" id="amtTotal">—</div>
+          <div class="small">Montant total estimé. Le dashboard pourra ensuite générer et envoyer le lien Stripe adapté.</div>
         </div>
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary" id="sendToDashboardBtn" type="button">Envoyer au dashboard</button>
-        <a class="btn" id="fallbackWhatsBtn" target="_blank" rel="noopener">Envoyer sur WhatsApp</a>
-        <a class="btn" id="fallbackMailBtn">Envoyer par email</a>
+        <button class="btn primary" id="sendBtn" type="button">Envoyer au dashboard</button>
+        <a class="btn" id="waBtn" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn" id="mailBtn">Email</a>
       </div>
 
-      <div class="alert" id="sendStatus">Le dashboard n’est pas encore contacté. Dès l’envoi, la demande complète pourra être transmise pour génération du devis PDF et du lien Stripe.</div>
+      <div class="status" id="statusBox">Complétez vos coordonnées puis envoyez la demande. Le dashboard l'importera ensuite automatiquement via Supabase. Aucun faux paiement n'est affiché sur cette page.</div>
     </section>
 
-    <aside class="panel price-card">
-      <div class="mini">Étape 2</div>
-      <h2 style="margin-top:0">Devis final</h2>
-      <p class="price-main" id="quoteAmount">—</p>
-      <p class="status" id="quoteStatus">Aucun devis reçu depuis la page réservation.</p>
-
-      <div class="payment-options">
-        <div class="payment-opt selected" data-pay="deposit">
-          <div class="payment-opt-title">Acompte — 30%</div>
-          <div class="payment-opt-amount" id="depositAmount">—</div>
-          <div class="payment-opt-desc">Le lien Stripe portera sur l’acompte. Le solde sera réglé selon vos conditions habituelles.</div>
+    <aside style="display:grid; gap:22px; align-content:start;">
+      <section class="panel side-box">
+        <div class="label">Récapitulatif</div>
+        <div class="summary-list">
+          <div class="row"><div class="key">Source devis</div><div class="val" id="sumSource">—</div></div>
+          <div class="row"><div class="key">Distance</div><div class="val" id="sumDistance">—</div></div>
+          <div class="row"><div class="key">Durée</div><div class="val" id="sumDuration">—</div></div>
+          <div class="row"><div class="key">Mode retenu</div><div class="val" id="sumMode">Acompte 30 %</div></div>
         </div>
-        <div class="payment-opt" data-pay="full">
-          <div class="payment-opt-title">Paiement total</div>
-          <div class="payment-opt-amount" id="fullAmount">—</div>
-          <div class="payment-opt-desc">Le lien Stripe portera sur la totalité du devis TTC.</div>
-        </div>
-      </div>
+        <div class="total-line"><span>Total TTC</span><strong id="sumTotal">—</strong></div>
+      </section>
 
-      <div class="mini" style="margin-top:26px">Récapitulatif</div>
-      <div class="summary-list">
-        <div class="summary-row"><div class="summary-key">Prestation</div><div class="summary-val" id="sumPrestation">—</div></div>
-        <div class="summary-row"><div class="summary-key">Véhicule</div><div class="summary-val" id="sumVehicule">—</div></div>
-        <div class="summary-row"><div class="summary-key">Trajet</div><div class="summary-val" id="sumTrip">—</div></div>
-        <div class="summary-row"><div class="summary-key">Distance</div><div class="summary-val" id="sumDistance">—</div></div>
-        <div class="summary-row"><div class="summary-key">Durée</div><div class="summary-val" id="sumDuration">—</div></div>
-        <div class="summary-row"><div class="summary-key">Date / heure</div><div class="summary-val" id="sumDateTime">—</div></div>
-        <div class="summary-row"><div class="summary-key">Source devis</div><div class="summary-val" id="sumQuoteSource">—</div></div>
-      </div>
+      <section class="panel side-box">
+        <div class="label">Flux SHVIP</div>
+        <p class="muted">Après envoi, la demande part dans Supabase avec <strong>importe = 0</strong>. Votre script Python d'import récupère ensuite la réservation et l'intègre dans le dashboard. Les champs utilisés correspondent à ceux attendus par votre script de synchronisation. </p>
+        <p class="muted">Le script attend notamment : <strong>nom</strong>, <strong>telephone</strong>, <strong>email</strong>, <strong>depart</strong>, <strong>arrivee</strong>, <strong>date_course</strong>, <strong>heure</strong>, <strong>nb_passagers</strong>, <strong>prestation</strong>, <strong>notes</strong> et <strong>importe</strong>. </p>
+      </section>
     </aside>
   </main>
 
-  <div class="footer">SHVIP — Maison Privée de Chauffeurs · Le dashboard peut créer le devis PDF et le lien de paiement Stripe après réception des données client.</div>
-
   <script>
-    // À REMPLACER par l'URL réelle de ton dashboard / backend Python.
-    // Exemple : 'https://ton-backend.com/api/web/booking-request'
-    const DASHBOARD_ENDPOINT = '';
+    // À compléter avec vos informations Supabase côté site.
+    const SUPABASE_URL = 'https://baacqgpplfhavbquvoda.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_KvfyCq3879qjGxTw5OCqwA__X931c_S';
     const SHVIP_PHONE = '33649604960';
     const SHVIP_EMAIL = 's.h.vip.chauffeur@gmail.com';
 
-    let selectedPayMode = 'deposit';
+    let paymentMode = 'acompte';
+    let devisTTC = 0;
+    let devisDistance = '';
+    let devisDuration = '';
+    let devisSource = '';
 
-    const params = new URLSearchParams(window.location.search);
+    const q = new URLSearchParams(window.location.search);
 
-    function euroToNumber(text) {
-      if (!text) return null;
-      const cleaned = String(text).replace(/\s/g,'').replace('€','').replace(',','.');
-      const num = Number(cleaned);
-      return Number.isFinite(num) ? num : null;
-    }
-    function numberToEuro(num) {
-      if (!Number.isFinite(num)) return 'Sur devis';
-      return Math.round(num) + ' €';
-    }
+    const els = {
+      nom: document.getElementById('nom'),
+      telephone: document.getElementById('telephone'),
+      email: document.getElementById('email'),
+      prestation: document.getElementById('prestation'),
+      vehicule: document.getElementById('vehicule'),
+      depart: document.getElementById('depart'),
+      arrivee: document.getElementById('arrivee'),
+      dateCourse: document.getElementById('dateCourse'),
+      heure: document.getElementById('heure'),
+      passagers: document.getElementById('passagers'),
+      notes: document.getElementById('notes'),
+      amtAcompte: document.getElementById('amtAcompte'),
+      amtTotal: document.getElementById('amtTotal'),
+      sumSource: document.getElementById('sumSource'),
+      sumDistance: document.getElementById('sumDistance'),
+      sumDuration: document.getElementById('sumDuration'),
+      sumMode: document.getElementById('sumMode'),
+      sumTotal: document.getElementById('sumTotal'),
+      statusBox: document.getElementById('statusBox'),
+      sendBtn: document.getElementById('sendBtn'),
+      waBtn: document.getElementById('waBtn'),
+      mailBtn: document.getElementById('mailBtn'),
+      cardAcompte: document.getElementById('cardAcompte'),
+      cardTotal: document.getElementById('cardTotal')
+    };
 
-    function initFromReservation() {
-      const prestation = params.get('prestation') || '—';
-      const vehicule = params.get('vehicule') || '—';
-      const depart = params.get('depart') || '';
-      const arrivee = params.get('arrivee') || '';
-      const date = params.get('date') || '';
-      const heure = params.get('heure') || '';
-      const details = params.get('details') || '';
-      const quote = params.get('quote') || 'Sur devis';
-      const distance = params.get('distance') || '—';
-      const duration = params.get('duration') || '—';
-      const trip = params.get('trip') || (depart && arrivee ? `${depart} → ${arrivee}` : depart || '—');
-      const quoteSource = params.get('quote_source') || 'reservation';
-      const quoteStatus = params.get('quote_status') || '';
-
-      document.getElementById('sumPrestation').textContent = prestation;
-      document.getElementById('sumVehicule').textContent = vehicule;
-      document.getElementById('sumTrip').textContent = trip;
-      document.getElementById('sumDistance').textContent = distance;
-      document.getElementById('sumDuration').textContent = duration;
-      document.getElementById('sumDateTime').textContent = `${date || 'Date à confirmer'} · ${heure || 'Heure à confirmer'}`;
-      document.getElementById('sumQuoteSource').textContent = quoteSource;
-
-      document.getElementById('clientNotes').value = details;
-
-      document.getElementById('quoteAmount').textContent = quote;
-      document.getElementById('quoteStatus').textContent = quoteStatus || (quote === 'Sur devis' ? 'Devis manuel requis. Le dashboard pourra envoyer une proposition personnalisée.' : 'Devis repris depuis la page réservation. Aucun recalcul n’est effectué ici.');
-      document.getElementById('quoteStatus').classList.toggle('error', quote === 'Sur devis');
-      document.getElementById('quoteStatus').classList.toggle('ok', quote !== 'Sur devis');
-
-      const full = euroToNumber(quote);
-      document.getElementById('fullAmount').textContent = numberToEuro(full);
-      document.getElementById('depositAmount').textContent = full ? numberToEuro(full * 0.30) : 'Sur devis';
-      updateFallbackLinks();
+    function euros(n) {
+      if (!Number.isFinite(n)) return '—';
+      return `${Math.round(n)} €`;
     }
 
-    function getPayload() {
-      const quote = document.getElementById('quoteAmount').textContent.trim();
-      const full = euroToNumber(quote);
-      const amountSelected = selectedPayMode === 'deposit'
-        ? (full ? Math.round(full * 0.30) : null)
-        : full;
-
-      return {
-        source: 'website-contact-finalisation',
-        reservation: {
-          prestation: document.getElementById('sumPrestation').textContent.trim(),
-          vehicule: document.getElementById('sumVehicule').textContent.trim(),
-          trajet: document.getElementById('sumTrip').textContent.trim(),
-          distance: document.getElementById('sumDistance').textContent.trim(),
-          duree: document.getElementById('sumDuration').textContent.trim(),
-          datetime: document.getElementById('sumDateTime').textContent.trim(),
-          quote_source: document.getElementById('sumQuoteSource').textContent.trim(),
-          quote_total_text: quote,
-          quote_total_amount: full,
-          payment_mode: selectedPayMode,
-          payment_amount: amountSelected
-        },
-        client: {
-          name: document.getElementById('clientName').value.trim(),
-          phone: document.getElementById('clientPhone').value.trim(),
-          email: document.getElementById('clientEmail').value.trim(),
-          notes: document.getElementById('clientNotes').value.trim()
-        }
-      };
+    function setStatus(msg, type='') {
+      els.statusBox.textContent = msg;
+      els.statusBox.classList.remove('ok', 'err');
+      if (type === 'ok') els.statusBox.classList.add('ok');
+      if (type === 'err') els.statusBox.classList.add('err');
     }
 
-    function validatePayload(payload) {
-      if (!payload.client.name) return 'Merci de renseigner le nom du client.';
-      if (!payload.client.phone) return 'Merci de renseigner le téléphone du client.';
-      if (!payload.client.email) return 'Merci de renseigner l’email du client.';
-      if (!payload.reservation.trajet || payload.reservation.trajet === '—') return 'Aucun trajet reçu depuis la page réservation.';
+    function applyMode(mode) {
+      paymentMode = mode;
+      els.cardAcompte.classList.toggle('active', mode === 'acompte');
+      els.cardTotal.classList.toggle('active', mode === 'total');
+      els.sumMode.textContent = mode === 'acompte' ? 'Acompte 30 %' : 'Paiement total';
+    }
+
+    function buildClientMessage() {
+      const lines = [
+        'Bonjour SHVIP,',
+        '',
+        'Je confirme ma demande de réservation :',
+        `Nom : ${els.nom.value || '—'}`,
+        `Téléphone : ${els.telephone.value || '—'}`,
+        `Email : ${els.email.value || '—'}`,
+        `Prestation : ${els.prestation.value || '—'}`,
+        `Véhicule : ${els.vehicule.value || '—'}`,
+        `Départ : ${els.depart.value || '—'}`,
+        `Arrivée : ${els.arrivee.value || '—'}`,
+        `Date : ${els.dateCourse.value || '—'}`,
+        `Heure : ${els.heure.value || '—'}`,
+        `Passagers : ${els.passagers.value || '—'}`,
+        `Distance : ${devisDistance || '—'}`,
+        `Durée : ${devisDuration || '—'}`,
+        `Devis TTC : ${euros(devisTTC)}`,
+        `Mode choisi : ${paymentMode === 'acompte' ? 'Acompte 30 %' : 'Paiement total'}`
+      ];
+      if (els.notes.value.trim()) lines.push(`Notes : ${els.notes.value.trim()}`);
+      return lines.join('\n');
+    }
+
+    function refreshCommunicationLinks() {
+      const message = buildClientMessage();
+      els.waBtn.href = `https://wa.me/${SHVIP_PHONE}?text=${encodeURIComponent(message)}`;
+      els.mailBtn.href = `mailto:${SHVIP_EMAIL}?subject=${encodeURIComponent('Nouvelle demande SHVIP à valider')}&body=${encodeURIComponent(message)}`;
+    }
+
+    function hydrateFromReservation() {
+      els.prestation.value = q.get('prestation') || '';
+      els.vehicule.value = q.get('vehicule') || '';
+      els.depart.value = q.get('depart') || '';
+      els.arrivee.value = q.get('arrivee') || '';
+      els.dateCourse.value = q.get('date') || '';
+      els.heure.value = q.get('heure') || '';
+      els.passagers.value = q.get('passagers') || '';
+      els.notes.value = q.get('details') || '';
+
+      devisTTC = Number(q.get('devis_ttc') || q.get('quote') || 0);
+      devisDistance = q.get('distance') || '';
+      devisDuration = q.get('duration') || '';
+      devisSource = q.get('quote_source') || 'Devis réservation';
+
+      const acompte = devisTTC ? devisTTC * 0.30 : 0;
+      els.amtAcompte.textContent = devisTTC ? euros(acompte) : 'Sur devis';
+      els.amtTotal.textContent = devisTTC ? euros(devisTTC) : 'Sur devis';
+      els.sumTotal.textContent = devisTTC ? euros(devisTTC) : 'Sur devis';
+      els.sumSource.textContent = devisSource || '—';
+      els.sumDistance.textContent = devisDistance || '—';
+      els.sumDuration.textContent = devisDuration || '—';
+
+      if (!devisTTC) {
+        setStatus('Aucun montant transmis depuis la page réservation. Merci de revenir au calcul du devis avant finalisation.', 'err');
+      }
+
+      refreshCommunicationLinks();
+    }
+
+    function validateForm() {
+      if (!els.nom.value.trim()) return 'Merci de renseigner le nom complet.';
+      if (!els.telephone.value.trim()) return 'Merci de renseigner le téléphone.';
+      if (!els.email.value.trim()) return 'Merci de renseigner l’email client.';
+      if (!els.depart.value.trim()) return 'Le départ est manquant.';
+      if (!els.prestation.value.trim()) return 'La prestation est manquante.';
       return '';
     }
 
-    function updateFallbackLinks() {
-      const payload = getPayload();
-      const lines = [
-        'Bonjour SHVIP, merci de finaliser cette réservation :',
-        '',
-        `Client : ${payload.client.name || '—'}`,
-        `Téléphone : ${payload.client.phone || '—'}`,
-        `Email : ${payload.client.email || '—'}`,
-        `Prestation : ${payload.reservation.prestation}`,
-        `Véhicule : ${payload.reservation.vehicule}`,
-        `Trajet : ${payload.reservation.trajet}`,
-        `Distance : ${payload.reservation.distance}`,
-        `Durée : ${payload.reservation.duree}`,
-        `Date / heure : ${payload.reservation.datetime}`,
-        `Total TTC : ${payload.reservation.quote_total_text}`,
-        `Mode de paiement souhaité : ${payload.reservation.payment_mode === 'deposit' ? 'Acompte 30%' : 'Paiement total'}`,
-        `Montant à encaisser : ${payload.reservation.payment_amount ? payload.reservation.payment_amount + ' €' : 'Sur devis'}`,
-      ];
-      if (payload.client.notes) lines.push(`Notes : ${payload.client.notes}`);
-
-      const message = encodeURIComponent(lines.join('\n'));
-      document.getElementById('fallbackWhatsBtn').href = `https://wa.me/${SHVIP_PHONE}?text=${message}`;
-      document.getElementById('fallbackMailBtn').href = `mailto:${SHVIP_EMAIL}?subject=${encodeURIComponent('Finalisation réservation SHVIP')}&body=${message}`;
-    }
-
-    function setStatus(message, type='') {
-      const box = document.getElementById('sendStatus');
-      box.textContent = message;
-      box.className = 'alert' + (type ? ' ' + type : '');
-    }
-
-    async function sendToDashboard() {
-      const payload = getPayload();
-      const validationError = validatePayload(payload);
+    async function envoyerVersSupabase() {
+      const validationError = validateForm();
       if (validationError) {
-        setStatus(validationError, 'error');
+        setStatus(validationError, 'err');
+        return;
+      }
+      if (!SUPABASE_URL.startsWith('http') || SUPABASE_PUBLISHABLE_KEY.includes('YOUR_')) {
+        setStatus('Supabase n’est pas encore configuré dans cette page. Remplacez SUPABASE_URL et SUPABASE_PUBLISHABLE_KEY en haut du script.', 'err');
         return;
       }
 
-      updateFallbackLinks();
+      const payload = {
+        nom: els.nom.value.trim(),
+        telephone: els.telephone.value.trim(),
+        email: els.email.value.trim(),
+        depart: els.depart.value.trim(),
+        arrivee: els.arrivee.value.trim(),
+        date_course: els.dateCourse.value || '',
+        heure: els.heure.value || '',
+        nb_passagers: els.passagers.value || '1',
+        prestation: `${els.prestation.value || ''} | ${els.vehicule.value || ''} | ${paymentMode === 'acompte' ? 'Acompte 30 %' : 'Paiement total'} | Devis ${devisTTC ? euros(devisTTC) : 'Sur devis'}`,
+        notes: [
+          devisSource ? `Source devis : ${devisSource}` : '',
+          devisDistance ? `Distance : ${devisDistance}` : '',
+          devisDuration ? `Durée : ${devisDuration}` : '',
+          els.notes.value.trim()
+        ].filter(Boolean).join(' | '),
+        importe: 0
+      };
 
-      if (!DASHBOARD_ENDPOINT) {
-        setStatus('Le dashboard n’est pas encore branché à cette page. Le devis est prêt : utilise WhatsApp ou email ci-dessus, ou ajoute ton endpoint backend dans la constante DASHBOARD_ENDPOINT.', 'error');
-        return;
-      }
+      els.sendBtn.disabled = true;
+      setStatus('Envoi en cours vers Supabase…');
 
-      setStatus('Transmission en cours vers le dashboard…');
       try {
-        const resp = await fetch(DASHBOARD_ENDPOINT, {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/reservations`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_PUBLISHABLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+            'Prefer': 'return=representation'
+          },
           body: JSON.stringify(payload)
         });
 
-        const data = await resp.json().catch(() => ({}));
-
-        if (!resp.ok) {
-          throw new Error(data.error || `Erreur HTTP ${resp.status}`);
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || `Erreur HTTP ${res.status}`);
         }
 
-        let msg = 'Demande envoyée au dashboard avec succès.';
-        if (data.quote_link) msg += ` Lien devis : ${data.quote_link}`;
-        if (data.payment_link) msg += ` Lien paiement : ${data.payment_link}`;
-        if (data.reference) msg += ` Référence : ${data.reference}`;
-        setStatus(msg, 'ok');
+        setStatus('Demande transmise avec succès. Le script de synchronisation importera la réservation dans le dashboard, puis vous pourrez envoyer le devis et le lien de paiement depuis votre interface SHVIP.', 'ok');
+        refreshCommunicationLinks();
       } catch (err) {
-        setStatus('La connexion au dashboard a échoué. Utilise temporairement WhatsApp ou email, ou vérifie l’endpoint backend. Détail : ' + err.message, 'error');
+        setStatus(`Échec d’envoi vers Supabase : ${err.message}`, 'err');
+      } finally {
+        els.sendBtn.disabled = false;
       }
     }
 
-    document.querySelectorAll('.payment-opt').forEach(el => {
-      el.addEventListener('click', () => {
-        document.querySelectorAll('.payment-opt').forEach(x => x.classList.remove('selected'));
-        el.classList.add('selected');
-        selectedPayMode = el.dataset.pay;
-        updateFallbackLinks();
-      });
+    els.cardAcompte.addEventListener('click', () => { applyMode('acompte'); refreshCommunicationLinks(); });
+    els.cardTotal.addEventListener('click', () => { applyMode('total'); refreshCommunicationLinks(); });
+    els.sendBtn.addEventListener('click', envoyerVersSupabase);
+    ['input','change'].forEach(evt => {
+      [els.nom, els.telephone, els.email].forEach(el => el.addEventListener(evt, refreshCommunicationLinks));
     });
 
-    ['clientName','clientPhone','clientEmail','clientNotes'].forEach(id => {
-      document.getElementById(id).addEventListener('input', updateFallbackLinks);
-    });
-    document.getElementById('sendToDashboardBtn').addEventListener('click', sendToDashboard);
-
-    initFromReservation();
+    hydrateFromReservation();
+    applyMode('acompte');
   </script>
 </body>
 </html>
