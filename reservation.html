@@ -763,14 +763,11 @@
 
     function continueToContact(event) {
       if (event) event.preventDefault();
-      const priceText = (els.prixAffiche.textContent || '').trim() || 'Sur devis';
-      const distanceText = (els.sumDistance.textContent || '').trim() || '';
-      const durationText = (els.sumDuration.textContent || '').trim() || '';
-      const statusText = (els.quoteStatus.textContent || '').trim() || '';
-      const detected = mode === 'transfer' ? detectFixedRoute(els.depart.value.trim(), els.arrivee.value.trim()) : null;
-      const source = priceText === 'Sur devis' ? 'sur-devis' : (detected ? 'fixed' : (mode === 'dispo' ? 'dispo' : 'dynamic'));
+      const priceText = (els.prixAffiche.textContent || 'Sur devis').trim();
+      const statusText = (els.quoteStatus.textContent || '').trim();
       const params = new URLSearchParams({
-        prestation: mode === 'transfer' ? (detected?.label || 'Transfert personnalisé') : 'Mise à disposition',
+        prestation: mode === 'transfer' ? (detectFixedRoute(els.depart.value.trim(), els.arrivee.value.trim())?.label || 'Transfert personnalisé') : 'Mise à disposition',
+        mode: mode,
         vehicule: els.vehicule.value || '',
         depart: els.depart.value || '',
         arrivee: mode === 'transfer' ? (els.arrivee.value || '') : '',
@@ -779,13 +776,13 @@
         passagers: els.passagers.value || '',
         details: els.details.value || '',
         quote: priceText,
-        distance: distanceText,
-        duration: durationText,
-        quoteStatus: statusText,
-        quoteSource: source,
-        autoquote: '1'
+        distance: (els.sumDistance.textContent || '').trim(),
+        duration: (els.sumDuration.textContent || '').trim(),
+        trip: (els.sumTrip.textContent || '').trim(),
+        quote_status: statusText,
+        quote_source: priceText === 'Sur devis' ? 'manual' : 'reservation'
       });
-      window.location.href = '/contact?' + params.toString() + '#demande-privee';
+      window.location.href = '/contact?' + params.toString() + '#finalisation';
     }
 
     function initAutocomplete() {
