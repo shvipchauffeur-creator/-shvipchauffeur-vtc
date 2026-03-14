@@ -646,7 +646,6 @@
 
 <!-- ================================== STEP 1 ================================== -->
 <div id="step1">
-  <div id="demande-privee"></div>
   <div class="section-container anim-3">
     <div class="form-card">
       <p class="form-section-title">01 — Choisissez votre <span>prestation</span></p>
@@ -798,7 +797,7 @@
     <div class="devis-header">
       <div class="devis-tag">Estimation tarifaire</div>
       <h2>Votre <em>tarif personnalisé</em></h2>
-      <p>Basé sur votre demande. Finalisez votre réservation puis recevez<br>un lien de paiement sécurisé correspondant au montant choisi.</p>
+      <p>Basé sur votre demande. Choisissez l'acompte ou le règlement total puis transmettez votre demande. Un lien de paiement Stripe pourra ensuite être envoyé depuis notre équipe ou votre dashboard.</p>
     </div>
 
     <!-- RECAP -->
@@ -859,33 +858,22 @@
       </div>
     </div>
 
-    <!-- FINALISATION PAR LIEN DE PAIEMENT -->
+    <!-- FINALISATION SANS CARTE SUR LE SITE -->
     <div class="stripe-zone">
-      <div class="stripe-zone-title">🔗 Finalisation par lien de paiement</div>
-      <div class="fields-grid">
-        <div class="field span-2">
-          <label>Mode de finalisation</label>
-          <div style="padding:1rem 1.1rem; border:1px solid rgba(201,169,110,0.18); color:var(--or-pale); background:rgba(255,255,255,0.01); line-height:1.8;">
-            Aucun paiement par carte n'est saisi sur le site. Après confirmation, SHVIP vous envoie un lien de paiement Stripe sécurisé correspondant à l'acompte 30% ou au montant total.
-          </div>
-        </div>
-        <div class="field span-2">
-          <label>Lien de paiement</label>
-          <div style="padding:1rem 1.1rem; border:1px solid rgba(201,169,110,0.18); color:var(--muted); background:rgba(255,255,255,0.01); line-height:1.8;">
-            Le lien est envoyé manuellement par WhatsApp ou par email après validation de votre demande. C'est la méthode la plus fiable pour garantir le bon montant.
-          </div>
-        </div>
+      <div class="stripe-zone-title">🔗 Finalisation & lien de paiement</div>
+      <div style="color:var(--gris); line-height:1.8; font-size:0.72rem; letter-spacing:0.05em;">
+        Aucun paiement par carte n'est demandé sur cette page. Après validation de votre demande, <strong style="color:var(--or-pale); font-weight:500;">un lien de paiement Stripe sécurisé</strong> pourra vous être envoyé par notre équipe via email, WhatsApp ou depuis votre dashboard administratif.
       </div>
       <div class="stripe-secured">
         <span class="shield">🛡</span>
-        Paiement sécurisé Stripe via lien externe · Aucun numéro de carte n'est stocké sur le site
+        Validation de commande sans saisie bancaire · Lien Stripe envoyé séparément après vérification
       </div>
     </div>
 
     <div class="form-footer">
       <button class="btn-secondary" onclick="backToStep1()">← Modifier ma demande</button>
       <button class="btn-primary" onclick="goToStep3()">
-        <span id="btnPayLabel">Confirmer et recevoir le lien d'acompte</span>
+        <span id="btnPayLabel">Finaliser ma demande</span>
         <span class="arrow">→</span>
       </button>
     </div>
@@ -898,30 +886,30 @@
   <div class="section-container">
     <div class="confirm-center">
       <div class="confirm-icon">✓</div>
-      <h2>Réservation <em>confirmée</em></h2>
-      <p>Votre demande a bien été confirmée. Un lien de paiement Stripe va vous être envoyé par WhatsApp ou par email, selon le mode de règlement choisi. Votre coordinateur SHVIP vous recontacte rapidement.</p>
+      <h2>Demande <em>transmise</em></h2>
+      <p id="confirmMessage">Votre demande a bien été transmise à notre équipe. Aucun paiement n'est prélevé sur cette page. Un lien de paiement sécurisé pourra vous être envoyé après validation de la course.</p>
       <div class="confirm-ref" id="confirmRef">Réf : SHVIP-2026-XXXX</div>
       <br>
-      <a href="https://wa.me/33649604960" class="confirm-whatsapp">
-        💬 Contacter votre coordinateur WhatsApp →
-      </a>
+      <a href="https://wa.me/33649604960" class="confirm-whatsapp" id="confirmWhatsApp">💬 Ouvrir WhatsApp avec ma demande →</a>
+      <br><br>
+      <a href="mailto:s.h.vip.chauffeur@gmail.com" class="confirm-whatsapp" id="confirmEmail">✉️ Préparer un email de finalisation →</a>
     </div>
 
     <div class="side-info">
       <div class="side-info-item">
         <div class="side-info-icon">📋</div>
         <div class="side-info-label">Prochaine étape</div>
-        <div class="side-info-val">Confirmation SMS<br>sous 15 minutes</div>
+        <div class="side-info-val">Lien de paiement<br>après validation</div>
       </div>
       <div class="side-info-item">
         <div class="side-info-icon">🤝</div>
         <div class="side-info-label">Votre chauffeur</div>
-        <div class="side-info-val">Attribué 2h avant<br>le départ</div>
+        <div class="side-info-val">Validation manuelle<br>par SHVIP</div>
       </div>
       <div class="side-info-item">
         <div class="side-info-icon">📄</div>
         <div class="side-info-label">Facture</div>
-        <div class="side-info-val">Envoyée par email<br>dans l'heure</div>
+        <div class="side-info-val">Dashboard / email<br>selon votre choix</div>
       </div>
     </div>
   </div>
@@ -945,7 +933,6 @@
   let selectedPrest = '';
   let selectedVehicle = '';
   let payMode = 'acompte';
-  let incomingQuote = null;
 
   function selectPrest(el) {
     document.querySelectorAll('.prestation-card').forEach(c => c.classList.remove('selected'));
@@ -963,8 +950,7 @@
     payMode = mode;
     document.getElementById('payAcompte').classList.toggle('selected', mode === 'acompte');
     document.getElementById('payTotal').classList.toggle('selected', mode === 'total');
-    document.getElementById('btnPayLabel').textContent =
-      mode === 'acompte' ? `Confirmer et recevoir le lien d'acompte` : `Confirmer et recevoir le lien de paiement total`;
+    document.getElementById('btnPayLabel').textContent = mode === 'acompte' ? 'Finaliser ma demande (acompte 30%)' : 'Finaliser ma demande (paiement total)';
   }
 
   const tarifs = {
@@ -1015,131 +1001,86 @@
     'Longue Distance':           'Longue distance · Sur devis',
   };
 
+  let incomingQuote = null;
+
+  function parsePriceNumber(value) {
+    if (!value) return NaN;
+    const normalized = String(value).replace(/€/g,'').replace(/,/g,'.').replace(/\s+/g,'').trim();
+    const match = normalized.match(/\d+(?:\.\d+)?/);
+    return match ? Number(match[0]) : NaN;
+  }
+
   function computePrice() {
+    if (incomingQuote && !Number.isNaN(incomingQuote.total)) return incomingQuote;
     const prestTarifs = tarifs[selectedPrest];
     if (!prestTarifs) return { ttcFixed: true, ttc: 0, label: '' };
     const ttc = prestTarifs[selectedVehicle] || 0;
     const label = tarifLabels[selectedPrest] || '';
-    return { ttcFixed: true, ttc, label };
+    return { ttcFixed: true, ttc, label, source: 'fallback' };
   }
 
-  function parseMoney(value) {
-    if (!value) return NaN;
-    const cleaned = String(value).replace(/\s/g, '').replace(',', '.').replace(/€|EUR/gi, '');
-    const num = parseFloat(cleaned);
-    return Number.isFinite(num) ? num : NaN;
-  }
-
-  function vehicleFromReservation(value) {
-    return {
-      business: 'Mercedes Classe E',
-      prestige: 'Mercedes Classe S',
-      van: 'Mercedes Classe V'
-    }[value] || value || '';
-  }
-
-  function prestationFromReservation(value) {
-    if (!value) return '';
-    const v = value.toLowerCase();
-    if (v.includes('orly')) return 'Paris — Orly';
-    if (v.includes('cdg') || v.includes('roissy')) return 'Paris — Roissy CDG';
-    if (v.includes('disney')) return 'Paris — Disneyland';
-    if (v.includes('mise à disposition') || v.includes('mise a disposition')) return 'Mise à Disposition';
-    return 'Longue Distance';
-  }
-
-  function applyQuoteToTotals(source) {
-    const total = Number(source.total || 0);
-    const label = source.label || 'Devis transmis depuis la réservation';
-    const distance = source.distance || '—';
-    const duration = source.duration || '—';
-    const trip = source.trip || `${document.getElementById('fdep').value.trim()} → ${document.getElementById('farr').value.trim()}`;
-
-    document.getElementById('tBaseLabel').textContent = label;
-
-    if (!Number.isFinite(total) || total <= 0) {
+  function applyQuoteToStep2(p) {
+    if (!p || (Number.isNaN(Number(p.total ?? p.ttc)) && !/sur devis/i.test(String(p.label || '')))) {
+      document.getElementById('tBaseLabel').textContent = 'Prestation · Sur devis';
       document.getElementById('tBase').textContent = 'Sur devis';
-      document.getElementById('tVehicle').textContent = 'Selon validation';
-      document.getElementById('tTVA').textContent = 'À confirmer';
+      document.getElementById('tVehicle').textContent = 'À confirmer';
+      document.getElementById('tTVA').textContent = '—';
       document.getElementById('tTotal').textContent = 'Sur devis';
       document.getElementById('amtAcompte').textContent = 'Sur devis';
       document.getElementById('amtTotal').textContent = 'Sur devis';
-      return { totalText: 'Sur devis', acompteText: 'Sur devis', trip, distance, duration };
+      return;
     }
-
-    const ht = Math.round((total / 1.2) * 100) / 100;
+    const total = Number(p.total ?? p.ttc);
+    if (Number.isNaN(total)) {
+      document.getElementById('tBaseLabel').textContent = p.label || 'Prestation · Sur devis';
+      document.getElementById('tBase').textContent = 'Sur devis';
+      document.getElementById('tVehicle').textContent = 'À confirmer';
+      document.getElementById('tTVA').textContent = '—';
+      document.getElementById('tTotal').textContent = 'Sur devis';
+      document.getElementById('amtAcompte').textContent = 'Sur devis';
+      document.getElementById('amtTotal').textContent = 'Sur devis';
+      return;
+    }
+    const ht  = Math.round(total / 1.2);
     const tva = Math.round((total - ht) * 100) / 100;
-    const acompte = Math.round(total * 0.30 * 100) / 100;
-
-    document.getElementById('tBase').textContent = `${ht.toFixed(2).replace('.00','')} € HT`;
+    document.getElementById('tBaseLabel').textContent = p.label || 'Devis transmis depuis la réservation';
+    document.getElementById('tBase').textContent    = ht + ' € HT';
     document.getElementById('tVehicle').textContent = 'Inclus';
-    document.getElementById('tTVA').textContent = `${tva.toFixed(2).replace('.00','')} €`;
-    document.getElementById('tTotal').textContent = `${total.toFixed(2).replace('.00','')}`;
-    document.getElementById('amtAcompte').textContent = `${acompte.toFixed(2).replace('.00','')} €`;
-    document.getElementById('amtTotal').textContent = `${total.toFixed(2).replace('.00','')} €`;
-
-    return {
-      totalText: `${total.toFixed(2).replace('.00','')} €`,
-      acompteText: `${acompte.toFixed(2).replace('.00','')} €`,
-      trip,
-      distance,
-      duration
-    };
+    document.getElementById('tTVA').textContent     = tva + ' €';
+    document.getElementById('tTotal').textContent   = String(Math.round(total));
+    const acompte = Math.round(total * 0.30);
+    document.getElementById('amtAcompte').textContent = acompte + ' €';
+    document.getElementById('amtTotal').textContent   = Math.round(total) + ' €';
   }
 
   function goToStep2() {
     const name  = document.getElementById('fname').value.trim();
     const phone = document.getElementById('fphone').value.trim();
     const email = document.getElementById('femail').value.trim();
-    const pax   = document.getElementById('fpax').value.trim();
     const date  = document.getElementById('fdate').value;
     const time  = document.getElementById('ftime').value;
     const dep   = document.getElementById('fdep').value.trim();
     const arr   = document.getElementById('farr').value.trim();
-    const notes = document.getElementById('fnotes').value.trim();
 
     if (!selectedPrest)  { alert('Veuillez choisir une prestation.'); return; }
     if (!selectedVehicle){ alert('Veuillez choisir un véhicule.'); return; }
     if (!name)  { alert('Veuillez entrer votre nom.'); return; }
     if (!phone) { alert('Veuillez entrer votre téléphone.'); return; }
+    if (!email) { alert('Veuillez entrer votre email.'); return; }
     if (!date)  { alert('Veuillez choisir une date.'); return; }
     if (!time)  { alert('Veuillez choisir une heure.'); return; }
-    if (!dep)   { alert('Veuillez entrer l\'adresse de départ.'); return; }
-    if (!arr && selectedPrest !== 'Mise à Disposition')   { alert('Veuillez entrer l\'adresse d\'arrivée.'); return; }
+    if (!dep)   { alert('Veuillez entrer l'adresse de départ.'); return; }
+    if (!arr)   { alert('Veuillez entrer l'adresse d'arrivée.'); return; }
 
     document.getElementById('recapPrest').textContent   = selectedPrest;
     document.getElementById('recapVehicle').textContent = selectedVehicle;
-    document.getElementById('recapName').textContent    = name;
+    document.getElementById('recapName').textContent    = name + ' · ' + email;
     document.getElementById('recapDate').textContent    = `${date} à ${time}`;
     document.getElementById('recapDep').textContent     = dep;
-    document.getElementById('recapArr').textContent     = arr || 'Selon programme';
+    document.getElementById('recapArr').textContent     = arr;
 
-    let totals;
-    if (incomingQuote) {
-      totals = applyQuoteToTotals(incomingQuote);
-    } else {
-      const p = computePrice();
-      totals = applyQuoteToTotals({ total: p.ttc, label: p.label || 'Prestation · Prix fixe TTC' });
-    }
-
-    window.currentReservationPayload = {
-      name,
-      phone,
-      email,
-      pax,
-      date,
-      time,
-      dep,
-      arr: arr || 'Selon programme',
-      notes,
-      prestation: selectedPrest,
-      vehicle: selectedVehicle,
-      totalText: totals.totalText,
-      acompteText: totals.acompteText,
-      distance: totals.distance,
-      duration: totals.duration,
-      trip: totals.trip
-    };
+    const p = computePrice();
+    applyQuoteToStep2(p);
 
     setStep(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1150,46 +1091,98 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function buildAdminMessage(ref) {
+    const totalRaw = document.getElementById('tTotal').textContent;
+    const totalText = totalRaw === 'Sur devis' ? 'Sur devis' : totalRaw + ' €';
+    const selectedAmount = payMode === 'acompte' ? document.getElementById('amtAcompte').textContent : document.getElementById('amtTotal').textContent;
+    return [
+      `Nouvelle demande SHVIP — ${ref}`,
+      `Client : ${document.getElementById('fname').value.trim()}`,
+      `Téléphone : ${document.getElementById('fphone').value.trim()}`,
+      `Email : ${document.getElementById('femail').value.trim()}`,
+      `Prestation : ${selectedPrest}`,
+      `Véhicule : ${selectedVehicle}`,
+      `Date / heure : ${document.getElementById('fdate').value} à ${document.getElementById('ftime').value}`,
+      `Départ : ${document.getElementById('fdep').value.trim()}`,
+      `Arrivée : ${document.getElementById('farr').value.trim()}`,
+      `Passagers : ${document.getElementById('fpax').value || '—'}`,
+      `Montant devis : ${totalText}`,
+      `Mode souhaité : ${payMode === 'acompte' ? 'Acompte 30%' : 'Paiement total'}`,
+      `Montant à envoyer : ${selectedAmount}`,
+      `Notes : ${document.getElementById('fnotes').value.trim() || '—'}`,
+      `Référence : ${ref}`
+    ].join('
+');
+  }
+
   function goToStep3() {
     const ref = 'SHVIP-2026-' + Math.floor(1000 + Math.random() * 9000);
     document.getElementById('confirmRef').textContent = 'Réf : ' + ref;
-
-    const payload = window.currentReservationPayload || {};
-    const amountText = payMode === 'acompte' ? (payload.acompteText || document.getElementById('amtAcompte').textContent) : (payload.totalText || document.getElementById('amtTotal').textContent);
-    const modeLabel = payMode === 'acompte' ? 'Acompte 30%' : 'Paiement total';
-    const lines = [
-      'Bonjour SHVIP, je confirme ma réservation et je souhaite recevoir mon lien de paiement Stripe.',
-      '',
-      `Référence : ${ref}`,
-      `Mode de règlement : ${modeLabel}`,
-      `Montant : ${amountText}`,
-      `Prestation : ${payload.prestation || selectedPrest}`,
-      `Véhicule : ${payload.vehicle || selectedVehicle}`,
-      `Nom : ${payload.name || ''}`,
-      `Téléphone : ${payload.phone || ''}`,
-      payload.email ? `Email : ${payload.email}` : '',
-      `Date / heure : ${payload.date || ''} à ${payload.time || ''}`,
-      `Départ : ${payload.dep || ''}`,
-      `Arrivée : ${payload.arr || ''}`,
-      payload.pax ? `Passagers : ${payload.pax}` : '',
-      payload.distance ? `Distance : ${payload.distance}` : '',
-      payload.duration ? `Durée : ${payload.duration}` : '',
-      payload.notes ? `Notes : ${payload.notes}` : ''
-    ].filter(Boolean).join('\n');
-
-    const wa = `https://wa.me/33649604960?text=${encodeURIComponent(lines)}`;
-    const link = document.querySelector('.confirm-whatsapp');
-    if (link) link.href = wa;
-
+    const amountText = payMode === 'acompte' ? document.getElementById('amtAcompte').textContent : document.getElementById('amtTotal').textContent;
+    document.getElementById('confirmMessage').textContent = `Votre demande a bien été transmise. Aucun paiement n'est prélevé sur cette page. Un lien de paiement sécurisé pour ${amountText} pourra vous être envoyé après validation de la course.`;
+    const msg = buildAdminMessage(ref);
+    document.getElementById('confirmWhatsApp').href = 'https://wa.me/33649604960?text=' + encodeURIComponent(msg);
+    document.getElementById('confirmEmail').href = 'mailto:s.h.vip.chauffeur@gmail.com?subject=' + encodeURIComponent('Nouvelle demande SHVIP ' + ref) + '&body=' + encodeURIComponent(msg);
     setStep(3);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  function hydrateFromReservation() {
+    const params = new URLSearchParams(window.location.search);
+    const mapPrest = (raw) => {
+      const v = (raw || '').toLowerCase();
+      if (v.includes('orly')) return 'Paris — Orly';
+      if (v.includes('cdg') || v.includes('roissy')) return 'Paris — Roissy CDG';
+      if (v.includes('disney')) return 'Paris — Disneyland';
+      if (v.includes('mise')) return 'Mise à Disposition';
+      return 'Transfert Aéroport / Gare';
+    };
+    const mapVeh = (raw) => {
+      if (raw === 'business' || /classe e/i.test(raw || '')) return 'Mercedes Classe E';
+      if (raw === 'prestige' || /classe s/i.test(raw || '')) return 'Mercedes Classe S';
+      if (raw === 'van' || /classe v/i.test(raw || '')) return 'Mercedes Classe V';
+      return '';
+    };
+
+    const prestation = params.get('prestation') || '';
+    const vehicle = params.get('vehicule') || '';
+    const quoteRaw = params.get('quote') || '';
+    const quoteVal = parsePriceNumber(quoteRaw);
+    const quoteSource = params.get('quoteSource') || '';
+
+    if (prestation) selectedPrest = mapPrest(prestation);
+    if (vehicle) selectedVehicle = mapVeh(vehicle);
+    if (params.get('depart')) document.getElementById('fdep').value = params.get('depart');
+    if (params.get('arrivee')) document.getElementById('farr').value = params.get('arrivee');
+    if (params.get('date')) document.getElementById('fdate').value = params.get('date');
+    if (params.get('heure')) document.getElementById('ftime').value = params.get('heure');
+    if (params.get('details')) document.getElementById('fnotes').value = params.get('details');
+    if (params.get('passagers')) {
+      const pass = params.get('passagers');
+      const sel = document.getElementById('fpax');
+      const opt = Array.from(sel.options).find(o => o.value === pass || o.textContent.startsWith(pass));
+      if (opt) sel.value = opt.value;
+    }
+
+    if (selectedPrest) document.querySelectorAll('.prestation-card').forEach(c => c.classList.toggle('selected', c.dataset.prest === selectedPrest));
+    if (selectedVehicle) document.querySelectorAll('.vehicle-card').forEach(c => c.classList.toggle('selected', c.dataset.vehicle === selectedVehicle));
+    if (!Number.isNaN(quoteVal)) {
+      incomingQuote = {
+        total: quoteVal,
+        label: quoteSource === 'fixed' ? 'Devis SHVIP transmis depuis la réservation' : 'Devis dynamique transmis depuis la réservation',
+        source: quoteSource
+      };
+    }
+  }
+
+  hydrateFromReservation();
 
   function setStep(n) {
     document.getElementById('step1').style.display = n === 1 ? 'block' : 'none';
     document.getElementById('step2').style.display = n === 2 ? 'block' : 'none';
     document.getElementById('step3').style.display = n === 3 ? 'block' : 'none';
 
+    // Steps bar
     [1,2,3].forEach(i => {
       const si = document.getElementById('si' + i);
       si.classList.remove('active', 'done');
@@ -1201,61 +1194,6 @@
     if (document.getElementById('conn2'))
       document.getElementById('conn2').classList.toggle('done', n >= 3);
   }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-
-    const prestParam = params.get('prestation') || '';
-    const vehicleParam = vehicleFromReservation(params.get('vehicule') || '');
-    const dep = params.get('depart') || '';
-    const arr = params.get('arrivee') || '';
-    const date = params.get('date') || '';
-    const heure = params.get('heure') || '';
-    const passagers = params.get('passagers') || '';
-    const details = params.get('details') || '';
-    const amount = params.get('quote_amount') || '';
-    const distance = params.get('quote_distance') || '';
-    const duration = params.get('quote_duration') || '';
-    const trip = params.get('quote_trip') || '';
-    const source = params.get('quote_source') || '';
-
-    if (dep) document.getElementById('fdep').value = dep;
-    if (arr) document.getElementById('farr').value = arr;
-    if (date) document.getElementById('fdate').value = date;
-    if (heure) document.getElementById('ftime').value = heure;
-    if (details) document.getElementById('fnotes').value = details;
-    if (passagers) {
-      const paxSelect = document.getElementById('fpax');
-      const target = Array.from(paxSelect.options).find(opt => opt.textContent.startsWith(passagers));
-      if (target) paxSelect.value = target.value;
-    }
-
-    const prestNormalized = prestationFromReservation(prestParam);
-    if (prestNormalized) {
-      const prestCard = Array.from(document.querySelectorAll('.prestation-card')).find(c => c.dataset.prest === prestNormalized);
-      if (prestCard) selectPrest(prestCard);
-    }
-
-    if (vehicleParam) {
-      const vehicleCard = Array.from(document.querySelectorAll('.vehicle-card')).find(c => c.dataset.vehicle === vehicleParam);
-      if (vehicleCard) selectVehicle(vehicleCard);
-    }
-
-    const amountNum = parseMoney(amount);
-    incomingQuote = {
-      total: Number.isFinite(amountNum) ? amountNum : 0,
-      distance,
-      duration,
-      trip: trip || `${dep} → ${arr}`,
-      label: source === 'fixed'
-        ? 'Devis transmis depuis la réservation · Tarif fixe'
-        : source === 'dispo'
-          ? 'Devis transmis depuis la réservation · Mise à disposition'
-          : amount && amount.toLowerCase().includes('sur devis')
-            ? 'Devis transmis depuis la réservation · Sur devis'
-            : 'Devis transmis depuis la réservation · Estimation dynamique'
-    };
-  });
 </script>
 </body>
 </html>
