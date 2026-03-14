@@ -525,8 +525,11 @@
         date_course: els.dateCourse.value || '',
         heure: els.heure.value || '',
         nb_passagers: els.passagers.value || '1',
-        prestation: `${els.prestation.value || ''} | ${els.vehicule.value || ''} | ${paymentMode === 'acompte' ? 'Acompte 30 %' : 'Paiement total'} | Devis ${devisTTC ? euros(devisTTC) : 'Sur devis'}`,
-        notes: [
+        // 👇 PRIX AJOUTÉ
+          prix: devisTTC || 0,
+		  
+		  prestation: `${els.prestation.value || ''} | ${els.vehicule.value || ''} | ${paymentMode === 'acompte' ? 'Acompte 30 %' : 'Paiement total'}`,
+		  notes: [
           devisSource ? `Source devis : ${devisSource}` : '',
           devisDistance ? `Distance : ${devisDistance}` : '',
           devisDuration ? `Durée : ${devisDuration}` : '',
