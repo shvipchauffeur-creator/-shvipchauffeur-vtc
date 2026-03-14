@@ -763,36 +763,14 @@
 
     function continueToContact(event) {
       if (event) event.preventDefault();
-
-      const quoteAmount = (els.prixAffiche.textContent || '').trim();
-      const quoteDistance = (els.sumDistance.textContent || '').trim();
-      const quoteDuration = (els.sumDuration.textContent || '').trim();
-      const quoteTrip = (els.sumTrip.textContent || '').trim();
-      const quoteStatus = (els.quoteStatus.textContent || '').trim();
-      const fixedRoute = mode === 'transfer' ? detectFixedRoute(els.depart.value.trim(), els.arrivee.value.trim()) : null;
-      const quoteSource = mode === 'dispo'
-        ? 'dispo'
-        : fixedRoute
-          ? 'fixed'
-          : (quoteAmount && quoteAmount !== '—' && quoteAmount.toLowerCase() !== 'sur devis' ? 'dynamic' : 'devis');
-
-      if (!els.depart.value.trim()) {
-        alert('Veuillez renseigner votre adresse de départ.');
-        return;
-      }
-      if (mode === 'transfer' && !els.arrivee.value.trim()) {
-        alert('Veuillez renseigner votre adresse d\'arrivée.');
-        return;
-      }
-      if (!quoteAmount || quoteAmount === '—') {
-        alert('Veuillez d\'abord cliquer sur « Obtenir mon tarif » pour calculer votre devis.');
-        return;
-      }
-
+      const priceText = (els.prixAffiche.textContent || '').trim() || 'Sur devis';
+      const distanceText = (els.sumDistance.textContent || '').trim() || '';
+      const durationText = (els.sumDuration.textContent || '').trim() || '';
+      const statusText = (els.quoteStatus.textContent || '').trim() || '';
+      const detected = mode === 'transfer' ? detectFixedRoute(els.depart.value.trim(), els.arrivee.value.trim()) : null;
+      const source = priceText === 'Sur devis' ? 'sur-devis' : (detected ? 'fixed' : (mode === 'dispo' ? 'dispo' : 'dynamic'));
       const params = new URLSearchParams({
-        prestation: mode === 'transfer'
-          ? (fixedRoute?.label || 'Transfert personnalisé')
-          : `Mise à disposition (${els.dureeDispo.value || '4'} h)`,
+        prestation: mode === 'transfer' ? (detected?.label || 'Transfert personnalisé') : 'Mise à disposition',
         vehicule: els.vehicule.value || '',
         depart: els.depart.value || '',
         arrivee: mode === 'transfer' ? (els.arrivee.value || '') : '',
@@ -800,12 +778,11 @@
         heure: els.heure.value || '',
         passagers: els.passagers.value || '',
         details: els.details.value || '',
-        quote_amount: quoteAmount,
-        quote_distance: quoteDistance,
-        quote_duration: quoteDuration,
-        quote_trip: quoteTrip,
-        quote_status: quoteStatus,
-        quote_source: quoteSource,
+        quote: priceText,
+        distance: distanceText,
+        duration: durationText,
+        quoteStatus: statusText,
+        quoteSource: source,
         autoquote: '1'
       });
       window.location.href = '/contact?' + params.toString() + '#demande-privee';
