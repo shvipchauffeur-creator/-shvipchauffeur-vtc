@@ -445,9 +445,7 @@ footer {
       <h2>Demande <em>confirmée</em></h2>
       <p>Votre réservation a été enregistrée dans le système SHVIP. L'équipe vous contacte dans l'heure pour confirmation définitive.</p>
       <div class="ref-badge" id="ref-badge">—</div>
-      <a class="wa-link" href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20viens%20de%20soumettre%20une%20r%C3%A9servation%20en%20ligne." target="_blank">
-        <span>📱</span><span>Réponse immédiate &nbsp;<strong>WhatsApp : 06 49 60 49 60</strong></span>
-      </a>
+
     </div>
   </div>
 
@@ -620,7 +618,7 @@ footer {
       window.scrollTo({top:180,behavior:'smooth'});
     } catch(err) {
       console.error(err);
-      showToast('Erreur lors de l\'envoi. Contactez-nous : 06 49 60 49 60');
+      showToast('Une erreur est survenue. Veuillez réessayer.');
       btn.classList.remove('loading'); btn.textContent = 'Confirmer ma réservation ✓';
     }
   }
