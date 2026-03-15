@@ -1,60 +1,69 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SHVIP — Réservation Privée</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+  
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --gold: #c9a96e; --gold-dim: #a07840;
-      --gold-glow: rgba(201,169,110,0.15); --gold-border: rgba(201,169,110,0.3);
-      --ink: #07080a; --ink-2: #0e0f12; --ink-3: #161719; --ink-4: #1e2024;
-      --text: #e6dfd3; --text-soft: rgba(230,223,211,0.55); --text-faint: rgba(230,223,211,0.28);
-      --success: #5dbf8a; --error: #e07070;
-    }
+  --gold:   #C9A84C;
+  --gold2:  #E8C96E;
+  --gold3:  #8B6914;
+  --ink:    #05070E;
+  --ink2:   #0A0C18;
+  --ink3:   #111520;
+  --white:  #F0EDE8;
+  --muted:  #6B6455;
+  --line:   rgba(201,168,76,0.18);
+  --success:#4caf82;
+  --error:  #cf6679;
+}
     html { scroll-behavior: smooth; }
-    body { background: var(--ink); color: var(--text); font-family: 'Raleway', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
+    body { background: var(--ink); color: var(--white); font-family: 'Raleway', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
     body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 180px; }
 
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 3.5rem; background: rgba(7,8,10,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--gold-border); }
-    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 400; letter-spacing: 0.25em; color: var(--gold); text-decoration: none; }
-    .nav-links { display: flex; gap: 2.8rem; list-style: none; }
-    .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.3s; }
-    .nav-links a:hover { color: var(--gold); }
+    
+    
+    
+    
+    
 
     .page-header { padding: 9.5rem 3.5rem 3.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 1; }
-    .page-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 3rem; background: linear-gradient(to bottom, var(--gold-border), transparent); }
+    .page-header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 3rem; background: linear-gradient(to bottom, var(--line), transparent); }
     .tag { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; display: flex; align-items: center; gap: 0.8rem; }
     .tag::before, .tag::after { content: '◆'; font-size: 0.4rem; opacity: 0.6; }
     .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 5.5vw, 4.2rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.2rem; }
     .page-header h1 em { font-style: italic; color: var(--gold); }
-    .page-header p { font-size: 0.75rem; color: var(--text-soft); max-width: 400px; line-height: 2; }
+    .page-header p { font-size: 0.75rem; color: var(--muted); max-width: 400px; line-height: 2; }
 
     .progress-wrap { position: relative; z-index: 1; max-width: 520px; margin: 3.5rem auto 0; padding: 0 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; }
     .prog-step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
-    .prog-step::after { content: ''; position: absolute; top: 15px; left: 50%; right: -50%; height: 1px; background: var(--gold-border); z-index: 0; }
+    .prog-step::after { content: ''; position: absolute; top: 15px; left: 50%; right: -50%; height: 1px; background: var(--line); z-index: 0; }
     .prog-step:last-child::after { display: none; }
-    .prog-dot { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold-border); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 500; background: var(--ink); position: relative; z-index: 1; color: var(--text-faint); transition: all 0.4s; }
-    .prog-step.active .prog-dot { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 18px var(--gold-glow); }
+    .prog-dot { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 500; background: var(--ink); position: relative; z-index: 1; color: var(--muted); transition: all 0.4s; }
+    .prog-step.active .prog-dot { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 18px var(--gold2); }
     .prog-step.done .prog-dot { border-color: var(--success); background: var(--success); color: var(--ink); }
-    .prog-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); margin-top: 0.6rem; transition: color 0.3s; }
+    .prog-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 0.6rem; transition: color 0.3s; }
     .prog-step.active .prog-label { color: var(--gold); }
     .prog-step.done .prog-label { color: var(--success); }
 
     .main { position: relative; z-index: 1; max-width: 900px; margin: 3.5rem auto 7rem; padding: 0 1.5rem; }
-    .panel { background: var(--ink-2); border: 1px solid var(--gold-border); animation: riseIn 0.5s cubic-bezier(.22,.68,0,1.2) both; }
+    .panel { background: var(--ink2); border: 1px solid var(--line); animation: riseIn 0.5s cubic-bezier(.22,.68,0,1.2) both; }
     @keyframes riseIn { from { opacity: 0; transform: translateY(24px) scale(0.99); } to { opacity: 1; transform: none; } }
     .panel-head { padding: 2.2rem 3rem 1.8rem; border-bottom: 1px solid rgba(201,169,110,0.12); display: flex; align-items: baseline; justify-content: space-between; }
     .panel-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 300; }
     .panel-head h2 em { font-style: italic; color: var(--gold); }
-    .panel-step-tag { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-faint); }
+    .panel-step-tag { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
     .panel-body { padding: 2.5rem 3rem; }
 
     .cards-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
     .cards-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.9rem; }
-    .opt-card { border: 1px solid var(--gold-border); background: var(--ink-3); padding: 1.5rem 1.3rem; cursor: pointer; position: relative; transition: border-color 0.3s, background 0.3s, transform 0.2s; }
+    .opt-card { border: 1px solid var(--line); background: var(--ink3); padding: 1.5rem 1.3rem; cursor: pointer; position: relative; transition: border-color 0.3s, background 0.3s, transform 0.2s; }
     .opt-card:hover { border-color: rgba(201,169,110,0.6); transform: translateY(-2px); }
     .opt-card.sel { border-color: var(--gold); background: rgba(201,169,110,0.05); }
     .opt-card.sel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg,transparent,var(--gold),transparent); }
@@ -63,60 +72,60 @@
     .opt-icon { font-size: 1.6rem; margin-bottom: 0.7rem; }
     .opt-badge { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
     .opt-name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; margin-bottom: 0.3rem; }
-    .opt-desc { font-size: 0.6rem; color: var(--text-soft); line-height: 1.7; }
+    .opt-desc { font-size: 0.6rem; color: var(--muted); line-height: 1.7; }
     .opt-price { font-size: 0.65rem; color: var(--gold); margin-top: 0.7rem; }
 
     .sec-div { display: flex; align-items: center; gap: 1.2rem; margin: 2.2rem 0 1.8rem; }
     .sec-div span { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
-    .sec-div::before, .sec-div::after { content: ''; flex: 1; height: 1px; background: var(--gold-border); }
+    .sec-div::before, .sec-div::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 
     .pay-tabs { display: flex; margin-bottom: 2rem; }
-    .pay-tab { flex: 1; padding: 1rem; border: 1px solid var(--gold-border); background: var(--ink-3); cursor: pointer; text-align: center; transition: all 0.3s; font-family: 'Raleway',sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-soft); }
+    .pay-tab { flex: 1; padding: 1rem; border: 1px solid var(--line); background: var(--ink3); cursor: pointer; text-align: center; transition: all 0.3s; font-family: 'Raleway',sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
     .pay-tab:first-child { border-right: none; }
-    .pay-tab.active { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
-    .pay-tab-sub { font-size: 0.55rem; color: var(--text-faint); margin-top: 0.25rem; text-transform: none; letter-spacing: 0.08em; }
+    .pay-tab.active { background: var(--gold2); border-color: var(--gold); color: var(--gold); }
+    .pay-tab-sub { font-size: 0.55rem; color: var(--muted); margin-top: 0.25rem; text-transform: none; letter-spacing: 0.08em; }
 
     .fields { display: grid; gap: 1.1rem; }
     .col-2 { grid-template-columns: 1fr 1fr; }
     .col-3 { grid-template-columns: 1fr 1fr 1fr; }
     .f { display: flex; flex-direction: column; gap: 0.45rem; }
-    .f label { font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-soft); }
+    .f label { font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
     .f label .req { color: var(--gold); }
-    .f input, .f select, .f textarea { background: var(--ink-4); border: 1px solid rgba(201,169,110,0.2); color: var(--text); padding: 0.9rem 1.1rem; font-family: 'Raleway',sans-serif; font-size: 0.78rem; font-weight: 300; outline: none; transition: border-color 0.3s, box-shadow 0.3s; width: 100%; appearance: none; }
-    .f input:focus, .f select:focus, .f textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+    .f input, .f select, .f textarea { background: var(--ink3); border: 1px solid rgba(201,169,110,0.2); color: var(--white); padding: 0.9rem 1.1rem; font-family: 'Raleway',sans-serif; font-size: 0.78rem; font-weight: 300; outline: none; transition: border-color 0.3s, box-shadow 0.3s; width: 100%; appearance: none; }
+    .f input:focus, .f select:focus, .f textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold2); }
     .f input.err { border-color: var(--error); }
-    .f input::placeholder, .f textarea::placeholder { color: var(--text-faint); }
+    .f input::placeholder, .f textarea::placeholder { color: var(--muted); }
     .f select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a96e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.1rem center; padding-right: 2.8rem; cursor: pointer; }
-    .f select option { background: var(--ink-4); }
+    .f select option { background: var(--ink3); }
     .f textarea { resize: vertical; min-height: 85px; line-height: 1.7; }
 
     /* Autocomplete */
     .ac-wrap { position: relative; }
-    .ac-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--ink-3); border: 1px solid var(--gold-border); border-top: none; z-index: 100; max-height: 200px; overflow-y: auto; }
-    .ac-item { padding: 0.75rem 1.1rem; font-size: 0.74rem; cursor: pointer; color: var(--text-soft); border-bottom: 1px solid rgba(201,169,110,0.07); transition: background 0.15s; }
-    .ac-item:hover { background: var(--gold-glow); color: var(--text); }
+    .ac-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--ink3); border: 1px solid var(--line); border-top: none; z-index: 100; max-height: 200px; overflow-y: auto; }
+    .ac-item { padding: 0.75rem 1.1rem; font-size: 0.74rem; cursor: pointer; color: var(--muted); border-bottom: 1px solid rgba(201,169,110,0.07); transition: background 0.15s; }
+    .ac-item:hover { background: var(--gold2); color: var(--white); }
     .ac-item:last-child { border-bottom: none; }
 
-    .price-preview { background: var(--ink-3); border: 1px solid var(--gold-border); padding: 1.4rem 1.8rem; display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; }
-    .price-preview-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-soft); }
+    .price-preview { background: var(--ink3); border: 1px solid var(--line); padding: 1.4rem 1.8rem; display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; }
+    .price-preview-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
     .price-preview-val { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); }
-    .price-preview-note { font-size: 0.55rem; color: var(--text-faint); margin-top: 0.2rem; }
+    .price-preview-note { font-size: 0.55rem; color: var(--muted); margin-top: 0.2rem; }
 
     /* Ref preview box */
-    .ref-box { background: var(--gold-glow); border: 1px solid var(--gold-border); padding: 1rem 1.6rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-    .ref-box-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-soft); }
+    .ref-box { background: var(--gold2); border: 1px solid var(--line); padding: 1rem 1.6rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .ref-box-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
     .ref-box-val { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.1em; }
 
-    .recap-block { background: var(--ink-3); border: 1px solid var(--gold-border); margin-bottom: 1.1rem; }
+    .recap-block { background: var(--ink3); border: 1px solid var(--line); margin-bottom: 1.1rem; }
     .recap-block-head { padding: 0.85rem 1.6rem; border-bottom: 1px solid rgba(201,169,110,0.12); font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
     .recap-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.6rem 1.6rem; font-size: 0.72rem; border-bottom: 1px solid rgba(201,169,110,0.06); }
     .recap-row:last-child { border-bottom: none; }
-    .rl { color: var(--text-soft); } .rv { color: var(--text); font-weight: 400; text-align: right; max-width: 62%; }
-    .recap-total { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1.6rem; background: var(--gold-glow); border-top: 1px solid var(--gold-border); }
+    .rl { color: var(--muted); } .rv { color: var(--white); font-weight: 400; text-align: right; max-width: 62%; }
+    .recap-total { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1.6rem; background: var(--gold2); border-top: 1px solid var(--line); }
     .recap-total .rl { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; }
     .recap-total .rv { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); }
 
-    .legal-note { border-left: 2px solid var(--gold-dim); padding: 0.8rem 1.2rem; font-size: 0.62rem; color: var(--text-soft); line-height: 1.8; background: rgba(201,169,110,0.04); margin-bottom: 1.8rem; }
+    .legal-note { border-left: 2px solid var(--gold3); padding: 0.8rem 1.2rem; font-size: 0.62rem; color: var(--muted); line-height: 1.8; background: rgba(201,169,110,0.04); margin-bottom: 1.8rem; }
 
     .btn-gold { background: var(--gold); color: var(--ink); border: none; cursor: pointer; width: 100%; padding: 1.2rem 2rem; font-family: 'Raleway',sans-serif; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; transition: background 0.3s, transform 0.2s, box-shadow 0.3s; position: relative; overflow: hidden; }
     .btn-gold::after { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.15) 50%,transparent 70%); transform: translateX(-100%); transition: transform 0.5s; }
@@ -125,7 +134,7 @@
     .btn-gold.loading { pointer-events: none; opacity: 0.7; }
     .btn-gold.loading::before { content: ''; display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(7,8,10,0.3); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 0.6rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .btn-ghost { background: transparent; color: var(--text-soft); border: 1px solid var(--gold-border); cursor: pointer; padding: 1.1rem 2rem; font-family: 'Raleway',sans-serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; transition: all 0.3s; }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); cursor: pointer; padding: 1.1rem 2rem; font-family: 'Raleway',sans-serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; transition: all 0.3s; }
     .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
     .btn-row { display: flex; gap: 0.8rem; margin-top: 1.8rem; }
     .btn-row .btn-gold { flex: 1; }
@@ -134,31 +143,155 @@
     .success-ring { width: 72px; height: 72px; border-radius: 50%; border: 1px solid var(--success); display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 1.6rem; color: var(--success); box-shadow: 0 0 30px rgba(93,191,138,0.2); }
     .success-wrap h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; margin-bottom: 1rem; }
     .success-wrap h2 em { color: var(--gold); font-style: italic; }
-    .success-wrap p { color: var(--text-soft); font-size: 0.77rem; line-height: 2; max-width: 400px; margin: 0 auto 2rem; }
-    .ref-badge { display: inline-block; border: 1px solid var(--gold-border); padding: 0.8rem 2rem; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2.5rem; }
-    .wa-link { display: flex; align-items: center; justify-content: center; gap: 0.9rem; background: var(--ink-3); border: 1px solid var(--gold-border); padding: 1.1rem; text-decoration: none; color: var(--text-soft); font-size: 0.7rem; transition: border-color 0.3s; max-width: 420px; margin: 0 auto; }
-    .wa-link:hover { border-color: var(--gold); color: var(--text); }
-    .wa-link strong { color: var(--text); }
+    .success-wrap p { color: var(--muted); font-size: 0.77rem; line-height: 2; max-width: 400px; margin: 0 auto 2rem; }
+    .ref-badge { display: inline-block; border: 1px solid var(--line); padding: 0.8rem 2rem; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2.5rem; }
+    .wa-link { display: flex; align-items: center; justify-content: center; gap: 0.9rem; background: var(--ink3); border: 1px solid var(--line); padding: 1.1rem; text-decoration: none; color: var(--muted); font-size: 0.7rem; transition: border-color 0.3s; max-width: 420px; margin: 0 auto; }
+    .wa-link:hover { border-color: var(--gold); color: var(--white); }
+    .wa-link strong { color: var(--white); }
 
-    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink-3); border: 1px solid var(--error); padding: 0.9rem 1.8rem; font-size: 0.72rem; color: var(--error); transition: transform 0.4s cubic-bezier(.22,.68,0,1.2); z-index: 999; }
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink3); border: 1px solid var(--error); padding: 0.9rem 1.8rem; font-size: 0.72rem; color: var(--error); transition: transform 0.4s cubic-bezier(.22,.68,0,1.2); z-index: 999; }
     .toast.show { transform: translateX(-50%) translateY(0); }
-    .foot-note { text-align: center; font-size: 0.58rem; color: var(--text-faint); line-height: 2.2; margin-top: 2rem; position: relative; z-index: 1; padding-bottom: 4rem; }
-    .foot-note a { color: var(--text-faint); text-decoration: none; }
+    .foot-note { text-align: center; font-size: 0.58rem; color: var(--muted); line-height: 2.2; margin-top: 2rem; position: relative; z-index: 1; padding-bottom: 4rem; }
+    .foot-note a { color: var(--muted); text-decoration: none; }
     .foot-note a:hover { color: var(--gold); }
     .hidden { display: none !important; }
 
     @media (max-width: 680px) {
-      nav { padding: 1rem 1.2rem; } .nav-links { display: none; }
+       
       .panel-head, .panel-body { padding: 1.5rem 1.3rem; }
       .cards-grid-2, .cards-grid-3, .col-2, .col-3 { grid-template-columns: 1fr; }
       .pay-tabs { flex-direction: column; }
     }
-  </style>
+  
+/* ── NAV STANDARD SHVIP ─────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 56px;
+  transition: all 0.6s ease;
+}
+nav.scrolled {
+  background: rgba(5,7,14,0.92);
+  backdrop-filter: blur(12px);
+  padding: 18px 56px;
+  border-bottom: 1px solid var(--line);
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after,
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 10px 24px;
+  text-decoration: none;
+  transition: all 0.35s ease;
+}
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+@media (max-width: 768px) {
+  nav { padding: 22px 24px; }
+  nav.scrolled { padding: 16px 24px; }
+  .nav-links, .nav-cta { display: none; }
+}
+
+
+/* ── FOOTER STANDARD SHVIP ──────────────────────────── */
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 56px;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-decoration: none;
+}
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.45);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-copy {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(240,237,232,0.3);
+}
+@media (max-width: 768px) {
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+  .footer-links { gap: 16px; }
+}
+
+</style>
 </head>
 <body>
 
-<nav>
-  <a class="nav-logo" href="/">SHVIP</a>
+<nav id="nav">
+  <a href="/" class="nav-logo">SHVIP</a>
   <ul class="nav-links">
     <li><a href="/services">Services</a></li>
     <li><a href="/flotte">Flotte</a></li>
@@ -166,6 +299,7 @@
     <li><a href="/partenaires">Partenaires</a></li>
     <li><a href="/contact">Contact</a></li>
   </ul>
+  <a href="/contact#demande-privee" class="nav-cta">Demande privée</a>
 </nav>
 
 <header class="page-header">
@@ -285,6 +419,7 @@
         <div class="recap-block-head">◇ &nbsp; Trajet</div>
         <div class="recap-row"><span class="rl">Départ</span><span class="rv" id="r-dep">—</span></div>
         <div class="recap-row"><span class="rl">Arrivée</span><span class="rv" id="r-arr">—</span></div>
+        <div class="recap-row" id="row-distance" style="display:none"><span class="rl">Distance</span><span class="rv" id="r-distance">—</span></div>
         <div class="recap-row"><span class="rl">Date & heure</span><span class="rv" id="r-date">—</span></div>
         <div class="recap-row"><span class="rl">Passagers</span><span class="rv" id="r-pax">—</span></div>
         <div class="recap-total"><span class="rl">Montant TTC estimé</span><span class="rv" id="r-prix">—</span></div>
@@ -311,9 +446,7 @@
       <h2>Demande <em>confirmée</em></h2>
       <p>Votre réservation a été enregistrée dans le système SHVIP. L'équipe vous contacte dans l'heure pour confirmation définitive.</p>
       <div class="ref-badge" id="ref-badge">—</div>
-      <a class="wa-link" href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20viens%20de%20soumettre%20une%20r%C3%A9servation%20en%20ligne." target="_blank">
-        <span>📱</span><span>Réponse immédiate &nbsp;<strong>WhatsApp : 06 49 60 49 60</strong></span>
-      </a>
+
     </div>
   </div>
 
@@ -326,340 +459,28 @@
 </p>
 <div class="toast" id="toast"></div>
 
-<!-- CONFIG GOOGLE MAPS : remplacez la valeur de GOOGLE_MAPS_API_KEY ci-dessous dans le script principal -->
+<!-- ⚠️ Remplacez YOUR_GOOGLE_API_KEY par votre vraie clé Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec&libraries=places,geometry&language=fr&region=FR"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  /* ─── CONFIG ─── */
-  const GOOGLE_MAPS_API_KEY = 'REMPLACEZ_ICI_PAR_VOTRE_GOOGLE_MAPS_API_KEY';
-
-  async function loadGoogleMaps() {
-    if (window.google?.maps) return window.google.maps;
-    if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.includes('REMPLACEZ_ICI')) {
-      console.warn('Google Maps API key manquante.');
-      return null;
-    }
-    if (window.__shvipGoogleMapsPromise) return window.__shvipGoogleMapsPromise;
-    window.__shvipGoogleMapsPromise = new Promise((resolve) => {
-      const existing = document.querySelector('script[data-google-maps-shvip="1"]');
-      if (existing && window.google?.maps) return resolve(window.google.maps);
-
-      const s = existing || document.createElement('script');
-      if (!existing) {
-        s.src = `https://maps.googleapis.com/maps/api/js?key=${AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec}&libraries=places&language=fr&region=FR`;
-        s.async = true;
-        s.defer = true;
-        s.setAttribute('data-google-maps-shvip', '1');
-      }
-
-      let settled = false;
-      const finish = (value = null) => {
-        if (settled) return;
-        settled = true;
-        resolve(value);
-      };
-
-      const timeout = setTimeout(() => {
-        console.warn('Google Maps timeout : bascule en mode estimation standard.');
-        finish(null);
-      }, 6000);
-
-      s.onload = () => {
-        clearTimeout(timeout);
-        finish(window.google?.maps || null);
-      };
-      s.onerror = () => {
-        clearTimeout(timeout);
-        console.warn('Impossible de charger Google Maps.');
-        finish(null);
-      };
-
-      if (!existing) document.head.appendChild(s);
-    });
-
-    return window.__shvipGoogleMapsPromise;
-  }
-
   /* ─── SUPABASE ─── */
   const { createClient } = supabase;
-  const db = createClient('https://ehbqbembkeizojzgxrun.supabase.co','sb_publishable_kMNUSpr924eqPpNNGYo8Ug_HnauqRed');
+  const db = createClient('https://htblfillncczsfteciyy.supabase.co','sb_publishable_yh-guGKPlaJBtqCxAtC0QA_N12x0zyA');
 
   /* ─── STATE ─── */
   const S = { svc:'Transfert aéroport / gare', veh:'Classe E — Business', pt:130, pd:400, pay:'Paiement total' };
   let currentRef = '';
-  let acSvc;
-  const acTimers = {};
-  let geocoder = null;
-  let distanceService = null;
-  let pricingState = {
-    amount: 130,
-    routeLabel: 'Tarif fixe Paris centre',
-    priceMode: 'fixed',
-    matchedPreset: null,
-    distanceKm: null,
-    durationMin: null,
-    details: null
-  };
-
-  const AIRPORT_PRESETS = {
-    orly: {
-      label: 'Paris centre ↔ Orly',
-      matches: ['orly'],
-      prices: {
-        'Classe E — Business': 130,
-        'Classe S — Prestige': 195,
-        'Classe V — Van VIP': 154
-      }
-    },
-    cdg: {
-      label: 'Paris centre ↔ Roissy CDG',
-      matches: ['roissy', 'charles de gaulle', 'cdg'],
-      prices: {
-        'Classe E — Business': 162,
-        'Classe S — Prestige': 243,
-        'Classe V — Van VIP': 192
-      }
-    },
-    disney: {
-      label: 'Paris centre ↔ Disneyland',
-      matches: ['disneyland', 'marne-la-vallee', 'marne la vallee', 'chessy'],
-      prices: {
-        'Classe E — Business': 182,
-        'Classe S — Prestige': 273,
-        'Classe V — Van VIP': 215
-      }
-    }
-  };
-
-  const DYNAMIC_RATES = {
-    'Classe E — Business': { base: 25, km: 2.2, min: 0.65, floor: 95 },
-    'Classe S — Prestige': { base: 40, km: 3.3, min: 0.95, floor: 140 },
-    'Classe V — Van VIP': { base: 32, km: 2.7, min: 0.8, floor: 120 }
-  };
-
-  function normalizeText(v='') {
-    return v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  }
-
-  function matchPresetByText(address='') {
-    const t = normalizeText(address);
-    for (const [key, preset] of Object.entries(AIRPORT_PRESETS)) {
-      if (preset.matches.some(m => t.includes(m))) return key;
-    }
-    return null;
-  }
-
-  async function ensureMapsServices() {
-    const maps = await loadGoogleMaps();
-    if (!maps) return null;
-    if (!geocoder) geocoder = new maps.Geocoder();
-    if (!distanceService) distanceService = new maps.DistanceMatrixService();
-    if (!acSvc) acSvc = new maps.places.AutocompleteService();
-    return maps;
-  }
-
-  function geocodeAddress(address) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const maps = await ensureMapsServices();
-        if (!maps || !geocoder) return reject(new Error('Google Maps non chargé'));
-        geocoder.geocode({ address, region: 'FR' }, (results, status) => {
-          if (status === 'OK' && results?.[0]) resolve(results[0]);
-          else reject(new Error('Geocoding impossible pour : ' + address));
-        });
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
-
-  function getAddressComponent(result, type) {
-    return result?.address_components?.find(c => c.types?.includes(type))?.long_name || '';
-  }
-
-  function isParisCenter(result) {
-    const postal = getAddressComponent(result, 'postal_code');
-    const locality = normalizeText(getAddressComponent(result, 'locality'));
-    const postalTown = normalizeText(getAddressComponent(result, 'postal_town'));
-    const admin2 = normalizeText(getAddressComponent(result, 'administrative_area_level_2'));
-    const formatted = normalizeText(result?.formatted_address || '');
-    const isParisLocality = locality === 'paris' || postalTown === 'paris' || admin2 === 'paris';
-    const isParisPostal = /^750([0][1-9]|1\d|20)$/.test(postal);
-    return Boolean(isParisPostal || (isParisLocality && formatted.includes('paris')));
-  }
-
-  function getPresetIfEligible(depResult, arrResult, depText, arrText) {
-    const depPreset = matchPresetByText(depText);
-    const arrPreset = matchPresetByText(arrText);
-    if (depPreset && isParisCenter(arrResult)) return depPreset;
-    if (arrPreset && isParisCenter(depResult)) return arrPreset;
-    return null;
-  }
-
-  function getDistance(origin, destination) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const maps = await ensureMapsServices();
-        if (!maps || !distanceService) return reject(new Error('Google Maps non chargé'));
-        distanceService.getDistanceMatrix({
-          origins: [origin],
-          destinations: [destination],
-          travelMode: maps.TravelMode.DRIVING,
-          drivingOptions: { departureTime: new Date(), trafficModel: 'bestguess' },
-          unitSystem: maps.UnitSystem.METRIC,
-          region: 'FR'
-        }, (response, status) => {
-          if (status !== 'OK') return reject(new Error('Distance Matrix indisponible'));
-          const el = response?.rows?.[0]?.elements?.[0];
-          if (!el || el.status !== 'OK') return reject(new Error('Trajet introuvable'));
-          resolve({
-            distanceMeters: el.distance.value,
-            durationSeconds: (el.duration_in_traffic || el.duration).value,
-            distanceText: el.distance.text,
-            durationText: (el.duration_in_traffic || el.duration).text
-          });
-        });
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
-
-  function roundPrice(v) {
-    return Math.round(v / 5) * 5;
-  }
-
-  function buildPaymentNote(amount) {
-    return S.pay === 'Acompte 30 %'
-      ? `Acompte : ${Math.round(amount * 0.3)} € — Solde : ${Math.round(amount * 0.7)} €`
-      : 'Paiement intégral TTC';
-  }
-
-  async function computeTransferPrice() {
-    const dep = document.getElementById('f-depart')?.value.trim() || '';
-    const arr = document.getElementById('f-arrivee')?.value.trim() || '';
-    if (!dep || !arr) {
-      return {
-        amount: S.pt,
-        routeLabel: 'Saisissez départ et arrivée pour calculer le tarif',
-        priceMode: 'placeholder',
-        matchedPreset: null,
-        distanceKm: null,
-        durationMin: null,
-        details: null
-      };
-    }
-
-    const maps = await loadGoogleMaps();
-    if (!maps) {
-      return {
-        amount: S.pt,
-        routeLabel: 'Clé Google Maps manquante — tarif de base affiché',
-        priceMode: 'fallback',
-        matchedPreset: null,
-        distanceKm: null,
-        durationMin: null,
-        details: null
-      };
-    }
-
-    const [depResult, arrResult] = await Promise.all([geocodeAddress(dep), geocodeAddress(arr)]);
-    const presetKey = getPresetIfEligible(depResult, arrResult, dep, arr);
-
-    if (presetKey) {
-      const preset = AIRPORT_PRESETS[presetKey];
-      return {
-        amount: preset.prices[S.veh],
-        routeLabel: `${preset.label} · tarif fixe`,
-        priceMode: 'fixed',
-        matchedPreset: presetKey,
-        distanceKm: null,
-        durationMin: null,
-        details: 'Prix standard appliqué car l’une des adresses est dans Paris centre.'
-      };
-    }
-
-    const dm = await getDistance(dep, arr);
-    const distanceKm = dm.distanceMeters / 1000;
-    const durationMin = dm.durationSeconds / 60;
-    const rate = DYNAMIC_RATES[S.veh] || DYNAMIC_RATES['Classe E — Business'];
-    const raw = rate.base + (distanceKm * rate.km) + (durationMin * rate.min);
-    const amount = Math.max(rate.floor, roundPrice(raw));
-
-    return {
-      amount,
-      routeLabel: `Tarif recalculé selon l'adresse réelle · ${dm.distanceText} · ${dm.durationText}`,
-      priceMode: 'dynamic',
-      matchedPreset: null,
-      distanceKm: Number(distanceKm.toFixed(1)),
-      durationMin: Math.round(durationMin),
-      details: 'Formule estimative : base + distance + temps. Péages séparés.'
-    };
-  }
-
-  async function computePricing() {
-    if (S.svc === 'Mise à disposition') {
-      const h = +(document.getElementById('f-duree')?.value || 4);
-      return {
-        amount: Math.round((S.pd / 4) * h),
-        routeLabel: `Mise à disposition · ${h}h`,
-        priceMode: 'hourly',
-        matchedPreset: null,
-        distanceKm: null,
-        durationMin: h * 60,
-        details: 'Tarif horaire maison SHVIP.'
-      };
-    }
-
-    if (S.svc === 'Transfert aéroport / gare') {
-      return computeTransferPrice();
-    }
-
-    return {
-      amount: S.pt,
-      routeLabel: 'Prestation sur étude — estimation indicative',
-      priceMode: 'manual',
-      matchedPreset: null,
-      distanceKm: null,
-      durationMin: null,
-      details: null
-    };
-  }
-
-  function renderPricePreview(state) {
-    document.getElementById('prev-price').textContent = state.amount + ' €';
-    const payment = buildPaymentNote(state.amount);
-    document.getElementById('prev-note').textContent = `${state.routeLabel} · ${payment}`;
-  }
-
-  async function updatePrice() {
-    try {
-      pricingState = await computePricing();
-      renderPricePreview(pricingState);
-    } catch (err) {
-      console.error(err);
-      pricingState = {
-        amount: S.pt,
-        routeLabel: 'Calcul indisponible — estimation standard affichée',
-        priceMode: 'fallback',
-        matchedPreset: null,
-        distanceKm: null,
-        durationMin: null,
-        details: null
-      };
-      renderPricePreview(pricingState);
-    }
-    return pricingState.amount;
-  }
 
   /* ─── GOOGLE PLACES ─── */
+  let acSvc;
+  const acTimers = {};
   function acSearch(input, listId) {
     const list = document.getElementById(listId);
     clearTimeout(acTimers[listId]);
     if (!input.value.trim() || input.value.length < 3) { list.classList.add('hidden'); return; }
-    acTimers[listId] = setTimeout(async () => {
-      const maps = await loadGoogleMaps();
-      if (!maps) return;
-      if (!acSvc) acSvc = new maps.places.AutocompleteService();
+    acTimers[listId] = setTimeout(() => {
+      if (!window.google) return;
+      if (!acSvc) acSvc = new google.maps.places.AutocompleteService();
       acSvc.getPlacePredictions(
         { input: input.value, componentRestrictions:{ country:'fr' }, language:'fr' },
         (predictions, status) => {
@@ -669,11 +490,12 @@
             const el = document.createElement('div');
             el.className = 'ac-item';
             el.textContent = p.description;
-            el.onclick = async () => {
+            el.onclick = () => {
               input.value = p.description;
               list.classList.add('hidden');
               input.classList.remove('err');
-              await updatePrice();
+              distanceKm = null; distanceLabel = '';
+              onAddressChange();
             };
             list.appendChild(el);
           });
@@ -682,12 +504,10 @@
       );
     }, 280);
   }
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.ac-wrap')) document.querySelectorAll('.ac-list').forEach(l => l.classList.add('hidden'));
-  });
+  document.addEventListener('click', e => { if (!e.target.closest('.ac-wrap')) document.querySelectorAll('.ac-list').forEach(l => l.classList.add('hidden')); });
 
   /* ─── PICKERS ─── */
-  async function pickCard(el, group) {
+  function pickCard(el, group) {
     el.closest('.cards-grid-2,.cards-grid-3').querySelectorAll('.opt-card').forEach(c => c.classList.remove('sel'));
     el.classList.add('sel');
     if (group === 'svc') {
@@ -696,18 +516,104 @@
       document.getElementById('bloc-transfert').classList.toggle('hidden', d);
       document.getElementById('bloc-dispo').classList.toggle('hidden', !d);
     } else {
-      S.veh = el.dataset.veh;
-      S.pt = +el.dataset.pt;
-      S.pd = +el.dataset.pd;
+      S.veh = el.dataset.veh; S.pt = +el.dataset.pt; S.pd = +el.dataset.pd;
+      distanceKm = null; distanceLabel = '';
+      onAddressChange();
     }
-    await updatePrice();
+    updatePrice();
+  }
+  function pickPay(el) {
+    document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active'); S.pay = el.dataset.pay; updatePrice();
   }
 
-  async function pickPay(el) {
-    document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    S.pay = el.dataset.pay;
-    await updatePrice();
+  /* ─── TARIFICATION AU KM ─── */
+  // Prise en charge fixe + prix par km selon véhicule (minimum appliqué)
+  const TARIFS = {
+    'Classe E — Business': { pec: 25, km: 2.20, min: 50 },
+    'Classe S — Prestige': { pec: 35, km: 3.30, min: 75 },
+    'Classe V — Van VIP':  { pec: 30, km: 2.60, min: 60 },
+  };
+
+  // Distance calculée par Google Distance Matrix (en km)
+  let distanceKm = null;
+  let distanceLabel = '';
+  let distanceTimer = null;
+
+  function getDistanceMatrix(origin, destination, callback) {
+    if (!window.google) return;
+    const svc = new google.maps.DistanceMatrixService();
+    svc.getDistanceMatrix({
+      origins: [origin],
+      destinations: [destination],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.METRIC,
+      language: 'fr',
+      region: 'FR'
+    }, (response, status) => {
+      if (status === 'OK') {
+        const el = response.rows[0].elements[0];
+        if (el.status === 'OK') {
+          callback(el.distance.value / 1000, el.distance.text, el.duration.text);
+        }
+      }
+    });
+  }
+
+  function calcPrice() {
+    if (S.svc === 'Mise à disposition') {
+      const h = +(document.getElementById('f-duree')?.value || 4);
+      return Math.round((S.pd / 4) * h);
+    }
+    const t = TARIFS[S.veh] || TARIFS['Classe E — Business'];
+    if (distanceKm === null) return null; // pas encore calculé
+    const prix = t.pec + distanceKm * t.km;
+    return Math.max(Math.round(prix), t.min);
+  }
+
+  function updatePrice() {
+    const b = calcPrice();
+    const priceEl = document.getElementById('prev-price');
+    const noteEl  = document.getElementById('prev-note');
+
+    if (S.svc === 'Mise à disposition') {
+      priceEl.textContent = b + ' €';
+      noteEl.textContent  = 'Mise à disposition TTC';
+      return;
+    }
+
+    if (b === null) {
+      priceEl.textContent = '—';
+      noteEl.textContent  = 'Renseignez départ & arrivée';
+      return;
+    }
+
+    priceEl.textContent = b + ' €';
+    const distInfo = distanceLabel ? ' · ' + distanceLabel : '';
+    if (S.pay === 'Acompte 30 %') {
+      noteEl.textContent = 'Acompte : ' + Math.round(b * .3) + ' € — Solde : ' + Math.round(b * .7) + ' €' + distInfo;
+    } else {
+      noteEl.textContent = 'Paiement intégral TTC' + distInfo;
+    }
+  }
+
+  // Recalcule la distance dès que départ ET arrivée sont renseignés
+  function onAddressChange() {
+    if (S.svc === 'Mise à disposition') return;
+    const dep = document.getElementById('f-depart')?.value.trim();
+    const arr = document.getElementById('f-arrivee')?.value.trim();
+    if (!dep || !arr || dep.length < 5 || arr.length < 5) return;
+
+    clearTimeout(distanceTimer);
+    distanceTimer = setTimeout(() => {
+      document.getElementById('prev-price').textContent = '…';
+      document.getElementById('prev-note').textContent  = 'Calcul en cours';
+      getDistanceMatrix(dep, arr, (km, distText, durText) => {
+        distanceKm    = km;
+        distanceLabel = distText + ' · ' + durText;
+        updatePrice();
+      });
+    }, 600);
   }
 
   /* ─── REFERENCE ─── */
@@ -718,161 +624,134 @@
   }
 
   /* ─── NAV ─── */
-  async function goTo(n) {
+  function goTo(n) {
     if (n === 3 && !validate()) return;
     [1,2,3].forEach(i => {
       document.getElementById('p'+i)?.classList.add('hidden');
       const ps = document.getElementById('ps'+i);
-      if (ps) {
-        ps.classList.remove('active','done');
-        if (i < n) ps.classList.add('done');
-        if (i === n) ps.classList.add('active');
-      }
+      if (ps) { ps.classList.remove('active','done'); if(i<n) ps.classList.add('done'); if(i===n) ps.classList.add('active'); }
     });
     document.getElementById('p'+n)?.classList.remove('hidden');
+    if (n === 3) { currentRef = genRef(); fillRecap(); }
     window.scrollTo({top:180,behavior:'smooth'});
-
-    try {
-      if (n === 3) {
-        currentRef = genRef();
-        await fillRecap();
-      } else {
-        updatePrice().catch(err => console.error('updatePrice failed after navigation', err));
-      }
-    } catch (err) {
-      console.error('Navigation step error', err);
-      showToast('Le calcul du tarif est indisponible pour le moment, mais vous pouvez continuer.');
-    }
+    updatePrice();
   }
 
   /* ─── VALIDATION ─── */
-  function chk(id) {
-    const el = document.getElementById(id);
-    const ok = el && el.value.trim() !== '';
-    el?.classList.toggle('err', !ok);
-    return ok;
-  }
-
+  function chk(id) { const el=document.getElementById(id); const ok=el&&el.value.trim()!==''; el?.classList.toggle('err',!ok); return ok; }
   function validate() {
     const d = S.svc === 'Mise à disposition';
-    const ids = ['f-nom','f-telephone','f-email','f-date','f-heure', ...(d ? ['f-depart-dispo'] : ['f-depart','f-arrivee'])];
+    const ids = ['f-nom','f-telephone','f-email','f-date','f-heure', ...(d?['f-depart-dispo']:['f-depart','f-arrivee'])];
     const ok = ids.map(chk).every(Boolean);
     if (!ok) showToast('Veuillez remplir tous les champs obligatoires.');
     return ok;
   }
 
   /* ─── RECAP ─── */
-  async function fillRecap() {
+  function fillRecap() {
     const d = S.svc === 'Mise à disposition';
     const dep = d ? document.getElementById('f-depart-dispo').value : document.getElementById('f-depart').value;
-    const arr = d ? document.getElementById('f-duree').value + 'h de mise à disposition' : document.getElementById('f-arrivee').value;
+    const arr = d ? document.getElementById('f-duree').value+'h de mise à disposition' : document.getElementById('f-arrivee').value;
     const dt = document.getElementById('f-date').value;
     const dateStr = dt ? new Date(dt+'T12:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—';
-    await updatePrice();
 
+    // Afficher la référence
     document.getElementById('ref-display').textContent = currentRef;
     document.getElementById('ref-badge').textContent = currentRef;
 
-    set('r-svc', S.svc);
-    set('r-veh', S.veh);
-    set('r-pay', S.pay);
-    set('r-dep', dep || '—');
-    set('r-arr', arr || '—');
-    set('r-date', dateStr + (document.getElementById('f-heure').value ? ' à ' + document.getElementById('f-heure').value : ''));
-    set('r-pax', document.getElementById('f-passagers').value + ' passager(s)');
-    set('r-prix', pricingState.amount + ' € TTC');
+    set('r-svc',S.svc); set('r-veh',S.veh); set('r-pay',S.pay);
+    set('r-dep',dep||'—'); set('r-arr',arr||'—');
+    set('r-date', dateStr + (document.getElementById('f-heure').value ? ' à '+document.getElementById('f-heure').value : ''));
+    set('r-pax', document.getElementById('f-passagers').value+' passager(s)');
+    const prix = calcPrice();
+    set('r-prix', prix !== null ? prix + ' € TTC' : '—');
+    if (distanceLabel) {
+      const distEl = document.getElementById('r-distance');
+      if (distEl) distEl.textContent = distanceLabel;
+      const rowDist = document.getElementById('row-distance');
+      if (rowDist) rowDist.style.display = '';
+    }
     set('r-nom', document.getElementById('f-nom').value);
     set('r-tel', document.getElementById('f-telephone').value);
     set('r-email', document.getElementById('f-email').value);
   }
-
-  function set(id, v) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = v;
-  }
+  function set(id,v) { const el=document.getElementById(id); if(el) el.textContent=v; }
 
   /* ─── SUBMIT ─── */
   async function submitReservation() {
     const btn = document.getElementById('btn-confirm');
-    btn.classList.add('loading');
-    btn.textContent = 'Envoi en cours…';
+    btn.classList.add('loading'); btn.textContent = 'Envoi en cours…';
     const d = S.svc === 'Mise à disposition';
     const duree = document.getElementById('f-duree').value;
 
+    const payload = {
+      reference:   currentRef,
+      nom:         document.getElementById('f-nom').value.trim(),
+      telephone:   document.getElementById('f-telephone').value.trim(),
+      email:       document.getElementById('f-email').value.trim(),
+      depart:      d ? document.getElementById('f-depart-dispo').value.trim() : document.getElementById('f-depart').value.trim(),
+      arrivee:     d ? '(Mise à dispo — '+duree+'h)' : document.getElementById('f-arrivee').value.trim(),
+      date_course: document.getElementById('f-date').value||'',
+      heure:       document.getElementById('f-heure').value||'',
+      nb_passagers:document.getElementById('f-passagers').value||'1',
+      prix:        calcPrice() ?? 0,
+      prestation:  `${S.svc} | ${S.veh} | ${S.pay}` + (distanceLabel ? ` | ${distanceLabel}` : ''),
+      notes:       [d?`Durée : ${duree}h`:'', document.getElementById('f-notes').value.trim()].filter(Boolean).join(' | ')
+    };
+
     try {
-      await updatePrice();
-      const payload = {
-        reference: currentRef,
-        nom: document.getElementById('f-nom').value.trim(),
-        telephone: document.getElementById('f-telephone').value.trim(),
-        email: document.getElementById('f-email').value.trim(),
-        depart: d ? document.getElementById('f-depart-dispo').value.trim() : document.getElementById('f-depart').value.trim(),
-        arrivee: d ? '(Mise à dispo — ' + duree + 'h)' : document.getElementById('f-arrivee').value.trim(),
-        date_course: document.getElementById('f-date').value || '',
-        heure: document.getElementById('f-heure').value || '',
-        nb_passagers: document.getElementById('f-passagers').value || '1',
-        prix: pricingState.amount,
-        prestation: `${S.svc} | ${S.veh} | ${S.pay}`,
-        notes: [
-          d ? `Durée : ${duree}h` : '',
-          pricingState.routeLabel || '',
-          pricingState.details || '',
-          document.getElementById('f-notes').value.trim()
-        ].filter(Boolean).join(' | '),
-        importe: 0
-      };
-
-      const { error } = await db.from('reservations').insert([payload]);
-      if (error) throw error;
-
+      const { data, error } = await db.from('reservations').insert([payload]).select();
+      if (error) {
+        console.error('Supabase error:', JSON.stringify(error));
+        showToast('Erreur : ' + (error.message || error.code || 'vérifiez la console'));
+        btn.classList.remove('loading'); btn.textContent = 'Confirmer ma réservation ✓';
+        return;
+      }
       [1,2,3].forEach(i => {
         document.getElementById('p'+i)?.classList.add('hidden');
-        const ps = document.getElementById('ps'+i);
-        if (ps) { ps.classList.add('done'); ps.classList.remove('active'); }
+        const ps=document.getElementById('ps'+i);
+        if(ps){ps.classList.add('done');ps.classList.remove('active');}
       });
       document.getElementById('p-success').classList.remove('hidden');
       window.scrollTo({top:180,behavior:'smooth'});
     } catch(err) {
-      console.error(err);
-      showToast("Erreur lors de l'envoi. Contactez-nous : 06 49 60 49 60");
-      btn.classList.remove('loading');
-      btn.textContent = 'Confirmer ma réservation ✓';
+      console.error('Exception:', err);
+      showToast('Erreur : ' + (err.message || 'vérifiez la console'));
+      btn.classList.remove('loading'); btn.textContent = 'Confirmer ma réservation ✓';
     }
   }
 
   /* ─── TOAST ─── */
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 4000);
-  }
+  function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),4000); }
 
   /* ─── INIT ─── */
   document.getElementById('f-date').min = new Date().toISOString().split('T')[0];
   document.getElementById('f-duree').addEventListener('change', updatePrice);
-  document.getElementById('f-depart')?.addEventListener('change', updatePrice);
-  document.getElementById('f-arrivee')?.addEventListener('change', updatePrice);
-  document.getElementById('f-depart-dispo')?.addEventListener('change', updatePrice);
   updatePrice();
-  loadGoogleMaps().catch(err => {
-    console.error(err);
-  });
 </script>
 
-<footer style="border-top:1px solid var(--gold-border); padding:2.5rem 3rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; position:relative; z-index:1;">
-  <div class="footer-logo" style="font-family:'Cormorant Garamond', serif; color:var(--gold); font-size:1.2rem; letter-spacing:0.15em;">SHVIP</div>
-  <ul class="footer-links" style="display:flex; gap:2rem; list-style:none; flex-wrap:wrap;">
-    <li><a href="/services" style="text-decoration:none; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft);">Services</a></li>
-    <li><a href="/flotte" style="text-decoration:none; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft);">Flotte</a></li>
-    <li><a href="/reservation" style="text-decoration:none; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold);">Réservation</a></li>
-    <li><a href="/partenaires" style="text-decoration:none; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft);">Partenaires</a></li>
-    <li><a href="/contact" style="text-decoration:none; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft);">Contact</a></li>
-    <li><a href="/conditions-generales" style="text-decoration:none; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft);">CGV</a></li>
-    <li><a href="/politique-de-confidentialite" style="text-decoration:none; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft);">Confidentialité</a></li>
+<footer>
+  <a href="/" class="footer-logo">SHVIP</a>
+  <ul class="footer-links">
+    <li><a href="/services">Services</a></li>
+    <li><a href="/flotte">Flotte</a></li>
+    <li><a href="/reservation">Réservation</a></li>
+    <li><a href="/partenaires">Partenaires</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/conditions-generales">CGV</a></li>
+    <li><a href="/politique-de-confidentialite">Confidentialité</a></li>
   </ul>
-  <div class="footer-copy" style="font-size:0.6rem; color:var(--text-faint); letter-spacing:0.08em;">© 2026 SHVIP · Paris · Tous droits réservés</div>
+  <span class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</span>
 </footer>
-
+<script>
+// ── NAV SCROLL EFFECT
+(function(){
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, {passive:true});
+})();
+</script>
 </body>
 </html>
