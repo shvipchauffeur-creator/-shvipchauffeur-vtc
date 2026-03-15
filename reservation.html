@@ -647,9 +647,8 @@ footer {
   </ul>
   <span class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</span>
 </footer>
-
-
-// ── NAV SCROLL EFFECT ──────────────────────────────────
+<script>
+// ── NAV SCROLL EFFECT
 (function(){
   const nav = document.querySelector('nav');
   if (!nav) return;
@@ -657,6 +656,6 @@ footer {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, {passive:true});
 })();
-
+</script>
 </body>
 </html>
