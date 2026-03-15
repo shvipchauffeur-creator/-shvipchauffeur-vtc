@@ -1,614 +1,890 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SHVIP — Réservation Privée</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHVIP — Réservation | Chauffeur privé Paris</title>
+  <meta name="description" content="Réservez votre chauffeur privé à Paris avec SHVIP. Estimation premium, transferts aéroport, business et mise à disposition." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --gold: #c9a96e; --gold-dim: #a07840;
-      --gold-glow: rgba(201,169,110,0.15); --gold-border: rgba(201,169,110,0.3);
-      --ink: #07080a; --ink-2: #0e0f12; --ink-3: #161719; --ink-4: #1e2024;
-      --text: #e6dfd3; --text-soft: rgba(230,223,211,0.55); --text-faint: rgba(230,223,211,0.28);
-      --success: #5dbf8a; --error: #e07070;
+      --bg: #060606;
+      --bg-2: #0f0f0f;
+      --bg-3: #151515;
+      --gold: #c9a96e;
+      --gold-soft: #e7d2ae;
+      --text: #f4efe7;
+      --muted: #a79b8c;
+      --line: rgba(201, 169, 110, 0.18);
+      --ok: #2fd36a;
+      --error: #d35a5a;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
     }
+
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { background: var(--ink); color: var(--text); font-family: 'Raleway', sans-serif; font-weight: 300; min-height: 100vh; overflow-x: hidden; }
-    body::before { content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.035; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:180px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+    }
 
-    nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:1.3rem 3.5rem; background:rgba(7,8,10,0.9); backdrop-filter:blur(20px); border-bottom:1px solid var(--gold-border); }
-    .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-weight:400; letter-spacing:0.25em; color:var(--gold); text-decoration:none; }
-    .nav-links { display:flex; gap:2.8rem; list-style:none; }
-    .nav-links a { color:var(--text-soft); text-decoration:none; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; transition:color 0.3s; }
-    .nav-links a:hover { color:var(--gold); }
+    a { color: inherit; }
 
-    .page-header { padding:9.5rem 3.5rem 3.5rem; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; z-index:1; }
-    .page-header::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:1px; height:3rem; background:linear-gradient(to bottom,var(--gold-border),transparent); }
-    .tag { font-size:0.6rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold); margin-bottom:1.4rem; display:flex; align-items:center; gap:0.8rem; }
-    .tag::before,.tag::after { content:'◆'; font-size:0.4rem; opacity:0.6; }
-    .page-header h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.6rem,5.5vw,4.2rem); font-weight:300; line-height:1.1; margin-bottom:1.2rem; }
-    .page-header h1 em { font-style:italic; color:var(--gold); }
-    .page-header p { font-size:0.75rem; color:var(--text-soft); max-width:400px; line-height:2; }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 42px;
+      background: rgba(6,6,6,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      text-decoration: none;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      letter-spacing: .18em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .72rem;
+      color: rgba(244,239,231,.82);
+    }
+    .nav-links a.active,
+    .nav-links a:hover { color: var(--gold); }
 
-    .progress-wrap { position:relative; z-index:1; max-width:520px; margin:3.5rem auto 0; padding:0 1.5rem; display:flex; align-items:flex-start; justify-content:space-between; }
-    .prog-step { display:flex; flex-direction:column; align-items:center; flex:1; position:relative; }
-    .prog-step::after { content:''; position:absolute; top:15px; left:50%; right:-50%; height:1px; background:var(--gold-border); z-index:0; }
-    .prog-step:last-child::after { display:none; }
-    .prog-dot { width:30px; height:30px; border-radius:50%; border:1px solid var(--gold-border); display:flex; align-items:center; justify-content:center; font-size:0.6rem; font-weight:500; background:var(--ink); position:relative; z-index:1; color:var(--text-faint); transition:all 0.4s; }
-    .prog-step.active .prog-dot { border-color:var(--gold); color:var(--gold); box-shadow:0 0 18px var(--gold-glow); }
-    .prog-step.done .prog-dot { border-color:var(--success); background:var(--success); color:var(--ink); }
-    .prog-label { font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-faint); margin-top:0.6rem; transition:color 0.3s; }
-    .prog-step.active .prog-label { color:var(--gold); }
-    .prog-step.done .prog-label { color:var(--success); }
+    .hero {
+      padding: 88px 42px 30px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(201,169,110,.08), transparent 30%),
+        radial-gradient(circle at 85% 0%, rgba(201,169,110,.05), transparent 25%),
+        linear-gradient(180deg, #090909 0%, #060606 100%);
+    }
+    .hero-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .34em;
+      font-size: .72rem;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.02;
+      font-weight: 300;
+    }
+    h1 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .hero-sub {
+      max-width: 760px;
+      margin-top: 16px;
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 1rem;
+    }
 
-    .main { position:relative; z-index:1; max-width:900px; margin:3.5rem auto 7rem; padding:0 1.5rem; }
-    .panel { background:var(--ink-2); border:1px solid var(--gold-border); animation:riseIn 0.5s cubic-bezier(.22,.68,0,1.2) both; }
-    @keyframes riseIn { from{opacity:0;transform:translateY(24px) scale(0.99)} to{opacity:1;transform:none} }
-    .panel-head { padding:2.2rem 3rem 1.8rem; border-bottom:1px solid rgba(201,169,110,0.12); display:flex; align-items:baseline; justify-content:space-between; }
-    .panel-head h2 { font-family:'Cormorant Garamond',serif; font-size:1.75rem; font-weight:300; }
-    .panel-head h2 em { font-style:italic; color:var(--gold); }
-    .panel-step-tag { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--text-faint); }
-    .panel-body { padding:2.5rem 3rem; }
+    .main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 34px 42px 80px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(340px, .8fr);
+      gap: 34px;
+    }
 
-    .cards-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; }
-    .cards-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:0.9rem; }
-    .opt-card { border:1px solid var(--gold-border); background:var(--ink-3); padding:1.5rem 1.3rem; cursor:pointer; position:relative; transition:border-color 0.3s,background 0.3s,transform 0.2s; }
-    .opt-card:hover { border-color:rgba(201,169,110,0.6); transform:translateY(-2px); }
-    .opt-card.sel { border-color:var(--gold); background:rgba(201,169,110,0.05); }
-    .opt-card.sel::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
-    .opt-card .tick { position:absolute; top:0.7rem; right:0.85rem; font-size:0.65rem; color:var(--gold); opacity:0; transition:opacity 0.2s; }
-    .opt-card.sel .tick { opacity:1; }
-    .opt-icon { font-size:1.6rem; margin-bottom:0.7rem; }
-    .opt-badge { font-size:0.5rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:0.4rem; }
-    .opt-name { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; margin-bottom:0.3rem; }
-    .opt-desc { font-size:0.6rem; color:var(--text-soft); line-height:1.7; }
-    .opt-price { font-size:0.65rem; color:var(--gold); margin-top:0.7rem; }
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.00));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
 
-    .sec-div { display:flex; align-items:center; gap:1.2rem; margin:2.2rem 0 1.8rem; }
-    .sec-div span { font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); white-space:nowrap; }
-    .sec-div::before,.sec-div::after { content:''; flex:1; height:1px; background:var(--gold-border); }
+    .form-wrap { padding: 34px; }
+    .panel-title {
+      margin: 0 0 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--gold-soft);
+    }
+    .panel-text {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
 
-    .pay-tabs { display:flex; margin-bottom:2rem; }
-    .pay-tab { flex:1; padding:1rem; border:1px solid var(--gold-border); background:var(--ink-3); cursor:pointer; text-align:center; transition:all 0.3s; font-family:'Raleway',sans-serif; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-soft); }
-    .pay-tab:first-child { border-right:none; }
-    .pay-tab.active { background:var(--gold-glow); border-color:var(--gold); color:var(--gold); }
-    .pay-tab-sub { font-size:0.55rem; color:var(--text-faint); margin-top:0.25rem; text-transform:none; letter-spacing:0.08em; }
+    .type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .type-card {
+      border: 1px solid var(--line);
+      background: var(--bg-2);
+      padding: 20px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .type-card.active {
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px var(--gold);
+    }
+    .type-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 6px;
+    }
+    .type-sub {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: .72rem;
+      letter-spacing: .22em;
+    }
 
-    .fields { display:grid; gap:1.1rem; }
-    .col-2 { grid-template-columns:1fr 1fr; }
-    .col-3 { grid-template-columns:1fr 1fr 1fr; }
-    .f { display:flex; flex-direction:column; gap:0.45rem; }
-    .f label { font-size:0.55rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-soft); }
-    .f label .req { color:var(--gold); }
-    .f input,.f select,.f textarea { background:var(--ink-4); border:1px solid rgba(201,169,110,0.2); color:var(--text); padding:0.9rem 1.1rem; font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:300; outline:none; transition:border-color 0.3s,box-shadow 0.3s; width:100%; appearance:none; }
-    .f input:focus,.f select:focus,.f textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-glow); }
-    .f input.err { border-color:var(--error); }
-    .f input::placeholder,.f textarea::placeholder { color:var(--text-faint); }
-    .f select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a96e'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1.1rem center; padding-right:2.8rem; cursor:pointer; }
-    .f select option { background:var(--ink-4); }
-    .f textarea { resize:vertical; min-height:85px; line-height:1.7; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 20px;
+    }
+    .field.full { grid-column: 1 / -1; }
+    .field label {
+      display: block;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-size: .82rem;
+      letter-spacing: .24em;
+      margin-bottom: 10px;
+    }
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 16px 18px;
+      font: inherit;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,169,110,.08);
+    }
 
-    /* Autocomplete */
-    .ac-wrap { position:relative; }
-    .ac-list { position:absolute; top:100%; left:0; right:0; background:var(--ink-3); border:1px solid var(--gold-border); border-top:none; z-index:100; max-height:200px; overflow-y:auto; }
-    .ac-item { padding:0.75rem 1.1rem; font-size:0.74rem; cursor:pointer; color:var(--text-soft); border-bottom:1px solid rgba(201,169,110,0.07); transition:background 0.15s; }
-    .ac-item:hover { background:var(--gold-glow); color:var(--text); }
-    .ac-item:last-child { border-bottom:none; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--gold);
+      padding: 15px 24px;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: .78rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: .2s ease;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: #111;
+    }
+    .btn-primary:hover { filter: brightness(1.06); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold);
+    }
+    .btn-secondary:hover { background: rgba(201,169,110,.06); }
 
-    /* Price box — dynamique */
-    .price-box { background:var(--ink-3); border:1px solid var(--gold-border); padding:1.6rem 2rem; margin-top:1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; transition:border-color 0.3s; }
-    .price-box.known { border-color:var(--gold); }
-    .price-box.devis { border-color:rgba(201,169,110,0.4); }
-    .price-box-left .pb-label { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--text-soft); margin-bottom:0.3rem; }
-    .price-box-left .pb-dest { font-size:0.68rem; color:var(--text-soft); margin-top:0.3rem; }
-    .price-box-left .pb-dest strong { color:var(--gold); }
-    .price-box-right .pb-price { font-family:'Cormorant Garamond',serif; font-size:2.4rem; color:var(--gold); line-height:1; }
-    .price-box-right .pb-note { font-size:0.55rem; color:var(--text-faint); margin-top:0.25rem; text-align:right; }
-    .price-box-right .pb-acompte { font-size:0.62rem; color:var(--text-soft); margin-top:0.3rem; text-align:right; }
+    .note {
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: .92rem;
+    }
+    .note strong { color: var(--gold-soft); font-weight: 500; }
 
-    /* Recap */
-    .ref-box { background:var(--gold-glow); border:1px solid var(--gold-border); padding:1rem 1.6rem; display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; }
-    .ref-box-label { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--text-soft); }
-    .ref-box-val { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--gold); letter-spacing:0.1em; }
+    .sticky-col {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      position: sticky;
+      top: 92px;
+      height: fit-content;
+    }
 
-    .recap-block { background:var(--ink-3); border:1px solid var(--gold-border); margin-bottom:1.1rem; }
-    .recap-block-head { padding:0.85rem 1.6rem; border-bottom:1px solid rgba(201,169,110,0.12); font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); }
-    .recap-row { display:flex; justify-content:space-between; align-items:baseline; padding:0.6rem 1.6rem; font-size:0.72rem; border-bottom:1px solid rgba(201,169,110,0.06); }
-    .recap-row:last-child { border-bottom:none; }
-    .rl { color:var(--text-soft); } .rv { color:var(--text); font-weight:400; text-align:right; max-width:62%; }
-    .recap-total { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 1.6rem; background:var(--gold-glow); border-top:1px solid var(--gold-border); }
-    .recap-total .rl { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; }
-    .recap-total .rv { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--gold); }
+    .quote-card,
+    .summary-card,
+    .vehicle-card {
+      padding: 28px;
+    }
+    .side-label {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      font-size: .78rem;
+      margin-bottom: 14px;
+    }
+    .quote-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.3rem;
+      font-weight: 300;
+      color: var(--gold-soft);
+      margin: 0 0 18px;
+    }
+    .quote-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.4rem;
+      color: var(--text);
+      margin: 0 0 8px;
+      line-height: 1;
+    }
+    .quote-status {
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .quote-status.ok { color: #ccebd7; }
+    .quote-status.error { color: #f0b7b7; }
 
-    .legal-note { border-left:2px solid var(--gold-dim); padding:0.8rem 1.2rem; font-size:0.62rem; color:var(--text-soft); line-height:1.8; background:rgba(201,169,110,0.04); margin-bottom:1.8rem; }
+    .summary-list {
+      display: grid;
+      gap: 14px;
+    }
+    .summary-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .summary-key { color: var(--muted); }
+    .summary-val { text-align: right; color: var(--text); }
 
-    .btn-gold { background:var(--gold); color:var(--ink); border:none; cursor:pointer; width:100%; padding:1.2rem 2rem; font-family:'Raleway',sans-serif; font-size:0.65rem; font-weight:600; letter-spacing:0.25em; text-transform:uppercase; transition:background 0.3s,transform 0.2s,box-shadow 0.3s; position:relative; overflow:hidden; }
-    .btn-gold::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.15) 50%,transparent 70%); transform:translateX(-100%); transition:transform 0.5s; }
-    .btn-gold:hover { background:#d4b578; transform:translateY(-1px); box-shadow:0 8px 30px rgba(201,169,110,0.25); }
-    .btn-gold:hover::after { transform:translateX(100%); }
-    .btn-gold.loading { pointer-events:none; opacity:0.7; }
-    .btn-gold.loading::before { content:''; display:inline-block; width:14px; height:14px; border:2px solid rgba(7,8,10,0.3); border-top-color:var(--ink); border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:0.6rem; }
-    @keyframes spin { to{transform:rotate(360deg)} }
-    .btn-ghost { background:transparent; color:var(--text-soft); border:1px solid var(--gold-border); cursor:pointer; padding:1.1rem 2rem; font-family:'Raleway',sans-serif; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; transition:all 0.3s; }
-    .btn-ghost:hover { border-color:var(--gold); color:var(--gold); }
-    .btn-row { display:flex; gap:0.8rem; margin-top:1.8rem; }
-    .btn-row .btn-gold { flex:1; }
+    .vehicle-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .vehicle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border: 1px solid rgba(255,255,255,.05);
+      background: var(--bg-2);
+      padding: 14px 16px;
+    }
+    .vehicle-name { color: var(--gold-soft); }
+    .vehicle-desc { color: var(--muted); font-size: .88rem; }
 
-    /* Success */
-    .success-wrap { padding:4rem 3rem; text-align:center; animation:riseIn 0.6s cubic-bezier(.22,.68,0,1.2) both; }
-    .success-ring { width:72px; height:72px; border-radius:50%; border:1px solid var(--success); display:flex; align-items:center; justify-content:center; margin:0 auto 2rem; font-size:1.6rem; color:var(--success); box-shadow:0 0 30px rgba(93,191,138,0.2); }
-    .success-wrap h2 { font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:300; margin-bottom:1rem; }
-    .success-wrap h2 em { color:var(--gold); font-style:italic; }
-    .success-wrap p { color:var(--text-soft); font-size:0.77rem; line-height:2; max-width:420px; margin:0 auto 2rem; }
-    .ref-badge { display:inline-block; border:1px solid var(--gold-border); padding:0.8rem 2rem; font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:2.5rem; }
-    .wa-link { display:flex; align-items:center; justify-content:center; gap:0.9rem; background:var(--ink-3); border:1px solid var(--gold-border); padding:1.1rem; text-decoration:none; color:var(--text-soft); font-size:0.7rem; transition:border-color 0.3s; max-width:420px; margin:0 auto; }
-    .wa-link:hover { border-color:var(--gold); color:var(--text); }
-    .wa-link strong { color:var(--text); }
+    .map-card { overflow: hidden; }
+    #routeMap {
+      width: 100%;
+      height: 280px;
+      border-top: 1px solid var(--line);
+    }
 
-    .toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px); background:var(--ink-3); border:1px solid var(--error); padding:0.9rem 1.8rem; font-size:0.72rem; color:var(--error); transition:transform 0.4s cubic-bezier(.22,.68,0,1.2); z-index:999; }
-    .toast.show { transform:translateX(-50%) translateY(0); }
-    .foot-note { text-align:center; font-size:0.58rem; color:var(--text-faint); line-height:2.2; margin-top:2rem; position:relative; z-index:1; padding-bottom:4rem; }
-    .foot-note a { color:var(--text-faint); text-decoration:none; }
-    .foot-note a:hover { color:var(--gold); }
-    .hidden { display:none !important; }
+    .pill {
+      display: inline-block;
+      padding: 7px 11px;
+      border: 1px solid rgba(201,169,110,.3);
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-size: .7rem;
+      margin-top: 8px;
+    }
 
-    @media (max-width:680px) {
-      nav { padding:1rem 1.2rem; } .nav-links { display:none; }
-      .panel-head,.panel-body { padding:1.5rem 1.3rem; }
-      .cards-grid-2,.cards-grid-3,.col-2,.col-3 { grid-template-columns:1fr; }
-      .pay-tabs { flex-direction:column; }
-      .price-box { flex-direction:column; align-items:flex-start; }
+    .footer {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 42px 50px;
+      color: rgba(255,255,255,.45);
+      font-size: .88rem;
+    }
+
+    @media (max-width: 980px) {
+      nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 68px 20px 24px; }
+      .main {
+        padding: 24px 20px 60px;
+        grid-template-columns: 1fr;
+      }
+      .sticky-col { position: static; }
+      .grid, .type-grid { grid-template-columns: 1fr; }
+      .summary-row { grid-template-columns: 1fr; }
+      .summary-val { text-align: left; }
+      .form-wrap, .quote-card, .summary-card, .vehicle-card { padding: 22px; }
+      .footer { padding: 0 20px 36px; }
     }
   </style>
 </head>
 <body>
+  <nav>
+    <a href="/" class="logo">SHVIP</a>
+    <ul class="nav-links">
+      <li><a href="/services">Services</a></li>
+      <li><a href="/flotte">Flotte</a></li>
+      <li><a href="/reservation" class="active">Réservation</a></li>
+      <li><a href="/partenaires">Partenaires</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<nav>
-  <a class="nav-logo" href="/">SHVIP</a>
-  <ul class="nav-links">
-    <li><a href="/services">Services</a></li>
-    <li><a href="/flotte">Flotte</a></li>
-    <li><a href="/partenaires">Partenaires</a></li>
-    <li><a href="/contact">Contact</a></li>
-  </ul>
-</nav>
-
-<header class="page-header">
-  <p class="tag">Réservation privée · Paris</p>
-  <h1>Votre course,<br><em>sur mesure.</em></h1>
-  <p>Complétez votre demande en quelques instants.<br/>Confirmation automatique, discrétion garantie.</p>
-</header>
-
-<div class="progress-wrap">
-  <div class="prog-step active" id="ps1"><div class="prog-dot">01</div><span class="prog-label">Prestation</span></div>
-  <div class="prog-step" id="ps2"><div class="prog-dot">02</div><span class="prog-label">Trajet</span></div>
-  <div class="prog-step" id="ps3"><div class="prog-dot">03</div><span class="prog-label">Confirmation</span></div>
-</div>
-
-<div class="main">
-
-  <!-- PANEL 1 -->
-  <div class="panel" id="p1">
-    <div class="panel-head"><h2>Choisissez votre <em>prestation</em></h2><span class="panel-step-tag">Étape 01 / 03</span></div>
-    <div class="panel-body">
-      <div class="cards-grid-2">
-        <div class="opt-card sel" data-svc="Transfert aéroport / gare" onclick="pickCard(this,'svc')"><span class="tick">✦</span><div class="opt-icon">✈️</div><div class="opt-badge">Prix fixe TTC</div><div class="opt-name">Transfert</div><div class="opt-desc">Aéroport, gare, adresse à adresse. Suivi de vol inclus.</div></div>
-        <div class="opt-card" data-svc="Mise à disposition" onclick="pickCard(this,'svc')"><span class="tick">✦</span><div class="opt-icon">🕐</div><div class="opt-badge">Min. 4 heures</div><div class="opt-name">Mise à disposition</div><div class="opt-desc">Chauffeur dédié à l'heure ou à la journée.</div></div>
-        <div class="opt-card" data-svc="Événement privé" onclick="pickCard(this,'svc')"><span class="tick">✦</span><div class="opt-icon">🥂</div><div class="opt-badge">Sur coordination</div><div class="opt-name">Événement privé</div><div class="opt-desc">Dîners, mariages, réceptions. Coordination discrète.</div></div>
-        <div class="opt-card" data-svc="Corporate / délégation" onclick="pickCard(this,'svc')"><span class="tick">✦</span><div class="opt-icon">💼</div><div class="opt-badge">Partenariat</div><div class="opt-name">Corporate</div><div class="opt-desc">Dirigeants, clients, délégations. Confidentialité absolue.</div></div>
-      </div>
-
-      <div class="sec-div"><span>Véhicule</span></div>
-      <div class="cards-grid-3">
-        <div class="opt-card sel" data-veh="Classe E — Business" data-pd="400" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Business</div><div class="opt-name">Classe E</div><div class="opt-desc">Cuir Nappa, Wi-Fi, eau minérale.</div><div class="opt-price">Transfert dès 130 € · Dispo 400 €/4h</div></div>
-        <div class="opt-card" data-veh="Classe S — Prestige" data-pd="600" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Prestige</div><div class="opt-name">Classe S</div><div class="opt-desc">Massage, 64 couleurs d'ambiance, tablettes.</div><div class="opt-price">Transfert dès 195 € · Dispo 600 €/4h</div></div>
-        <div class="opt-card" data-veh="Classe V — Van VIP" data-pd="480" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Van VIP</div><div class="opt-name">Classe V</div><div class="opt-desc">7 passagers, sièges pivotants, grand volume.</div><div class="opt-price">Transfert dès 154 € · Dispo 480 €/4h</div></div>
-      </div>
-
-      <div class="sec-div"><span>Paiement</span></div>
-      <div class="pay-tabs">
-        <div class="pay-tab active" data-pay="Paiement total" onclick="pickPay(this)">Paiement intégral<div class="pay-tab-sub">Montant total à la confirmation</div></div>
-        <div class="pay-tab" data-pay="Acompte 30 %" onclick="pickPay(this)">Acompte 30 %<div class="pay-tab-sub">Solde le jour de la course</div></div>
-      </div>
-      <button class="btn-gold" onclick="goTo(2)">Renseigner le trajet &nbsp;→</button>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Réservation · Chauffeur privé Paris</div>
+      <h1>Votre trajet,<br><em>estimé avec précision.</em></h1>
+      <p class="hero-sub">
+        Choisissez votre prestation, votre véhicule et vos adresses. SHVIP calcule une estimation premium pour vos transferts à Paris, en Île-de-France et vers les aéroports.
+      </p>
     </div>
+  </section>
+
+  <main class="main">
+    <section class="panel form-wrap">
+      <h2 class="panel-title">Obtenir mon tarif</h2>
+      <p class="panel-text">
+        Réservation premium SHVIP. Pour la mise à disposition, le minimum est de <strong>4 heures</strong>. Les trajets aéroport principaux conservent des tarifs fixes prioritaires lorsqu’ils sont reconnus.
+      </p>
+
+      <div class="type-grid">
+        <div class="type-card active" data-type="transfer" id="cardTransfer">
+          <div class="type-label">Transfert</div>
+          <div class="type-sub">Prix fixe ou estimation</div>
+        </div>
+        <div class="type-card" data-type="dispo" id="cardDispo">
+          <div class="type-label">Mise à disposition</div>
+          <div class="type-sub">Minimum 4 heures</div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="depart">Adresse de départ</label>
+          <input class="input" id="depart" type="text" placeholder="Ex. Hôtel Fouquet's Paris" />
+        </div>
+
+        <div class="field" id="arrivalField">
+          <label for="arrivee">Adresse d'arrivée</label>
+          <input class="input" id="arrivee" type="text" placeholder="Ex. Aéroport CDG Terminal 2E" />
+        </div>
+
+        <div class="field">
+          <label for="vehicule">Véhicule</label>
+          <select class="select" id="vehicule">
+            <option value="business">Classe E — Business</option>
+            <option value="prestige">Classe S — Prestige</option>
+            <option value="van">Classe V — Van VIP</option>
+          </select>
+        </div>
+
+        <div class="field" id="durationField" style="display:none;">
+          <label for="dureeDispo">Durée (mise à disposition)</label>
+          <select class="select" id="dureeDispo">
+            <option value="4">4 heures</option>
+            <option value="5">5 heures</option>
+            <option value="6">6 heures</option>
+            <option value="8">8 heures</option>
+            <option value="10">10 heures</option>
+            <option value="12">12 heures</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="date">Date</label>
+          <input class="input" id="date" type="date" />
+        </div>
+
+        <div class="field">
+          <label for="heure">Heure</label>
+          <input class="input" id="heure" type="time" />
+        </div>
+
+        <div class="field">
+          <label for="passagers">Passagers</label>
+          <select class="select" id="passagers">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="details">Détails complémentaires</label>
+          <textarea class="textarea" id="details" placeholder="Vol, bagages, siège bébé, plusieurs arrêts, nom du passager, demande particulière..."></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="calcBtn" type="button">Obtenir mon tarif</button>
+        <a class="btn btn-secondary" id="continueBtn" href="#" onclick="continueToContact(event)">Continuer la réservation</a>
+        <a class="btn btn-secondary" id="whatsBtn" target="_blank" rel="noopener">Réserver sur WhatsApp</a>
+      </div>
+
+      <p class="note">
+        <strong>Conseil :</strong> pour les trajets personnalisés non reconnus comme tarifs fixes SHVIP, une estimation dynamique est calculée. En cas d'indisponibilité Google Maps, le site bascule sur <strong>sur devis</strong> sans erreur bloquante.
+      </p>
+    </section>
+
+    <aside class="sticky-col">
+      <section class="panel quote-card">
+        <div class="side-label">Votre tarif estimé</div>
+        <h3 class="quote-title">Simulation premium</h3>
+        <div class="quote-price" id="prixAffiche">—</div>
+        <p class="quote-status" id="quoteStatus">Renseignez vos informations puis cliquez sur <strong>Obtenir mon tarif</strong>.</p>
+        <div class="pill" id="quoteMode">Mode : transfert</div>
+      </section>
+
+      <section class="panel summary-card">
+        <div class="side-label">Récapitulatif</div>
+        <div class="summary-list">
+          <div class="summary-row"><div class="summary-key">Prestation</div><div class="summary-val" id="sumType">Transfert</div></div>
+          <div class="summary-row"><div class="summary-key">Véhicule</div><div class="summary-val" id="sumVehicle">Classe E — Business</div></div>
+          <div class="summary-row"><div class="summary-key">Trajet</div><div class="summary-val" id="sumTrip">—</div></div>
+          <div class="summary-row"><div class="summary-key">Distance</div><div class="summary-val" id="sumDistance">—</div></div>
+          <div class="summary-row"><div class="summary-key">Durée</div><div class="summary-val" id="sumDuration">—</div></div>
+          <div class="summary-row"><div class="summary-key">Date / heure</div><div class="summary-val" id="sumDateTime">—</div></div>
+        </div>
+      </section>
+
+      <section class="panel vehicle-card">
+        <div class="side-label">Références SHVIP</div>
+        <div class="vehicle-grid">
+          <div class="vehicle-row"><div><div class="vehicle-name">Classe E — Business</div><div class="vehicle-desc">Idéale pour les déplacements business et transferts premium.</div></div><strong>Base dynamique : 3,20 €/km</strong></div>
+          <div class="vehicle-row"><div><div class="vehicle-name">Classe S — Prestige</div><div class="vehicle-desc">Confort supérieur et image haut de gamme.</div></div><strong>Base dynamique : 4,60 €/km</strong></div>
+          <div class="vehicle-row"><div><div class="vehicle-name">Classe V — Van VIP</div><div class="vehicle-desc">Familles, groupes, délégations et bagages.</div></div><strong>Base dynamique : 4,10 €/km</strong></div>
+        </div>
+      </section>
+
+      <section class="panel map-card">
+        <div class="quote-card" style="padding-bottom:0;">
+          <div class="side-label">Visualisation</div>
+          <h3 class="quote-title" style="font-size:2rem; margin-bottom:0;">Trajet</h3>
+        </div>
+        <div id="routeMap"></div>
+      </section>
+    </aside>
+  </main>
+
+  <div class="footer">
+    SHVIP — Maison Privée de Chauffeurs · Estimation fournie à titre indicatif avant confirmation définitive de la réservation.
   </div>
 
-  <!-- PANEL 2 -->
-  <div class="panel hidden" id="p2">
-    <div class="panel-head"><h2>Détails de <em>votre trajet</em></h2><span class="panel-step-tag">Étape 02 / 03</span></div>
-    <div class="panel-body">
-      <div class="fields col-2">
-        <div class="f"><label>Prénom & Nom <span class="req">*</span></label><input type="text" id="f-nom" placeholder="Alexandre Martin"/></div>
-        <div class="f"><label>Téléphone <span class="req">*</span></label><input type="tel" id="f-telephone" placeholder="+33 6 xx xx xx xx"/></div>
-      </div>
-      <div class="fields" style="margin-top:1.1rem">
-        <div class="f"><label>Email <span class="req">*</span></label><input type="email" id="f-email" placeholder="votre@email.com"/></div>
-      </div>
-
-      <div class="sec-div"><span>Trajet</span></div>
-
-      <!-- Transfert -->
-      <div id="bloc-transfert">
-        <div class="fields" style="margin-bottom:1.1rem">
-          <div class="f"><label>Adresse de départ <span class="req">*</span></label>
-            <div class="ac-wrap"><input type="text" id="f-depart" placeholder="Ex : 15 Rue de Rivoli, Paris" autocomplete="off" oninput="acSearch(this,'ac-dep')" onblur="delayHide('ac-dep')"/><div class="ac-list hidden" id="ac-dep"></div></div>
-          </div>
-        </div>
-        <div class="fields">
-          <div class="f"><label>Adresse d'arrivée <span class="req">*</span></label>
-            <div class="ac-wrap"><input type="text" id="f-arrivee" placeholder="Ex : Roissy-CDG Terminal 2E" autocomplete="off" oninput="acSearch(this,'ac-arr')" onblur="delayHide('ac-arr')"/><div class="ac-list hidden" id="ac-arr"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mise à dispo -->
-      <div id="bloc-dispo" class="hidden">
-        <div class="fields col-2">
-          <div class="f"><label>Point de départ <span class="req">*</span></label>
-            <div class="ac-wrap"><input type="text" id="f-depart-dispo" placeholder="Adresse de prise en charge" autocomplete="off" oninput="acSearch(this,'ac-dep-dispo')" onblur="delayHide('ac-dep-dispo')"/><div class="ac-list hidden" id="ac-dep-dispo"></div></div>
-          </div>
-          <div class="f"><label>Durée souhaitée</label>
-            <select id="f-duree" onchange="updatePrice()"><option value="4">4 heures</option><option value="5">5 heures</option><option value="6">6 heures</option><option value="8">8 heures</option><option value="10">10 heures</option><option value="12">12 heures</option></select>
-          </div>
-        </div>
-      </div>
-
-      <div class="fields col-3" style="margin-top:1.1rem">
-        <div class="f"><label>Date <span class="req">*</span></label><input type="date" id="f-date"/></div>
-        <div class="f"><label>Heure <span class="req">*</span></label><input type="time" id="f-heure"/></div>
-        <div class="f"><label>Passagers</label><select id="f-passagers"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></div>
-      </div>
-      <div class="fields" style="margin-top:1.1rem">
-        <div class="f"><label>Notes complémentaires</label><textarea id="f-notes" placeholder="Numéro de vol, bagages, code d'accès…"></textarea></div>
-      </div>
-
-      <!-- PRICE BOX DYNAMIQUE -->
-      <div class="price-box" id="price-box">
-        <div class="price-box-left">
-          <div class="pb-label">Tarif estimé TTC</div>
-          <div class="pb-dest" id="pb-dest">Renseignez départ et arrivée pour calculer le tarif</div>
-        </div>
-        <div class="price-box-right">
-          <div class="pb-price" id="pb-price">—</div>
-          <div class="pb-note" id="pb-note">Péages séparés</div>
-          <div class="pb-acompte hidden" id="pb-acompte"></div>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-ghost" onclick="goTo(1)">← Retour</button>
-        <button class="btn-gold" onclick="goTo(3)">Voir le récapitulatif →</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PANEL 3 -->
-  <div class="panel hidden" id="p3">
-    <div class="panel-head"><h2><em>Récapitulatif</em> de votre demande</h2><span class="panel-step-tag">Étape 03 / 03</span></div>
-    <div class="panel-body">
-      <div class="ref-box"><span class="ref-box-label">📋 &nbsp; Votre référence</span><span class="ref-box-val" id="ref-display">—</span></div>
-      <div class="recap-block">
-        <div class="recap-block-head">◈ &nbsp; Prestation</div>
-        <div class="recap-row"><span class="rl">Service</span><span class="rv" id="r-svc">—</span></div>
-        <div class="recap-row"><span class="rl">Véhicule</span><span class="rv" id="r-veh">—</span></div>
-        <div class="recap-row"><span class="rl">Paiement</span><span class="rv" id="r-pay">—</span></div>
-      </div>
-      <div class="recap-block">
-        <div class="recap-block-head">◇ &nbsp; Trajet</div>
-        <div class="recap-row"><span class="rl">Départ</span><span class="rv" id="r-dep">—</span></div>
-        <div class="recap-row"><span class="rl">Arrivée</span><span class="rv" id="r-arr">—</span></div>
-        <div class="recap-row"><span class="rl">Date & heure</span><span class="rv" id="r-date">—</span></div>
-        <div class="recap-row"><span class="rl">Passagers</span><span class="rv" id="r-pax">—</span></div>
-        <div class="recap-total"><span class="rl">Montant TTC</span><span class="rv" id="r-prix">—</span></div>
-      </div>
-      <div class="recap-block">
-        <div class="recap-block-head">◉ &nbsp; Vos coordonnées</div>
-        <div class="recap-row"><span class="rl">Nom</span><span class="rv" id="r-nom">—</span></div>
-        <div class="recap-row"><span class="rl">Téléphone</span><span class="rv" id="r-tel">—</span></div>
-        <div class="recap-row"><span class="rl">Email</span><span class="rv" id="r-email">—</span></div>
-      </div>
-      <div class="legal-note">⚠️ Péages facturés séparément. Pour les trajets sur devis, notre équipe vous confirme le tarif exact sous une heure.</div>
-      <button class="btn-gold" id="btn-confirm" onclick="submitReservation()">Confirmer ma réservation &nbsp;✓</button>
-      <div class="btn-row" style="margin-top:0.7rem">
-        <button class="btn-ghost" style="width:100%" onclick="goTo(2)">← Modifier</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SUCCESS -->
-  <div class="panel hidden" id="p-success">
-    <div class="success-wrap">
-      <div class="success-ring">✓</div>
-      <h2>Réservation <em>enregistrée</em></h2>
-      <p>Votre demande a été transmise automatiquement à l'équipe SHVIP. Vous recevrez une confirmation dans l'heure.</p>
-      <div class="ref-badge" id="ref-badge">—</div>
-      <a class="wa-link" href="https://wa.me/33649604960" target="_blank">
-        <span>📱</span><span>Une question ? &nbsp;<strong>WhatsApp : 06 49 60 49 60</strong></span>
-      </a>
-    </div>
-  </div>
-
-</div>
-
-<p class="foot-note">
-  Discrétion absolue &nbsp;·&nbsp; Réponse sous 1 heure &nbsp;·&nbsp; © 2026 SHVIP · Paris<br/>
-  <a href="/conditions-generales">CGV</a> &nbsp;·&nbsp; <a href="/politique-de-confidentialite">Confidentialité</a>
-</p>
-<div class="toast" id="toast"></div>
-
-<!-- ⚠️ Remplacez YOUR_GOOGLE_API_KEY par votre clé Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec&libraries=places&language=fr&region=FR"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-/* ─── SUPABASE ─── */
-const { createClient } = supabase;
-const db = createClient('https://ehbqbembkeizojzgxrun.supabase.co','sb_publishable_kMNUSpr924eqPpNNGYo8Ug_HnauqRed');
-
-/* ─── TARIFS FIXES PAR DESTINATION ───────────────────────────────────────────
-   Mots-clés détectés dans l'adresse (insensible casse/accents).
-   Chaque destination a un tarif par véhicule : [Classe E, Classe S, Classe V]
-   ─────────────────────────────────────────────────────────────────────────── */
-const DESTINATIONS = [
-  { keys:['roissy','cdg','charles de gaulle','charles-de-gaulle'], label:'Paris → Roissy-CDG', prices:[162,243,192] },
-  { keys:['orly'],                                                   label:'Paris → Orly',       prices:[130,195,154] },
-  { keys:['beauvais'],                                               label:'Paris → Beauvais',   prices:[182,273,215] },
-  { keys:['disneyland','disney','val d\'europe','marne-la-vallée','marne la vallee'], label:'Paris → Disneyland', prices:[182,273,215] },
-  { keys:['gare de lyon','gare du nord','gare montparnasse','gare saint-lazare','gare de l\'est','gare austerlitz'], label:'Gare Paris', prices:[80,120,95] },
-];
-
-/* Véhicule → index dans le tableau prices */
-const VEH_INDEX = { 'Classe E — Business':0, 'Classe S — Prestige':1, 'Classe V — Van VIP':2 };
-
-/* ─── STATE ─── */
-const S = { svc:'Transfert aéroport / gare', veh:'Classe E — Business', pd:400, pay:'Paiement total' };
-let currentRef = '';
-let detectedPrice = null;   // null = sur devis
-let detectedLabel = '';
-
-/* ─── NORMALISE TEXTE (accents) ─── */
-function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
-
-/* ─── DÉTECTION DESTINATION ─── */
-function detectDestination(depart, arrivee) {
-  const combined = norm(depart + ' ' + arrivee);
-  for (const dest of DESTINATIONS) {
-    if (dest.keys.some(k => combined.includes(norm(k)))) {
-      return dest;
-    }
-  }
-  return null;
-}
-
-/* ─── MISE À JOUR PRICE BOX ─── */
-function updatePrice() {
-  const isDispo = S.svc === 'Mise à disposition';
-  const box = document.getElementById('price-box');
-  const pbPrice = document.getElementById('pb-price');
-  const pbDest  = document.getElementById('pb-dest');
-  const pbNote  = document.getElementById('pb-note');
-  const pbAcomp = document.getElementById('pb-acompte');
-
-  if (isDispo) {
-    const h = +(document.getElementById('f-duree')?.value || 4);
-    const price = Math.round((S.pd / 4) * h);
-    detectedPrice = price;
-    detectedLabel = `Mise à disposition ${h}h`;
-    box.className = 'price-box known';
-    pbPrice.textContent = price + ' €';
-    pbDest.innerHTML = `<strong>${S.veh}</strong> — ${h} heures`;
-    pbNote.textContent = 'Prix fixe TTC · Péages séparés';
-    if (S.pay === 'Acompte 30 %') {
-      pbAcomp.textContent = `Acompte : ${Math.round(price*.3)} € — Solde : ${Math.round(price*.7)} €`;
-      pbAcomp.classList.remove('hidden');
-    } else { pbAcomp.classList.add('hidden'); }
-    return;
-  }
-
-  /* Transfert — détecter destination */
-  const dep = document.getElementById('f-depart')?.value || '';
-  const arr = document.getElementById('f-arrivee')?.value || '';
-
-  if (!dep && !arr) {
-    detectedPrice = null; detectedLabel = '';
-    box.className = 'price-box';
-    pbPrice.textContent = '—';
-    pbDest.textContent = 'Renseignez départ et arrivée pour calculer le tarif';
-    pbNote.textContent = 'Péages séparés';
-    pbAcomp.classList.add('hidden');
-    return;
-  }
-
-  const dest = detectDestination(dep, arr);
-  if (dest) {
-    const idx = VEH_INDEX[S.veh] ?? 0;
-    detectedPrice = dest.prices[idx];
-    detectedLabel = dest.label;
-    box.className = 'price-box known';
-    pbPrice.textContent = detectedPrice + ' €';
-    pbDest.innerHTML = `Trajet détecté : <strong>${dest.label}</strong>`;
-    pbNote.textContent = 'Prix fixe TTC · Péages séparés';
-    if (S.pay === 'Acompte 30 %') {
-      pbAcomp.textContent = `Acompte : ${Math.round(detectedPrice*.3)} € — Solde : ${Math.round(detectedPrice*.7)} €`;
-      pbAcomp.classList.remove('hidden');
-    } else { pbAcomp.classList.add('hidden'); }
-  } else {
-    /* Aucune destination connue → sur devis */
-    detectedPrice = null;
-    detectedLabel = dep && arr ? `${dep} → ${arr}` : '';
-    box.className = 'price-box devis';
-    pbPrice.textContent = 'Sur devis';
-    pbDest.innerHTML = dep && arr ? `Trajet : <strong>${dep} → ${arr}</strong>` : 'Trajet personnalisé';
-    pbNote.textContent = 'Tarif confirmé par notre équipe sous 1h';
-    pbAcomp.classList.add('hidden');
-  }
-}
-
-/* ─── PICKERS ─── */
-function pickCard(el, group) {
-  el.closest('.cards-grid-2,.cards-grid-3').querySelectorAll('.opt-card').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  if (group === 'svc') {
-    S.svc = el.dataset.svc;
-    const d = S.svc === 'Mise à disposition';
-    document.getElementById('bloc-transfert').classList.toggle('hidden', d);
-    document.getElementById('bloc-dispo').classList.toggle('hidden', !d);
-  } else {
-    S.veh = el.dataset.veh;
-    S.pd  = +el.dataset.pd;
-  }
-  updatePrice();
-}
-function pickPay(el) {
-  document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active'); S.pay = el.dataset.pay; updatePrice();
-}
-
-/* ─── GOOGLE PLACES AUTOCOMPLETE ─── */
-let acSvc; const acTimers = {};
-function acSearch(input, listId) {
-  const list = document.getElementById(listId);
-  clearTimeout(acTimers[listId]);
-  if (!input.value.trim() || input.value.length < 3) { list.classList.add('hidden'); return; }
-  acTimers[listId] = setTimeout(() => {
-    if (!window.google) return;
-    if (!acSvc) acSvc = new google.maps.places.AutocompleteService();
-    acSvc.getPlacePredictions(
-      { input: input.value, componentRestrictions:{ country:'fr' }, language:'fr' },
-      (preds, status) => {
-        list.innerHTML = '';
-        if (status !== 'OK' || !preds) { list.classList.add('hidden'); return; }
-        preds.slice(0,5).forEach(p => {
-          const el = document.createElement('div');
-          el.className = 'ac-item'; el.textContent = p.description;
-          el.onmousedown = () => {
-            input.value = p.description;
-            list.classList.add('hidden');
-            input.classList.remove('err');
-            updatePrice(); // ← recalcule le prix dès qu'une adresse est choisie
-          };
-          list.appendChild(el);
-        });
-        list.classList.remove('hidden');
+  <script>
+    const SHVIP_PHONE = '33649604960';
+    const FIXED_ROUTES = [
+      {
+        keywords: ['orly'],
+        fromKeywords: ['paris'],
+        prices: { business: 130, prestige: 195, van: 154 },
+        label: 'Paris → Orly (~27 min)'
+      },
+      {
+        keywords: ['cdg', 'roissy', 'charles de gaulle'],
+        fromKeywords: ['paris'],
+        prices: { business: 162, prestige: 243, van: 192 },
+        label: 'Paris → Roissy CDG (~40 min)'
+      },
+      {
+        keywords: ['disneyland', 'marne-la-vallée'],
+        fromKeywords: ['paris'],
+        prices: { business: 182, prestige: 273, van: 215 },
+        label: 'Paris → Disneyland (~45 min)'
       }
-    );
-  }, 280);
-}
-function delayHide(id) { setTimeout(() => { document.getElementById(id)?.classList.add('hidden'); updatePrice(); }, 200); }
+    ];
 
-/* ─── NAV ─── */
-function goTo(n) {
-  if (n === 3 && !validate()) return;
-  [1,2,3].forEach(i => {
-    document.getElementById('p'+i)?.classList.add('hidden');
-    const ps = document.getElementById('ps'+i);
-    if (ps) { ps.classList.remove('active','done'); if(i<n) ps.classList.add('done'); if(i===n) ps.classList.add('active'); }
-  });
-  document.getElementById('p'+n)?.classList.remove('hidden');
-  if (n === 3) { currentRef = genRef(); fillRecap(); }
-  window.scrollTo({top:180,behavior:'smooth'});
-}
+    const DISPO_RATES = { business: 100, prestige: 150, van: 120 };
+    const KM_RATES = { business: 3.2, prestige: 4.6, van: 4.1 };
+    const BASE_FEES = { business: 18, prestige: 30, van: 24 };
 
-/* ─── VALIDATION ─── */
-function chk(id) { const el=document.getElementById(id); const ok=el&&el.value.trim()!==''; el?.classList.toggle('err',!ok); return ok; }
-function validate() {
-  const d = S.svc === 'Mise à disposition';
-  const ids = ['f-nom','f-telephone','f-email','f-date','f-heure',...(d?['f-depart-dispo']:['f-depart','f-arrivee'])];
-  const ok = ids.map(chk).every(Boolean);
-  if (!ok) showToast('Veuillez remplir tous les champs obligatoires.');
-  return ok;
-}
+    let mode = 'transfer';
+    let map, directionsService, directionsRenderer, autocompleteDepart, autocompleteArrivee;
 
-/* ─── RECAP ─── */
-function fillRecap() {
-  const d = S.svc === 'Mise à disposition';
-  const dep = d ? document.getElementById('f-depart-dispo').value : document.getElementById('f-depart').value;
-  const arr = d ? document.getElementById('f-duree').value+'h de mise à disposition' : document.getElementById('f-arrivee').value;
-  const dt  = document.getElementById('f-date').value;
-  const dateStr = dt ? new Date(dt+'T12:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—';
+    const els = {
+      depart: document.getElementById('depart'),
+      arrivee: document.getElementById('arrivee'),
+      vehicule: document.getElementById('vehicule'),
+      date: document.getElementById('date'),
+      heure: document.getElementById('heure'),
+      passagers: document.getElementById('passagers'),
+      details: document.getElementById('details'),
+      dureeDispo: document.getElementById('dureeDispo'),
+      calcBtn: document.getElementById('calcBtn'),
+      whatsBtn: document.getElementById('whatsBtn'),
+      prixAffiche: document.getElementById('prixAffiche'),
+      quoteStatus: document.getElementById('quoteStatus'),
+      quoteMode: document.getElementById('quoteMode'),
+      sumType: document.getElementById('sumType'),
+      sumVehicle: document.getElementById('sumVehicle'),
+      sumTrip: document.getElementById('sumTrip'),
+      sumDistance: document.getElementById('sumDistance'),
+      sumDuration: document.getElementById('sumDuration'),
+      sumDateTime: document.getElementById('sumDateTime'),
+      cardTransfer: document.getElementById('cardTransfer'),
+      cardDispo: document.getElementById('cardDispo'),
+      durationField: document.getElementById('durationField'),
+      arrivalField: document.getElementById('arrivalField')
+    };
 
-  document.getElementById('ref-display').textContent = currentRef;
-  document.getElementById('ref-badge').textContent   = currentRef;
+    function formatVehicle(value) {
+      return {
+        business: 'Classe E — Business',
+        prestige: 'Classe S — Prestige',
+        van: 'Classe V — Van VIP'
+      }[value] || value;
+    }
 
-  set('r-svc', S.svc); set('r-veh', S.veh); set('r-pay', S.pay);
-  set('r-dep', dep||'—'); set('r-arr', arr||'—');
-  set('r-date', dateStr + (document.getElementById('f-heure').value ? ' à '+document.getElementById('f-heure').value : ''));
-  set('r-pax',  document.getElementById('f-passagers').value+' passager(s)');
-  set('r-prix', detectedPrice ? detectedPrice+' € TTC' : 'Sur devis — confirmé sous 1h');
-  set('r-nom',  document.getElementById('f-nom').value);
-  set('r-tel',  document.getElementById('f-telephone').value);
-  set('r-email',document.getElementById('f-email').value);
-}
-function set(id,v){ const el=document.getElementById(id); if(el) el.textContent=v; }
+    function setMode(next) {
+      mode = next;
+      els.cardTransfer.classList.toggle('active', next === 'transfer');
+      els.cardDispo.classList.toggle('active', next === 'dispo');
+      els.durationField.style.display = next === 'dispo' ? 'block' : 'none';
+      els.arrivalField.style.display = next === 'dispo' ? 'none' : 'block';
+      els.quoteMode.textContent = `Mode : ${next === 'transfer' ? 'transfert' : 'mise à disposition'}`;
+      els.sumType.textContent = next === 'transfer' ? 'Transfert' : 'Mise à disposition';
+      if (next === 'dispo') {
+        els.arrivee.value = '';
+      }
+      updateSummaryPlaceholders();
+    }
 
-/* ─── REFERENCE ─── */
-function genRef() {
-  const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let r='SHVIP-';
-  for(let i=0;i<6;i++) r+=c[Math.floor(Math.random()*c.length)];
-  return r;
-}
+    function updateSummaryPlaceholders() {
+      els.sumVehicle.textContent = formatVehicle(els.vehicule.value);
+      const trip = mode === 'transfer'
+        ? `${els.depart.value || '—'} → ${els.arrivee.value || '—'}`
+        : `${els.depart.value || '—'} · ${els.dureeDispo.value} h`;
+      els.sumTrip.textContent = trip;
+      els.sumDateTime.textContent = buildDateTime() || '—';
+    }
 
-/* ─── SUBMIT → SUPABASE (100% automatique, jamais d'appel demandé) ─── */
-async function submitReservation() {
-  const btn = document.getElementById('btn-confirm');
-  btn.classList.add('loading'); btn.textContent = 'Envoi en cours…';
+    function buildDateTime() {
+      if (!els.date.value && !els.heure.value) return '';
+      return `${els.date.value || 'Date à confirmer'} · ${els.heure.value || 'Heure à confirmer'}`;
+    }
 
-  const d = S.svc === 'Mise à disposition';
-  const duree = document.getElementById('f-duree').value;
+    function normalize(txt) {
+      return (txt || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    }
 
-  const payload = {
-    reference:   currentRef,
-    nom:         document.getElementById('f-nom').value.trim(),
-    telephone:   document.getElementById('f-telephone').value.trim(),
-    email:       document.getElementById('f-email').value.trim(),
-    depart:      d ? document.getElementById('f-depart-dispo').value.trim() : document.getElementById('f-depart').value.trim(),
-    arrivee:     d ? '(Mise à dispo — '+duree+'h)' : document.getElementById('f-arrivee').value.trim(),
-    date_course: document.getElementById('f-date').value || '',
-    heure:       document.getElementById('f-heure').value || '',
-    nb_passagers:document.getElementById('f-passagers').value || '1',
-    prix:        detectedPrice || 0,
-    prestation:  `${S.svc} | ${S.veh} | ${S.pay}`,
-    notes: [
-      detectedPrice ? `Tarif fixe : ${detectedPrice}€ (${detectedLabel})` : 'Tarif : sur devis',
-      d ? `Durée : ${duree}h` : '',
-      document.getElementById('f-notes').value.trim()
-    ].filter(Boolean).join(' | '),
-    importe: 0
-  };
+    function detectFixedRoute(from, to) {
+      const fromN = normalize(from);
+      const toN = normalize(to);
+      return FIXED_ROUTES.find(route => {
+        const toMatch = route.keywords.some(k => toN.includes(normalize(k)));
+        const fromMatch = route.fromKeywords.some(k => fromN.includes(normalize(k)));
+        return toMatch && fromMatch;
+      }) || null;
+    }
 
-  try {
-    const { error } = await db.from('reservations').insert([payload]);
-    if (error) throw error;
+    function updateQuote(priceText, statusText, kind = 'normal') {
+      els.prixAffiche.textContent = priceText;
+      els.quoteStatus.textContent = statusText;
+      els.quoteStatus.classList.remove('ok', 'error');
+      if (kind === 'ok') els.quoteStatus.classList.add('ok');
+      if (kind === 'error') els.quoteStatus.classList.add('error');
+    }
 
-    // ✅ Succès automatique — aucun appel demandé
-    [1,2,3].forEach(i => {
-      document.getElementById('p'+i)?.classList.add('hidden');
-      const ps = document.getElementById('ps'+i);
-      if (ps) { ps.classList.add('done'); ps.classList.remove('active'); }
-    });
-    document.getElementById('p-success').classList.remove('hidden');
-    window.scrollTo({top:180,behavior:'smooth'});
+    function buildWhatsMessage({ priceText, distanceText, durationText }) {
+      const lines = [
+        'Bonjour SHVIP, je souhaite réserver un chauffeur.',
+        '',
+        `Prestation : ${mode === 'transfer' ? 'Transfert' : 'Mise à disposition'}`,
+        `Véhicule : ${formatVehicle(els.vehicule.value)}`,
+        `Départ : ${els.depart.value || '—'}`
+      ];
+      if (mode === 'transfer') lines.push(`Arrivée : ${els.arrivee.value || '—'}`);
+      if (mode === 'dispo') lines.push(`Durée : ${els.dureeDispo.value} heures`);
+      lines.push(`Date / heure : ${buildDateTime() || 'À confirmer'}`);
+      lines.push(`Passagers : ${els.passagers.value}`);
+      if (distanceText) lines.push(`Distance : ${distanceText}`);
+      if (durationText) lines.push(`Durée trajet : ${durationText}`);
+      lines.push(`Tarif estimé : ${priceText}`);
+      if (els.details.value.trim()) lines.push(`Détails : ${els.details.value.trim()}`);
+      return encodeURIComponent(lines.join('\n'));
+    }
 
-  } catch(err) {
-    console.error(err);
-    showToast('Erreur d\'envoi. Réessayez ou écrivez-nous à contact@shvip-paris.fr');
-    btn.classList.remove('loading');
-    btn.textContent = 'Confirmer ma réservation ✓';
-  }
-}
+    function updateWhatsApp(priceText, distanceText = '', durationText = '') {
+      els.whatsBtn.href = `https://wa.me/${SHVIP_PHONE}?text=${buildWhatsMessage({ priceText, distanceText, durationText })}`;
+    }
 
-/* ─── TOAST ─── */
-function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),4500); }
+    function renderRoute(origin, destination) {
+      if (!directionsService || !directionsRenderer || mode !== 'transfer') return;
+      directionsService.route({
+        origin,
+        destination,
+        travelMode: google.maps.TravelMode.DRIVING
+      }, (result, status) => {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(result);
+        } else {
+          directionsRenderer.setDirections({ routes: [] });
+        }
+      });
+    }
 
-/* ─── INIT ─── */
-document.getElementById('f-date').min = new Date().toISOString().split('T')[0];
-// Recalcule le prix quand on tape l'adresse manuellement
-['f-depart','f-arrivee'].forEach(id => {
-  document.getElementById(id)?.addEventListener('input', updatePrice);
-});
-updatePrice();
-</script>
+    function clearRoute() {
+      if (directionsRenderer) directionsRenderer.setDirections({ routes: [] });
+    }
+
+    function computeDispo() {
+      const hours = Math.max(4, Number(els.dureeDispo.value || 4));
+      const vehicle = els.vehicule.value;
+      const total = DISPO_RATES[vehicle] * hours;
+      const priceText = `${total.toFixed(0)} €`;
+      const status = `Mise à disposition estimée sur la base de ${hours} heure${hours > 1 ? 's' : ''}. Confirmation définitive par SHVIP après validation.`;
+
+      els.sumDistance.textContent = '—';
+      els.sumDuration.textContent = `${hours} h`;
+      els.sumTrip.textContent = `${els.depart.value || 'Point de prise en charge à confirmer'} · ${hours} h`;
+      updateQuote(priceText, status, 'ok');
+      updateWhatsApp(priceText, '', `${hours} h`);
+      clearRoute();
+    }
+
+    function computeTransfer() {
+      const from = els.depart.value.trim();
+      const to = els.arrivee.value.trim();
+      if (!from || !to) {
+        updateQuote('—', 'Merci de renseigner l’adresse de départ et l’adresse d’arrivée.', 'error');
+        return;
+      }
+
+      const fixed = detectFixedRoute(from, to);
+      if (fixed) {
+        const price = fixed.prices[els.vehicule.value];
+        const priceText = `${price.toFixed(0)} €`;
+        els.sumTrip.textContent = fixed.label;
+        els.sumDistance.textContent = 'Trajet fixe';
+        els.sumDuration.textContent = 'Selon trafic';
+        updateQuote(priceText, `Tarif fixe SHVIP détecté pour ${fixed.label}.`, 'ok');
+        updateWhatsApp(priceText, 'Trajet fixe', 'Selon trafic');
+        renderRoute(from, to);
+        return;
+      }
+
+      if (!(window.google && google.maps && google.maps.DistanceMatrixService)) {
+        els.sumDistance.textContent = '—';
+        els.sumDuration.textContent = '—';
+        updateQuote('Sur devis', 'Google Maps n’est pas disponible. Merci de poursuivre votre demande sur WhatsApp.', 'error');
+        updateWhatsApp('Sur devis');
+        return;
+      }
+
+      const service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix({
+        origins: [from],
+        destinations: [to],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC
+      }, (response, status) => {
+        if (status !== 'OK' || !response.rows?.[0]?.elements?.[0] || response.rows[0].elements[0].status !== 'OK') {
+          els.sumDistance.textContent = '—';
+          els.sumDuration.textContent = '—';
+          updateQuote('Sur devis', 'Impossible de calculer ce trajet automatiquement. SHVIP vous proposera un tarif personnalisé.', 'error');
+          updateWhatsApp('Sur devis');
+          return;
+        }
+
+        const result = response.rows[0].elements[0];
+        const distanceKm = result.distance.value / 1000;
+        const durationText = result.duration.text;
+        const distanceText = `${distanceKm.toFixed(1)} km`;
+        const vehicle = els.vehicule.value;
+        const price = Math.max(55, BASE_FEES[vehicle] + distanceKm * KM_RATES[vehicle]);
+        const rounded = Math.round(price);
+        const priceText = `${rounded} €`;
+
+        els.sumDistance.textContent = distanceText;
+        els.sumDuration.textContent = durationText;
+        els.sumTrip.textContent = `${from} → ${to}`;
+        updateQuote(priceText, 'Estimation calculée automatiquement selon la distance et le véhicule sélectionné.', 'ok');
+        updateWhatsApp(priceText, distanceText, durationText);
+        renderRoute(from, to);
+      });
+    }
+
+    function calculateQuote() {
+      updateSummaryPlaceholders();
+      if (mode === 'dispo') {
+        computeDispo();
+      } else {
+        computeTransfer();
+      }
+    }
+
+    function generateReservationReference() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const h = String(now.getHours()).padStart(2, '0');
+      const min = String(now.getMinutes()).padStart(2, '0');
+      const rand = Math.floor(100 + Math.random() * 900);
+      return `SHVIP-${y}${m}${d}-${h}${min}-${rand}`;
+    }
+
+    function extractQuoteNumber() {
+      const raw = (els.prixAffiche?.textContent || '').trim();
+      if (!raw || raw === '—' || raw.toLowerCase().includes('sur devis')) return 0;
+
+      const cleaned = raw.replace(/[^\d,.-]/g, '').replace(',', '.');
+      const n = Number(cleaned);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function continueToContact(event) {
+      if (event) event.preventDefault();
+
+      const from = (els.depart.value || '').trim();
+      const to = (els.arrivee.value || '').trim();
+      const reference = generateReservationReference();
+      const devisTTC = extractQuoteNumber();
+
+      const fixedRoute = mode === 'transfer' ? detectFixedRoute(from, to) : null;
+
+      const prestationLabel =
+        mode === 'transfer'
+          ? (fixedRoute?.label || 'Transfert personnalisé')
+          : 'Mise à disposition';
+
+      const vehiculeLabel =
+        els.vehicule.options[els.vehicule.selectedIndex]?.text || '';
+
+      const distance = (els.sumDistance?.textContent || '').trim();
+      const duration = (els.sumDuration?.textContent || '').trim();
+
+      const quoteSource = devisTTC > 0
+        ? (fixedRoute ? 'Tarif fixe SHVIP' : 'Calcul automatique Google Maps')
+        : 'Sur devis';
+
+      const params = new URLSearchParams({
+        reference: reference,
+        ref_devis: reference,
+        prestation: prestationLabel,
+        vehicule: vehiculeLabel,
+        type_vehicule: vehiculeLabel,
+        depart: els.depart.value || '',
+        arrivee: mode === 'transfer' ? (els.arrivee.value || '') : '',
+        date: els.date.value || '',
+        heure: els.heure.value || '',
+        passagers: els.passagers.value || '',
+        details: els.details.value || '',
+        devis_ttc: String(devisTTC || 0),
+        prix: String(devisTTC || 0),
+        distance: distance || '',
+        duration: duration || '',
+        quote_source: quoteSource,
+        autoquote: '1'
+      });
+
+      window.location.href = '/contact?' + params.toString() + '#demande-privee';
+    }
+
+    function initAutocomplete() {
+      if (!(window.google && google.maps)) {
+        updateQuote('Sur devis', 'Google Maps n’a pas pu être chargé. Vérifiez la clé API ou les APIs activées.', 'error');
+        return;
+      }
+
+      map = new google.maps.Map(document.getElementById('routeMap'), {
+        center: { lat: 48.8566, lng: 2.3522 },
+        zoom: 11,
+        styles: [
+          { elementType: 'geometry', stylers: [{ color: '#0d0d0d' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#d6c29d' }] },
+          { elementType: 'labels.text.stroke', stylers: [{ color: '#0d0d0d' }] },
+          { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#1f1f1f' }] },
+          { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#171717' }] },
+          { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#111111' }] }
+        ],
+        disableDefaultUI: true,
+        zoomControl: true
+      });
+
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map,
+        suppressMarkers: false,
+        polylineOptions: { strokeColor: '#c9a96e', strokeWeight: 5 }
+      });
+
+      if (google.maps.places) {
+        const opts = {
+          componentRestrictions: { country: 'fr' },
+          fields: ['formatted_address', 'geometry', 'name']
+        };
+        autocompleteDepart = new google.maps.places.Autocomplete(els.depart, opts);
+        autocompleteArrivee = new google.maps.places.Autocomplete(els.arrivee, opts);
+      }
+
+      updateQuote('—', 'Google Maps chargé. Vous pouvez désormais calculer votre estimation.', 'ok');
+    }
+
+    els.cardTransfer.addEventListener('click', () => setMode('transfer'));
+    els.cardDispo.addEventListener('click', () => setMode('dispo'));
+    els.calcBtn.addEventListener('click', calculateQuote);
+    els.vehicule.addEventListener('change', updateSummaryPlaceholders);
+    els.date.addEventListener('change', updateSummaryPlaceholders);
+    els.heure.addEventListener('change', updateSummaryPlaceholders);
+    els.depart.addEventListener('input', updateSummaryPlaceholders);
+    els.arrivee.addEventListener('input', updateSummaryPlaceholders);
+    els.dureeDispo.addEventListener('change', updateSummaryPlaceholders);
+
+    updateSummaryPlaceholders();
+    updateWhatsApp('À confirmer');
+    setMode('transfer');
+  </script>
+
+  <!-- Remplace YOUR_GOOGLE_MAPS_API_KEY par ta vraie clé API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec&libraries=places&callback=initAutocomplete"></script>
 </body>
 </html>
