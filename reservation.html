@@ -330,7 +330,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   /* ─── CONFIG ─── */
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec';
+  const GOOGLE_MAPS_API_KEY = 'REMPLACEZ_ICI_PAR_VOTRE_GOOGLE_MAPS_API_KEY';
 
   async function loadGoogleMaps() {
     if (window.google?.maps) return window.google.maps;
@@ -345,7 +345,7 @@
 
       const s = existing || document.createElement('script');
       if (!existing) {
-        s.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&language=fr&region=FR`;
+        s.src = `https://maps.googleapis.com/maps/api/js?key=${AIzaSyDABnFvn3VSbe1p8v8A3TZOE0mco2GJGec}&libraries=places&language=fr&region=FR`;
         s.async = true;
         s.defer = true;
         s.setAttribute('data-google-maps-shvip', '1');
