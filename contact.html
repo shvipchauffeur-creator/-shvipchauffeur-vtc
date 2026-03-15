@@ -1,186 +1,213 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SHVIP — Finaliser la réservation</title>
-
-<style>
-
-body{
-font-family:Arial,Helvetica,sans-serif;
-background:#0c0c0c;
-color:white;
-margin:0;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-padding:40px 20px;
-}
-
-h1{
-text-align:center;
-margin-bottom:40px;
-}
-
-.card{
-background:#111;
-padding:30px;
-border-radius:10px;
-margin-bottom:20px;
-}
-
-input,select,textarea{
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:15px;
-border-radius:6px;
-border:none;
-}
-
-button{
-background:#c6a46c;
-color:black;
-padding:14px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-width:100%;
-font-weight:bold;
-}
-
-.summary{
-background:#151515;
-padding:20px;
-border-radius:10px;
-margin-bottom:30px;
-}
-
-.label{
-color:#aaa;
-font-size:13px;
-}
-
-.value{
-font-size:16px;
-margin-bottom:10px;
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHVIP — Contact | Maison Privée de Chauffeurs</title>
+  <meta name="description" content="Contact SHVIP : WhatsApp, téléphone, email, demande de réservation privée et partenariats B2B à Paris." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --noir: #0a0a0a; --noir-2: #111111; --noir-3: #1a1a1a;
+      --or: #c9a96e; --or-pale: #e8d5b0; --blanc: #f5f0e8;
+      --gris: #888888; --gris-2: #444444; --border: rgba(201,169,110,0.2);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--noir); color: var(--blanc); font-family: 'Montserrat', sans-serif; font-weight: 300; min-height: 100vh; }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 3rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      backdrop-filter: blur(4px);
+    }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; letter-spacing: 0.15em; color: var(--or); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--blanc); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s, color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--or); }
+    .hero {
+      padding: 14rem 3rem 6rem; text-align: center; border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 80%, rgba(201,169,110,0.05), transparent);
+      pointer-events: none;
+    }
+    .hero-label { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--or); margin-bottom: 1.5rem; opacity: 0.9; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 300; line-height: 1.1; }
+    .hero h1 em { font-style: italic; color: var(--or); }
+    .hero-sub { margin-top: 1.5rem; font-size: 0.78rem; letter-spacing: 0.08em; color: var(--gris); max-width: 660px; margin-inline: auto; line-height: 1.9; }
+    .page-content { max-width: 1080px; margin: 0 auto; padding: 5rem 3rem 7rem; }
+    .intro-grid, .links-grid, .contact-grid { display: grid; gap: 1.5px; background: var(--border); }
+    .intro-grid { grid-template-columns: 1.15fr 0.85fr; margin-bottom: 1.5px; }
+    .links-grid { grid-template-columns: repeat(3, 1fr); margin-bottom: 1.5px; }
+    .contact-grid { grid-template-columns: repeat(3, 1fr); }
+    .card, .panel {
+      background: var(--noir-2); padding: 2.4rem 2rem; position: relative; overflow: hidden;
+    }
+    .card::before, .panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--or), transparent); opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .card:hover::before, .panel:hover::before { opacity: 1; }
+    .kicker { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--or); margin-bottom: 0.9rem; }
+    .title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--or-pale); margin-bottom: 1rem; }
+    .title em { font-style: italic; color: var(--or); }
+    .text { font-size: 0.74rem; line-height: 1.9; color: var(--gris); }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.8rem; }
+    .btn-or, .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none;
+      padding: 1rem 1.5rem; font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase;
+      transition: all 0.25s; border: 1px solid var(--or);
+    }
+    .btn-or { color: var(--or); }
+    .btn-or:hover { background: var(--or); color: var(--noir); }
+    .btn-ghost { color: var(--blanc); border-color: var(--gris-2); }
+    .btn-ghost:hover { border-color: var(--or); color: var(--or-pale); }
+    .section-label {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 300;
+      color: var(--or-pale); margin: 3rem 0 1.4rem; padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .mini-title { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blanc); margin-bottom: 0.55rem; }
+    .mini-text, .contact-val { font-size: 0.7rem; color: var(--gris); line-height: 1.8; text-decoration: none; }
+    .contact-val strong { color: var(--or-pale); font-weight: 500; }
+    .anchor-spacer { position: relative; top: -100px; }
+    footer {
+      border-top: 1px solid var(--border); padding: 2.5rem 3rem; display: flex;
+      align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; color: var(--or); font-size: 1.2rem; letter-spacing: 0.15em; text-decoration: none; }
+    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .footer-links a { text-decoration: none; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gris); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--or); }
+    .footer-copy { font-size: 0.6rem; color: var(--gris-2); letter-spacing: 0.08em; }
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 10rem 1.5rem 4rem; }
+      .page-content { padding: 3rem 1.5rem 5rem; }
+      .intro-grid, .links-grid, .contact-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
-
 <body>
+<nav>
+  <a href="/" class="logo">SHVIP</a>
+  <ul class="nav-links">
+    <li><a href="/services">Services</a></li>
+    <li><a href="/flotte">Flotte</a></li>
+    <li><a href="/reservation">Réservation</a></li>
+    <li><a href="/partenaires">Partenaires</a></li>
+    <li><a href="/contact" class="active">Contact</a></li>
+  </ul>
+</nav>
 
-<div class="container">
-
-<h1>Finaliser votre réservation</h1>
-
-<div class="summary">
-
-<div class="label">Référence</div>
-<div id="ref" class="value"></div>
-
-<div class="label">Trajet</div>
-<div id="trajet" class="value"></div>
-
-<div class="label">Date</div>
-<div id="date" class="value"></div>
-
-<div class="label">Véhicule</div>
-<div id="vehicule" class="value"></div>
-
-<div class="label">Prix estimé</div>
-<div id="prix" class="value"></div>
-
+<div class="hero">
+  <p class="hero-label">Contact · Coordination SHVIP</p>
+  <h1>Un seul point de contact,<br><em>deux parcours clairs.</em></h1>
+  <p class="hero-sub">Pour une course privée, passez par la page Réservation. Pour un partenariat hôtel, conciergerie, agence ou corporate, utilisez le contact dédié ci-dessous. Le parcours devient plus simple et plus logique.</p>
 </div>
 
-<div class="card">
+<div class="page-content">
+  <span id="demande-privee" class="anchor-spacer"></span>
+  <div class="intro-grid">
+    <div class="panel">
+      <div class="kicker">Parcours privé</div>
+      <div class="title">Réserver un <em>trajet</em></div>
+      <p class="text">La demande privée se fait désormais sur la page <strong style="color:var(--or-pale);font-weight:500;">Réservation</strong> : choix de la prestation, sélection du véhicule, coordonnées, récapitulatif, génération de la référence SHVIP puis envoi vers Supabase.</p>
+      <div class="btn-row">
+        <a href="/reservation" class="btn-or"><span>Aller à la réservation</span><span>→</span></a>
+        <a href="https://wa.me/33649604960?text=Bonjour%20SHVIP%2C%20je%20souhaite%20organiser%20un%20trajet%20priv%C3%A9." target="_blank" class="btn-ghost"><span>WhatsApp direct</span><span>→</span></a>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="kicker">Coordination SHVIP</div>
+      <div class="mini-title">Téléphone & WhatsApp</div>
+      <a class="contact-val" href="tel:+33649604960"><strong>06 49 60 49 60</strong></a>
+      <div style="height:1.3rem"></div>
+      <div class="mini-title">Email</div>
+      <a class="contact-val" href="mailto:contact@shvip-paris.fr"><strong>contact@shvip-paris.fr</strong></a>
+      <div style="height:1.3rem"></div>
+      <div class="mini-title">Zone couverte</div>
+      <p class="mini-text">Paris, Île-de-France, aéroports, gares, Disneyland, mises à disposition et événements privés.</p>
+    </div>
+  </div>
 
-<form id="form">
+  <div class="section-label">Choisissez le bon <em>chemin</em></div>
+  <div class="links-grid">
+    <div class="card">
+      <div class="mini-title">1. Découvrir les services</div>
+      <p class="mini-text">Transferts, mise à disposition, événements et mobilité corporate.</p>
+      <div class="btn-row"><a href="/services" class="btn-ghost"><span>Voir les services</span><span>→</span></a></div>
+    </div>
+    <div class="card">
+      <div class="mini-title">2. Choisir la flotte</div>
+      <p class="mini-text">Classe E, Classe S ou Classe V selon votre niveau de confort et le nombre de passagers.</p>
+      <div class="btn-row"><a href="/flotte" class="btn-ghost"><span>Voir la flotte</span><span>→</span></a></div>
+    </div>
+    <div class="card">
+      <div class="mini-title">3. Finaliser la réservation</div>
+      <p class="mini-text">Tunnel clair en 3 étapes avec référence SHVIP et confirmation finale.</p>
+      <div class="btn-row"><a href="/reservation" class="btn-or"><span>Réserver maintenant</span><span>→</span></a></div>
+    </div>
+  </div>
 
-<label>Nom</label>
-<input id="nom" required>
+  <span id="partenariats" class="anchor-spacer"></span>
+  <div class="section-label">Contact <em>partenaires</em></div>
+  <div class="contact-grid">
+    <div class="card">
+      <div class="mini-title">Hôtels & conciergeries</div>
+      <p class="mini-text">Mise en place d'un standard maison, coordination client, disponibilité réactive et facturation adaptée.</p>
+    </div>
+    <div class="card">
+      <div class="mini-title">Agences & DMC</div>
+      <p class="mini-text">Transport d'invités, délégations, événements et accompagnement premium sur mesure.</p>
+    </div>
+    <div class="card">
+      <div class="mini-title">Corporate</div>
+      <p class="mini-text">Demandes récurrentes, trajets de dirigeants, facturation centralisée et process clair.</p>
+    </div>
+  </div>
 
-<label>Téléphone</label>
-<input id="telephone" required>
-
-<label>Email</label>
-<input id="email">
-
-<label>Notes</label>
-<textarea id="notes"></textarea>
-
-<button type="submit">
-Envoyer la demande
-</button>
-
-</form>
-
+  <div class="intro-grid" style="margin-top:1.5px;">
+    <div class="panel">
+      <div class="kicker">Demande B2B</div>
+      <div class="title">Parlons <em>partenariat</em></div>
+      <p class="text">Pour un partenariat, envoyez votre demande par email en précisant votre société, votre activité, le volume estimé et votre besoin opérationnel. Nous revenons vers vous rapidement avec une proposition claire.</p>
+      <div class="btn-row">
+        <a href="mailto:contact@shvip-paris.fr?subject=Demande%20de%20partenariat%20SHVIP" class="btn-or"><span>Envoyer un email</span><span>→</span></a>
+        <a href="/partenaires" class="btn-ghost"><span>Voir la page partenaires</span><span>→</span></a>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="kicker">Informations utiles</div>
+      <div class="mini-title">Temps de réponse</div>
+      <p class="mini-text">WhatsApp : très rapide<br>Email : selon la demande<br>Réservation privée : directement via la page réservation</p>
+      <div style="height:1.3rem"></div>
+      <div class="mini-title">Logique du site</div>
+      <p class="mini-text">Accueil → Services / Flotte → Réservation → Confirmation.<br>Partenaires → Contact B2B.</p>
+    </div>
+  </div>
 </div>
 
-</div>
-
-<script>
-
-const params = new URLSearchParams(window.location.search);
-
-const reference = params.get("reference") || "";
-const depart = params.get("depart") || "";
-const arrivee = params.get("arrivee") || "";
-const date = params.get("date") || "";
-const vehicule = params.get("vehicule") || "";
-const prix = params.get("prix") || "Sur devis";
-
-document.getElementById("ref").innerText = reference;
-document.getElementById("trajet").innerText = depart + " → " + arrivee;
-document.getElementById("date").innerText = date;
-document.getElementById("vehicule").innerText = vehicule;
-document.getElementById("prix").innerText = prix + " €";
-
-document.getElementById("form").addEventListener("submit",async function(e){
-
-e.preventDefault();
-
-const payload = {
-
-reference: reference,
-nom: document.getElementById("nom").value,
-telephone: document.getElementById("telephone").value,
-email: document.getElementById("email").value,
-
-depart: depart,
-arrivee: arrivee,
-date_course: date,
-type_vehicule: vehicule,
-prix: prix,
-
-notes: document.getElementById("notes").value
-
-};
-
-await fetch("https://https://htblfillncczsfteciyy.supabase.co",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json",
-"apikey":"sb_publishable_yh-guGKPlaJBtqCxAtC0QA_N12x0zyA",
-"Authorization":"Bearer TA_PUBLIC_ANON_KEY"
-},
-
-body:JSON.stringify(payload)
-
-});
-
-alert("Demande envoyée avec succès.");
-
-});
-
-</script>
-
+<footer>
+  <a href="/" class="footer-logo">SHVIP</a>
+  <div class="footer-links">
+    <a href="/services">Services</a>
+    <a href="/flotte">Flotte</a>
+    <a href="/reservation">Réservation</a>
+    <a href="/partenaires">Partenaires</a>
+    <a href="/contact">Contact</a>
+    <a href="/conditions-generales">CGV</a>
+    <a href="/politique-de-confidentialite">Confidentialité</a>
+  </div>
+  <div class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</div>
+</footer>
 </body>
 </html>
