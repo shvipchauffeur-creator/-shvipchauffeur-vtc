@@ -328,9 +328,9 @@ footer {
       </div>
       <div class="sec-div"><span>Véhicule</span></div>
       <div class="cards-grid-3">
-        <div class="opt-card sel" data-veh="Classe E — Business" data-pt="130" data-pd="400" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Business</div><div class="opt-name">Classe E</div><div class="opt-desc">Cuir Nappa, Wi-Fi, eau minérale.</div><div class="opt-price">Dès 130 € · Dispo 400 €/4h</div></div>
-        <div class="opt-card" data-veh="Classe S — Prestige" data-pt="195" data-pd="600" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Prestige</div><div class="opt-name">Classe S</div><div class="opt-desc">Massage, 64 couleurs d'ambiance, tablettes.</div><div class="opt-price">Dès 195 € · Dispo 600 €/4h</div></div>
-        <div class="opt-card" data-veh="Classe V — Van VIP" data-pt="154" data-pd="480" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Van VIP</div><div class="opt-name">Classe V</div><div class="opt-desc">7 passagers, sièges pivotants, grand volume.</div><div class="opt-price">Dès 154 € · Dispo 480 €/4h</div></div>
+        <div class="opt-card sel" data-veh="Classe E — Business" data-pt="130" data-pd="400" data-cap="3" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Business</div><div class="opt-name">Classe E</div><div class="opt-desc">Cuir Nappa, Wi-Fi, eau minérale.</div><div class="opt-price">Dès 130 € · Dispo 400 €/4h</div></div>
+        <div class="opt-card" data-veh="Classe S — Prestige" data-pt="195" data-pd="600" data-cap="3" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Prestige</div><div class="opt-name">Classe S</div><div class="opt-desc">Massage, 64 couleurs d'ambiance, tablettes.</div><div class="opt-price">Dès 195 € · Dispo 600 €/4h</div></div>
+        <div class="opt-card" data-veh="Classe V — Van VIP" data-pt="154" data-pd="480" data-cap="7" onclick="pickCard(this,'veh')"><span class="tick">✦</span><div class="opt-badge">Van VIP</div><div class="opt-name">Classe V</div><div class="opt-desc">7 passagers, sièges pivotants, grand volume.</div><div class="opt-price">Dès 154 € · Dispo 480 €/4h</div></div>
       </div>
       <div class="sec-div"><span>Paiement</span></div>
       <div class="pay-tabs">
@@ -468,7 +468,7 @@ footer {
   const db = createClient('https://htblfillncczsfteciyy.supabase.co','sb_publishable_yh-guGKPlaJBtqCxAtC0QA_N12x0zyA');
 
   /* ─── STATE ─── */
-  const S = { svc:'Transfert aéroport / gare', veh:'Classe E — Business', pt:130, pd:400, pay:'Paiement total' };
+  const S = { svc:'Transfert aéroport / gare', veh:'Classe E — Business', pt:130, pd:400, pay:'Paiement total', cap:3 };
   let currentRef = '';
 
   /* ─── GOOGLE PLACES ─── */
@@ -516,7 +516,7 @@ footer {
       document.getElementById('bloc-transfert').classList.toggle('hidden', d);
       document.getElementById('bloc-dispo').classList.toggle('hidden', !d);
     } else {
-      S.veh = el.dataset.veh; S.pt = +el.dataset.pt; S.pd = +el.dataset.pd;
+      S.veh = el.dataset.veh; S.pt = +el.dataset.pt; S.pd = +el.dataset.pd; S.cap = +el.dataset.cap;
       distanceKm = null; distanceLabel = '';
       onAddressChange();
     }
@@ -648,8 +648,18 @@ footer {
     const d = S.svc === 'Mise à disposition';
     const ids = ['f-nom','f-telephone','f-email','f-date','f-heure', ...(d?['f-depart-dispo']:['f-depart','f-arrivee'])];
     const ok = ids.map(chk).every(Boolean);
-    if (!ok) showToast('Veuillez remplir tous les champs obligatoires.');
-    return ok;
+    if (!ok) { showToast('Veuillez remplir tous les champs obligatoires.'); return false; }
+
+    // Vérification capacité véhicule
+    const pax = parseInt(document.getElementById('f-passagers').value || '1');
+    if (pax > S.cap) {
+      const vehLabel = S.cap === 7 ? 'Van VIP (7 pax)' : 'Classe E ou S (3 pax max)';
+      showToast(`⚠️ ${pax} passagers dépasse la capacité de ce véhicule (${S.cap} max). Choisissez le ${S.cap < 7 ? 'Van VIP pour 4 passagers et plus' : vehLabel}.`);
+      document.getElementById('f-passagers').classList.add('err');
+      return false;
+    }
+    document.getElementById('f-passagers').classList.remove('err');
+    return true;
   }
 
   /* ─── RECAP ─── */
