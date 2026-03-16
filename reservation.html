@@ -465,7 +465,7 @@ footer {
 <script>
   /* ─── SUPABASE ─── */
   const { createClient } = supabase;
-  const db = createClient('https://htblfillncczsfteciyy.supabase.co','sb_publishable_yh-guGKPlaJBtqCxAtC0QA_N12x0zyA');
+  const db = createClient('https://ehbqbembkeizojzgxrun.supabase.co','sb_publishable_kMNUSpr924eqPpNNGYo8Ug_HnauqRed');
 
   /* ─── STATE ─── */
   const S = { svc:'Transfert aéroport / gare', veh:'Classe E — Business', pt:130, pd:400, pay:'Paiement total' };
@@ -529,10 +529,15 @@ footer {
 
   /* ─── TARIFICATION AU KM ─── */
   // Prise en charge fixe + prix par km selon véhicule (minimum appliqué)
+  // Tarifs SHVIP — calés sur les prix fixes officiels (±1€)
+  // Paris-Orly (20km) : E=130€, S=195€, V=154€
+  // Paris-CDG  (35km) : E=162€, S=243€, V=192€
+  // Paris-Disneyland (45km) : E=182€, S=273€, V=215€
+  // Minimum = tarif 1h : E=100€, S=150€, V=120€
   const TARIFS = {
-    'Classe E — Business': { pec: 25, km: 2.20, min: 50 },
-    'Classe S — Prestige': { pec: 35, km: 3.30, min: 75 },
-    'Classe V — Van VIP':  { pec: 30, km: 2.60, min: 60 },
+    'Classe E — Business': { pec: 89.0,  km: 2.0711, min: 100 },
+    'Classe S — Prestige': { pec: 133.4, km: 3.1067, min: 150 },
+    'Classe V — Van VIP':  { pec: 106.2, km: 2.4244, min: 120 },
   };
 
   // Distance calculée par Google Distance Matrix (en km)
