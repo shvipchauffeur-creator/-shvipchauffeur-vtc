@@ -1,63 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SHVIP — Partenaires | Collaborations Privées Paris</title>
   <meta name="description" content="Partenariats SHVIP : hôtels, conciergeries, événementiel, agences DMC. Chauffeur privé Paris sur mesure." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  
+  
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --noir:    #0a0a0a;
-      --noir-2:  #111111;
-      --noir-3:  #1a1a1a;
-      --or:      #c9a96e;
-      --or-pale: #e8d5b0;
-      --blanc:   #f5f0e8;
-      --gris:    #888888;
-      --gris-2:  #444444;
-      --border:  rgba(201,169,110,0.2);
-    }
+  --gold:   #C9A84C;
+  --gold2:  #E8C96E;
+  --gold3:  #8B6914;
+  --ink:    #05070E;
+  --ink2:   #0A0C18;
+  --ink3:   #111520;
+  --white:  #F0EDE8;
+  --muted:  #6B6455;
+  --line:   rgba(201,168,76,0.18);
+  --success:#4caf82;
+  --error:  #cf6679;
+}
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--noir);
-      color: var(--blanc);
+      background: var(--ink);
+      color: var(--white);
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
       min-height: 100vh;
     }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.6rem 3rem;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
-      backdrop-filter: blur(4px);
-    }
-    .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 400; letter-spacing: 0.15em;
-      color: var(--or); text-decoration: none;
-    }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      text-decoration: none; color: var(--blanc);
-      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-      opacity: 0.7; transition: opacity 0.2s, color 0.2s;
-    }
-    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--or); }
+    
+    
+    
+    
+    
 
     /* HERO */
     .hero {
       padding: 14rem 3rem 6rem;
       text-align: center;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--line);
       position: relative; overflow: hidden;
     }
     .hero::before {
@@ -68,18 +58,18 @@
     }
     .hero-label {
       font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
-      color: var(--or); margin-bottom: 1.5rem; opacity: 0.9;
+      color: var(--gold); margin-bottom: 1.5rem; opacity: 0.9;
     }
     .hero h1 {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2.8rem, 6vw, 5rem);
       font-weight: 300; line-height: 1.1;
     }
-    .hero h1 em { font-style: italic; color: var(--or); }
+    .hero h1 em { font-style: italic; color: var(--gold); }
     .hero-sub {
       margin-top: 1.5rem;
       font-size: 0.78rem; letter-spacing: 0.1em;
-      color: var(--gris); max-width: 480px; margin-inline: auto;
+      color: var(--muted); max-width: 480px; margin-inline: auto;
       line-height: 1.9;
     }
 
@@ -92,19 +82,19 @@
     /* PARTNERS GRID */
     .partners-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px; background: var(--border);
+      gap: 1.5px; background: var(--line);
     }
     .partner-card {
-      background: var(--noir-2);
+      background: var(--ink2);
       padding: 2.5rem 2rem;
       position: relative; overflow: hidden;
       transition: background 0.3s;
     }
-    .partner-card:hover { background: var(--noir-3); }
+    .partner-card:hover { background: var(--ink3); }
     .partner-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--or), transparent);
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
       opacity: 0; transition: opacity 0.3s;
     }
     .partner-card:hover::before { opacity: 1; }
@@ -113,11 +103,11 @@
     }
     .partner-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 300; color: var(--or-pale);
+      font-size: 1.3rem; font-weight: 300; color: var(--gold2);
       margin-bottom: 0.8rem;
     }
     .partner-desc {
-      font-size: 0.7rem; color: var(--gris);
+      font-size: 0.7rem; color: var(--muted);
       line-height: 1.9; letter-spacing: 0.05em;
       margin-bottom: 1.4rem;
     }
@@ -126,44 +116,44 @@
       display: flex; flex-direction: column; gap: 0.4rem;
     }
     .partner-list li {
-      font-size: 0.62rem; letter-spacing: 0.1em; color: var(--gris);
+      font-size: 0.62rem; letter-spacing: 0.1em; color: var(--muted);
       display: flex; align-items: center; gap: 0.6rem;
     }
     .partner-list li::before {
-      content: '◇'; color: var(--or); font-size: 0.5rem; flex-shrink: 0;
+      content: '◇'; color: var(--gold); font-size: 0.5rem; flex-shrink: 0;
     }
 
     /* ENGAGEMENTS BLOCK */
     .engage-block {
       margin-top: 1.5px;
-      background: var(--noir-2);
-      border-top: 1px solid var(--border);
+      background: var(--ink2);
+      border-top: 1px solid var(--line);
       display: grid; grid-template-columns: 1fr 1px 1fr;
       position: relative; overflow: hidden;
     }
     .engage-block::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--or), transparent);
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
-    .engage-divider { background: var(--border); }
+    .engage-divider { background: var(--line); }
     .engage-side { padding: 3rem 2.5rem; }
     .engage-side h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem; font-weight: 300; color: var(--or-pale);
+      font-size: 1.4rem; font-weight: 300; color: var(--gold2);
       margin-bottom: 1rem;
     }
-    .engage-side h3 em { font-style: italic; color: var(--or); }
+    .engage-side h3 em { font-style: italic; color: var(--gold); }
     .engage-side p {
-      font-size: 0.7rem; color: var(--gris);
+      font-size: 0.7rem; color: var(--muted);
       line-height: 1.9; letter-spacing: 0.05em;
       margin-bottom: 1.5rem;
     }
 
     .btn-or {
       display: inline-flex; align-items: center; gap: 0.7rem;
-      border: 1px solid var(--or);
-      color: var(--or);
+      border: 1px solid var(--gold);
+      color: var(--gold);
       padding: 1rem 2.2rem;
       font-family: 'Montserrat', sans-serif;
       font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
@@ -174,11 +164,11 @@
     .btn-or::before {
       content: '';
       position: absolute; inset: 0;
-      background: var(--or); transform: translateX(-101%);
+      background: var(--gold); transform: translateX(-101%);
       transition: transform 0.3s ease;
     }
     .btn-or:hover::before { transform: translateX(0); }
-    .btn-or:hover { color: var(--noir); }
+    .btn-or:hover { color: var(--ink); }
     .btn-or span { position: relative; z-index: 1; }
 
     .engage-info {
@@ -195,31 +185,18 @@
     .engage-info-text { display: flex; flex-direction: column; gap: 0.2rem; }
     .engage-info-label {
       font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--or);
+      color: var(--gold);
     }
     .engage-info-val {
-      font-size: 0.68rem; color: var(--gris); line-height: 1.6;
+      font-size: 0.68rem; color: var(--muted); line-height: 1.6;
     }
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 3rem;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      color: var(--or); font-size: 1.2rem; letter-spacing: 0.15em;
-      text-decoration: none;
-    }
-    .footer-links { display: flex; gap: 2rem; }
-    .footer-links a {
-      text-decoration: none; font-size: 0.6rem; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--gris); transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--or); }
-    .footer-copy { font-size: 0.6rem; color: var(--gris-2); letter-spacing: 0.08em; }
+    
+    
+    
+    
+    
+    
 
     /* ANIMATIONS */
     @keyframes fadeUp {
@@ -232,22 +209,146 @@
 
     /* RESPONSIVE */
     @media (max-width: 700px) {
-      nav { padding: 1.2rem 1.5rem; }
-      .nav-links { display: none; }
+      
+      
       .hero { padding: 10rem 1.5rem 4rem; }
       .page-content { padding: 3rem 1.5rem 5rem; }
       .partners-grid { grid-template-columns: 1fr; }
       .engage-block { grid-template-columns: 1fr; }
       .engage-divider { display: none; }
-      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      
     }
-  </style>
+  
+/* ── NAV STANDARD SHVIP ─────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 56px;
+  transition: all 0.6s ease;
+}
+nav.scrolled {
+  background: rgba(5,7,14,0.92);
+  backdrop-filter: blur(12px);
+  padding: 18px 56px;
+  border-bottom: 1px solid var(--line);
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after,
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 10px 24px;
+  text-decoration: none;
+  transition: all 0.35s ease;
+}
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+@media (max-width: 768px) {
+  nav { padding: 22px 24px; }
+  nav.scrolled { padding: 16px 24px; }
+  .nav-links, .nav-cta { display: none; }
+}
+
+
+/* ── FOOTER STANDARD SHVIP ──────────────────────────── */
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 56px;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-decoration: none;
+}
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.45);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-copy {
+  font-family: 'Raleway', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(240,237,232,0.3);
+}
+@media (max-width: 768px) {
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+  .footer-links { gap: 16px; }
+}
+
+</style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
-  <a href="/" class="logo">SHVIP</a>
+<nav id="nav">
+  <a href="/" class="nav-logo">SHVIP</a>
   <ul class="nav-links">
     <li><a href="/services">Services</a></li>
     <li><a href="/flotte">Flotte</a></li>
@@ -255,6 +356,7 @@
     <li><a href="/partenaires" class="active">Partenaires</a></li>
     <li><a href="/contact">Contact</a></li>
   </ul>
+  <a href="/contact#demande-privee" class="nav-cta">Demande privée</a>
 </nav>
 
 <!-- HERO -->
@@ -309,7 +411,7 @@
     <div class="engage-side">
       <h3>Devenir <em>partenaire</em></h3>
       <p>Nous sélectionnons nos partenaires avec soin. Si votre activité implique une clientèle exigeante et que vous valorisez la discrétion et la qualité, contactez-nous pour discuter d'un partenariat.</p>
-      <a href="/reservation" class="btn-or">
+      <a href="/contact" class="btn-or">
         <span>Nous contacter</span>
         <span>→</span>
       </a>
@@ -351,17 +453,26 @@
 <!-- FOOTER -->
 <footer>
   <a href="/" class="footer-logo">SHVIP</a>
-  <div class="footer-links">
-    <a href="/services">Services</a>
-    <a href="/flotte">Flotte</a>
-    <a href="/reservation">Réservation</a>
-    <a href="/partenaires">Partenaires</a>
-    <a href="/contact">Contact</a>
-    <a href="/conditions-generales">CGV</a>
-    <a href="/politique-de-confidentialite">Confidentialité</a>
-  </div>
-  <div class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</div>
+  <ul class="footer-links">
+    <li><a href="/services">Services</a></li>
+    <li><a href="/flotte">Flotte</a></li>
+    <li><a href="/reservation">Réservation</a></li>
+    <li><a href="/partenaires">Partenaires</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/conditions-generales">CGV</a></li>
+    <li><a href="/politique-de-confidentialite">Confidentialité</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</span>
 </footer>
-
+<script>
+// ── NAV SCROLL EFFECT
+(function(){
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, {passive:true});
+})();
+</script>
 </body>
 </html>
