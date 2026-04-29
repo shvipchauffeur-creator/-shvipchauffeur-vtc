@@ -463,36 +463,37 @@ footer {
   let currentRef = '';
 
   /* ─── GOOGLE PLACES ─── */
-  let acSvc;
   const acTimers = {};
   function acSearch(input, listId) {
     const list = document.getElementById(listId);
     clearTimeout(acTimers[listId]);
     if (!input.value.trim() || input.value.length < 3) { list.classList.add('hidden'); return; }
-    acTimers[listId] = setTimeout(() => {
+    acTimers[listId] = setTimeout(async () => {
       if (!window.google) return;
-      if (!acSvc) acSvc = new google.maps.places.AutocompleteService();
-      acSvc.getPlacePredictions(
-        { input: input.value, componentRestrictions:{ country:'fr' }, language:'fr' },
-        (predictions, status) => {
-          list.innerHTML = '';
-          if (status !== 'OK' || !predictions) { list.classList.add('hidden'); return; }
-          predictions.slice(0,5).forEach(p => {
-            const el = document.createElement('div');
-            el.className = 'ac-item';
-            el.textContent = p.description;
-            el.onclick = () => {
-              input.value = p.description;
-              list.classList.add('hidden');
-              input.classList.remove('err');
-              distanceKm = null; distanceLabel = '';
-              onAddressChange();
-            };
-            list.appendChild(el);
-          });
-          list.classList.remove('hidden');
-        }
-      );
+      try {
+        const { AutocompleteSuggestion } = await google.maps.importLibrary('places');
+        const req = { input: input.value, includedRegionCodes: ['fr'], language: 'fr' };
+        const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions(req);
+        list.innerHTML = '';
+        if (!suggestions || !suggestions.length) { list.classList.add('hidden'); return; }
+        suggestions.slice(0, 5).forEach(s => {
+          const desc = s.placePrediction.text.toString();
+          const el = document.createElement('div');
+          el.className = 'ac-item';
+          el.textContent = desc;
+          el.onclick = () => {
+            input.value = desc;
+            list.classList.add('hidden');
+            input.classList.remove('err');
+            distanceKm = null; distanceLabel = '';
+            onAddressChange();
+          };
+          list.appendChild(el);
+        });
+        list.classList.remove('hidden');
+      } catch(e) {
+        /* fallback silencieux */
+      }
     }, 280);
   }
   document.addEventListener('click', e => { if (!e.target.closest('.ac-wrap')) document.querySelectorAll('.ac-list').forEach(l => l.classList.add('hidden')); });
