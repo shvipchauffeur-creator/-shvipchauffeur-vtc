@@ -1,5 +1,5 @@
 [build]
-  command = "sed -i 's/GOOGLE_MAPS_KEY_PLACEHOLDER/'\"$GOOGLE_MAPS_API_KEY\"'/g' reservation.html"
+  command = "node inject-key.js"
   functions = "netlify/functions"
   publish = "."
 
