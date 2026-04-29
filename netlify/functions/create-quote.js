@@ -5,7 +5,9 @@ const Stripe = require("stripe");
 
 /**
  * SHVIP — create-quote
- * - Auth admin via Bearer token (ADMIN_TOKEN)
+ * - Auth double voie :
+ *    • ADMIN_TOKEN  → panel admin (Bearer token ou X-Admin-Token)
+ *    • PUBLIC_FORM_SECRET → formulaire public (header X-Form-Secret)
  * - Accepts both payload formats:
  *    NEW: { customerEmail, customerName, description, mode, totalAmount, acomptePercent, libreAmount }
  *    ADMIN FORM: { customerEmail, customerName, from, to, datetime, vehicleType, passengers, notes, pricingMode, amount, depositAmount }
@@ -32,7 +34,7 @@ function corsHeaders(origin) {
   const ok = origin && origin === ALLOWED_ORIGIN;
   return {
     ...(ok ? { "Access-Control-Allow-Origin": origin } : {}),
-    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Admin-Token, Idempotency-Key",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Admin-Token, X-Form-Secret, Idempotency-Key",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Content-Type": "application/json",
   };
@@ -42,27 +44,37 @@ function unauthorized(headers) {
   return { statusCode: 401, headers, body: JSON.stringify({ error: "Unauthorized" }) };
 }
 
-function requireAdmin(event, headers) {
-  const expected = process.env.ADMIN_TOKEN;
-  if (!expected) {
+function requireAuth(event, headers) {
+  const adminToken   = process.env.ADMIN_TOKEN;
+  const publicSecret = process.env.PUBLIC_FORM_SECRET;
+
+  // ── Voie 1 : admin panel (Bearer / X-Admin-Token / ?token=)
+  if (adminToken) {
+    const auth    = event.headers?.authorization || event.headers?.Authorization || "";
+    const xToken  = event.headers?.["x-admin-token"] || event.headers?.["X-Admin-Token"] || "";
+    const qsToken = event.queryStringParameters?.token || "";
+    let token = "";
+    if (auth)         token = auth.startsWith("Bearer ") ? auth.slice(7).trim() : auth.trim();
+    else if (xToken)  token = String(xToken).trim();
+    else if (qsToken) token = String(qsToken).trim();
+    if (token && token === adminToken) return { ok: true, via: "admin" };
+  }
+
+  // ── Voie 2 : formulaire public (header X-Form-Secret)
+  if (publicSecret) {
+    const formSecret = event.headers?.["x-form-secret"] || event.headers?.["X-Form-Secret"] || "";
+    if (String(formSecret).trim() === publicSecret) return { ok: true, via: "public" };
+  }
+
+  // Aucun secret configuré = erreur de config
+  if (!adminToken && !publicSecret) {
     return {
       ok: false,
-      res: { statusCode: 500, headers, body: JSON.stringify({ error: "Missing ADMIN_TOKEN" }) },
+      res: { statusCode: 500, headers, body: JSON.stringify({ error: "Missing ADMIN_TOKEN and PUBLIC_FORM_SECRET" }) },
     };
   }
 
-  // Allow multiple ways (more robust)
-  const auth = event.headers?.authorization || event.headers?.Authorization || "";
-  const xToken = event.headers?.["x-admin-token"] || event.headers?.["X-Admin-Token"] || "";
-  const qsToken = event.queryStringParameters?.token || "";
-
-  let token = "";
-  if (auth) token = auth.startsWith("Bearer ") ? auth.slice(7).trim() : auth.trim();
-  else if (xToken) token = String(xToken).trim();
-  else if (qsToken) token = String(qsToken).trim();
-
-  if (!token || token !== expected) return { ok: false, res: unauthorized(headers) };
-  return { ok: true };
+  return { ok: false, res: unauthorized(headers) };
 }
 
 function mustEnv(name) {
@@ -166,7 +178,7 @@ exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
   if (event.httpMethod !== "POST") return { statusCode: 405, headers, body: JSON.stringify({ error: "Method Not Allowed" }) };
 
-  const gate = requireAdmin(event, headers);
+  const gate = requireAuth(event, headers);
   if (!gate.ok) return gate.res;
 
   try {
