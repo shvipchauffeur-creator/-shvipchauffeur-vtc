@@ -451,7 +451,7 @@ footer {
 <div class="toast" id="toast"></div>
 
 <!-- ⚠️ Remplacez YOUR_GOOGLE_API_KEY par votre vraie clé Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_MAPS_KEY_PLACEHOLDER&libraries=places,geometry&language=fr&region=FR&loading=async"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHiZk91-I9kBMoJf42_fxPII4CoVIdqrE&libraries=places,geometry&language=fr&region=FR&loading=async"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   /* ─── SUPABASE ─── */
@@ -472,8 +472,9 @@ footer {
       if (!window.google) return;
       try {
         const { AutocompleteSuggestion } = await google.maps.importLibrary('places');
-        const req = { input: input.value, includedRegionCodes: ['fr'], language: 'fr' };
-        const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions(req);
+        const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions({
+          input: input.value, includedRegionCodes: ['fr'], language: 'fr'
+        });
         list.innerHTML = '';
         if (!suggestions || !suggestions.length) { list.classList.add('hidden'); return; }
         suggestions.slice(0, 5).forEach(s => {
@@ -491,9 +492,7 @@ footer {
           list.appendChild(el);
         });
         list.classList.remove('hidden');
-      } catch(e) {
-        /* fallback silencieux */
-      }
+      } catch(e) { list.classList.add('hidden'); }
     }, 280);
   }
   document.addEventListener('click', e => { if (!e.target.closest('.ac-wrap')) document.querySelectorAll('.ac-list').forEach(l => l.classList.add('hidden')); });
