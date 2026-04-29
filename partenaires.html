@@ -3,131 +3,365 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SHVIP — Partenaires</title>
-
+  <title>SHVIP — Partenaires | Collaborations Privées Paris</title>
+  <meta name="description" content="Partenariats SHVIP : hôtels, conciergeries, événementiel, agences DMC. Chauffeur privé Paris sur mesure." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink:"#05070E", obsidian:"#070A12", gold:"#D6B15E", gold2:"#B8922A",
-            pearl:"#E9ECF2", muted:"#A8B0C2", glass:"rgba(255,255,255,0.06)",
-            line:"rgba(255,255,255,0.12)"
-          },
-          boxShadow:{ luxe:"0 24px 80px rgba(0,0,0,0.65)" },
-          fontFamily:{ heading:["Poppins","sans-serif"], body:["Inter","sans-serif"] }
-        }
-      }
-    };
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: Inter, sans-serif; }
-    h1,h2,h3,h4,h5,h6 { font-family: Poppins, sans-serif; }
-    body.rtl { direction: rtl; }
-    body.rtl .rtl-text-right { text-align: right; }
-    body.rtl .rtl-flex-reverse { flex-direction: row-reverse; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --noir:    #0a0a0a;
+      --noir-2:  #111111;
+      --noir-3:  #1a1a1a;
+      --or:      #c9a96e;
+      --or-pale: #e8d5b0;
+      --blanc:   #f5f0e8;
+      --gris:    #888888;
+      --gris-2:  #444444;
+      --border:  rgba(201,169,110,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--noir);
+      color: var(--blanc);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 3rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      backdrop-filter: blur(4px);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; letter-spacing: 0.15em;
+      color: var(--or); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--blanc);
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      opacity: 0.7; transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--or); }
+
+    /* HERO */
+    .hero {
+      padding: 14rem 3rem 6rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 80%, rgba(201,169,110,0.05), transparent);
+      pointer-events: none;
+    }
+    .hero-label {
+      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 1.5rem; opacity: 0.9;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300; line-height: 1.1;
+    }
+    .hero h1 em { font-style: italic; color: var(--or); }
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 0.78rem; letter-spacing: 0.1em;
+      color: var(--gris); max-width: 480px; margin-inline: auto;
+      line-height: 1.9;
+    }
+
+    /* CONTENT */
+    .page-content {
+      max-width: 900px; margin: 0 auto;
+      padding: 5rem 3rem 7rem;
+    }
+
+    /* PARTNERS GRID */
+    .partners-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px; background: var(--border);
+    }
+    .partner-card {
+      background: var(--noir-2);
+      padding: 2.5rem 2rem;
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .partner-card:hover { background: var(--noir-3); }
+    .partner-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--or), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .partner-card:hover::before { opacity: 1; }
+    .partner-icon {
+      font-size: 1.6rem; margin-bottom: 1.2rem; display: block; opacity: 0.8;
+    }
+    .partner-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 300; color: var(--or-pale);
+      margin-bottom: 0.8rem;
+    }
+    .partner-desc {
+      font-size: 0.7rem; color: var(--gris);
+      line-height: 1.9; letter-spacing: 0.05em;
+      margin-bottom: 1.4rem;
+    }
+    .partner-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .partner-list li {
+      font-size: 0.62rem; letter-spacing: 0.1em; color: var(--gris);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .partner-list li::before {
+      content: '◇'; color: var(--or); font-size: 0.5rem; flex-shrink: 0;
+    }
+
+    /* ENGAGEMENTS BLOCK */
+    .engage-block {
+      margin-top: 1.5px;
+      background: var(--noir-2);
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 1px 1fr;
+      position: relative; overflow: hidden;
+    }
+    .engage-block::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--or), transparent);
+    }
+    .engage-divider { background: var(--border); }
+    .engage-side { padding: 3rem 2.5rem; }
+    .engage-side h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300; color: var(--or-pale);
+      margin-bottom: 1rem;
+    }
+    .engage-side h3 em { font-style: italic; color: var(--or); }
+    .engage-side p {
+      font-size: 0.7rem; color: var(--gris);
+      line-height: 1.9; letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-or {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      border: 1px solid var(--or);
+      color: var(--or);
+      padding: 1rem 2.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer; transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .btn-or::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--or); transform: translateX(-101%);
+      transition: transform 0.3s ease;
+    }
+    .btn-or:hover::before { transform: translateX(0); }
+    .btn-or:hover { color: var(--noir); }
+    .btn-or span { position: relative; z-index: 1; }
+
+    .engage-info {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .engage-info li {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .engage-info-icon {
+      font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .engage-info-text { display: flex; flex-direction: column; gap: 0.2rem; }
+    .engage-info-label {
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--or);
+    }
+    .engage-info-val {
+      font-size: 0.68rem; color: var(--gris); line-height: 1.6;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--or); font-size: 1.2rem; letter-spacing: 0.15em;
+      text-decoration: none;
+    }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      text-decoration: none; font-size: 0.6rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gris); transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--or); }
+    .footer-copy { font-size: 0.6rem; color: var(--gris-2); letter-spacing: 0.08em; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim   { animation: fadeUp 0.6s ease both; }
+    .anim-2 { animation: fadeUp 0.6s ease 0.1s both; }
+    .anim-3 { animation: fadeUp 0.6s ease 0.2s both; }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 10rem 1.5rem 4rem; }
+      .page-content { padding: 3rem 1.5rem 5rem; }
+      .partners-grid { grid-template-columns: 1fr; }
+      .engage-block { grid-template-columns: 1fr; }
+      .engage-divider { display: none; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
   </style>
-
-  <script src="i18n.js"></script>
 </head>
-<body class="bg-ink text-pearl antialiased" onload="initLang()">
+<body>
 
-  <!-- HEADER -->
-  <header class="fixed top-0 w-full z-50 bg-ink/55 backdrop-blur-md border-b border-line">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="h-20 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full border border-line bg-white/5 flex items-center justify-center">
-            <span class="iconify text-xl text-gold" data-icon="lucide:crown"></span>
-          </div>
-          <span class="text-2xl font-extrabold tracking-tight">SH<span class="text-gold">VIP</span></span>
-        </a>
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">SHVIP</a>
+  <ul class="nav-links">
+    <li><a href="/services">Services</a></li>
+    <li><a href="/flotte">Flotte</a></li>
+    <li><a href="/reservation">Réservation</a></li>
+    <li><a href="/partenaires" class="active">Partenaires</a></li>
+    <li><a href="/contact?prestation=partenaire">Contact</a></li>
+  </ul>
+</nav>
 
-        <div class="hidden md:flex items-center gap-10 text-sm">
-          <a href="index.html" data-i18n="nav.home" class="text-muted hover:text-pearl transition">Accueil</a>
-          <a href="services.html" data-i18n="nav.services" class="text-muted hover:text-pearl transition">Services</a>
-          <a href="flotte.html" data-i18n="nav.fleet" class="text-muted hover:text-pearl transition">Flotte</a>
-          <a href="partenaires.html" data-i18n="nav.partners" class="text-pearl">Partenaires</a>
-          <a href="contact.html" data-i18n="nav.contact" class="text-muted hover:text-pearl transition">Contact</a>
-        </div>
+<!-- HERO -->
+<div class="hero anim">
+  <p class="hero-label">Partenaires · Collaborations</p>
+  <h1>Des partenariats<br><em>de confiance.</em></h1>
+  <p class="hero-sub">Hôtels, conciergeries, événementiel, agences DMC. Nous construisons des relations durables fondées sur la discrétion et l'exigence mutuelle.</p>
+</div>
 
-        <div class="flex items-center gap-3 rtl-flex-reverse">
-          <div class="hidden md:flex items-center gap-2">
-            <button type="button" onclick="setLang('fr')" class="px-3 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-xs font-semibold">FR</button>
-            <button type="button" onclick="setLang('en')" class="px-3 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-xs font-semibold">EN</button>
-            <button type="button" onclick="setLang('ar')" class="px-3 py-2 rounded-full border border-line bg-white/5 hover:bg-white/10 transition text-xs font-semibold">AR</button>
-          </div>
-          <a href="contact.html#reserver"
-             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm bg-gradient-to-r from-gold to-gold2 text-black shadow-luxe hover:opacity-90 transition rtl-flex-reverse">
-            <span class="iconify text-lg" data-icon="lucide:calendar-check"></span>
-            <span data-i18n="header.book">Réserver</span>
-          </a>
-        </div>
-      </div>
-    </nav>
-  </header>
+<!-- CONTENU -->
+<div class="page-content anim-2">
 
-  <!-- CONTENT -->
-  <main class="pt-28">
-    <section class="py-14">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 rtl-text-right" data-i18n="partners.title">
-          Partenaires
-        </h1>
-        <p class="text-muted max-w-3xl rtl-text-right" data-i18n="partners.subtitle">
-          Des collaborations de confiance : hôtels, événements, conciergeries.
-        </p>
+  <div class="partners-grid">
 
-        <div class="grid md:grid-cols-3 gap-8 mt-10">
-          <div class="rounded-3xl p-8 bg-glass border border-line shadow-luxe">
-            <h3 class="text-lg font-bold mb-2 rtl-text-right" data-i18n="partners.p1T">
-              Hôtels & Conciergeries
-            </h3>
-            <p class="text-muted text-sm rtl-text-right" data-i18n="partners.p1D">
-              Service premium pour vos clients et équipes.
-            </p>
-          </div>
-
-          <div class="rounded-3xl p-8 bg-glass border border-line shadow-luxe">
-            <h3 class="text-lg font-bold mb-2 rtl-text-right" data-i18n="partners.p2T">
-              Événementiel
-            </h3>
-            <p class="text-muted text-sm rtl-text-right" data-i18n="partners.p2D">
-              Transport invités, logistique VIP, chauffeurs dédiés.
-            </p>
-          </div>
-
-          <div class="rounded-3xl p-8 bg-glass border border-line shadow-luxe">
-            <h3 class="text-lg font-bold mb-2 rtl-text-right" data-i18n="partners.p3T">
-              Agences & DMC
-            </h3>
-            <p class="text-muted text-sm rtl-text-right" data-i18n="partners.p3D">
-              Solutions sur mesure pour tourisme et corporate.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-line bg-black/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
-      <div class="inline-flex items-center gap-2 text-2xl font-bold">SH<span class="text-gold">VIP</span></div>
-      <div class="mt-5 flex flex-wrap justify-center gap-4 text-sm text-muted">
-        <a href="conditions-generales.html" class="hover:text-pearl transition" data-i18n="footer.cgv">Conditions générales</a>
-        <span class="text-muted/60">•</span>
-        <a href="politique-de-confidentialite.html" class="hover:text-pearl transition" data-i18n="footer.privacy">Politique de confidentialité</a>
-      </div>
-      <p class="text-xs text-muted mt-8" data-i18n="footer.copy">© 2026 SHVIP. Tous droits réservés.</p>
+    <div class="partner-card">
+      <span class="partner-icon">🏨</span>
+      <div class="partner-title">Hôtels & Conciergeries</div>
+      <p class="partner-desc">Service premium pour vos clients et équipes. Coordination directe avec la conciergerie, discrétion absolue.</p>
+      <ul class="partner-list">
+        <li>Coordination avec la conciergerie</li>
+        <li>Facturation directe possible</li>
+        <li>Chauffeur attitré si besoin</li>
+      </ul>
     </div>
-  </footer>
+
+    <div class="partner-card">
+      <span class="partner-icon">🥂</span>
+      <div class="partner-title">Événementiel</div>
+      <p class="partner-desc">Transport invités, logistique VIP, chauffeurs dédiés. Fashion week, salons, dîners de gala, réceptions privées.</p>
+      <ul class="partner-list">
+        <li>Multi-véhicules & coordination</li>
+        <li>Briefing équipe avant événement</li>
+        <li>Points de collecte organisés</li>
+      </ul>
+    </div>
+
+    <div class="partner-card">
+      <span class="partner-icon">✈️</span>
+      <div class="partner-title">Agences & DMC</div>
+      <p class="partner-desc">Solutions sur mesure pour tourisme de luxe et corporate. Tarifs partenaires, disponibilité prioritaire, reporting.</p>
+      <ul class="partner-list">
+        <li>Tarifs partenaires négociés</li>
+        <li>Disponibilité prioritaire 24h/24</li>
+        <li>Facturation mensuelle consolidée</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="engage-block anim-3">
+
+    <div class="engage-side">
+      <h3>Devenir <em>partenaire</em></h3>
+      <p>Nous sélectionnons nos partenaires avec soin. Si votre activité implique une clientèle exigeante et que vous valorisez la discrétion et la qualité, contactez-nous pour discuter d'un partenariat.</p>
+      <a href="/contact#demande-privee" class="btn-or">
+        <span>Nous contacter</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <div class="engage-divider"></div>
+
+    <div class="engage-side">
+      <h3>Nos <em>engagements</em></h3>
+      <ul class="engage-info">
+        <li>
+          <div class="engage-info-icon">⚡</div>
+          <div class="engage-info-text">
+            <div class="engage-info-label">Réactivité</div>
+            <div class="engage-info-val">Réponse garantie sous 15 min · 24h/24 · 7j/7</div>
+          </div>
+        </li>
+        <li>
+          <div class="engage-info-icon">🔒</div>
+          <div class="engage-info-text">
+            <div class="engage-info-label">Confidentialité</div>
+            <div class="engage-info-val">Données protégées · NDA possible sur demande</div>
+          </div>
+        </li>
+        <li>
+          <div class="engage-info-icon">📋</div>
+          <div class="engage-info-text">
+            <div class="engage-info-label">Facturation</div>
+            <div class="engage-info-val">CB, virement, facturation mensuelle pour partenaires</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="footer-logo">SHVIP</a>
+  <div class="footer-links">
+    <a href="/services">Services</a>
+    <a href="/flotte">Flotte</a>
+    <a href="/reservation">Réservation</a>
+    <a href="/partenaires">Partenaires</a>
+    <a href="/contact">Contact</a>
+    <a href="/conditions-generales">CGV</a>
+    <a href="/politique-de-confidentialite">Confidentialité</a>
+  </div>
+  <div class="footer-copy">© 2026 SHVIP · Paris · Tous droits réservés</div>
+</footer>
 
 </body>
 </html>

@@ -1,4 +1,7 @@
-const ALLOWED_ORIGIN = process.env.SITE_URL || "https://shvipchauffeur-vtc.netlify.app";
+const ALLOWED_ORIGINS = [
+  process.env.SITE_URL || "https://shvip-paris.com",
+  "https://shvipchauffeur-vtc.netlify.app",
+];
 
 function corsHeaders(origin) {
   const base = {
@@ -8,10 +11,9 @@ function corsHeaders(origin) {
   };
   if (!origin) return base;
   const allowed =
-    origin === ALLOWED_ORIGIN ||
+    ALLOWED_ORIGINS.includes(origin) ||
     origin.includes("localhost") ||
-    origin.includes("127.0.0.1") ||
-    origin.includes("netlify.app");
+    origin.includes("127.0.0.1");
   if (allowed) return { ...base, "Access-Control-Allow-Origin": origin };
   return base;
 }
@@ -23,11 +25,9 @@ function requireAdmin(event, headers) {
   }
   const auth = event.headers?.authorization || event.headers?.Authorization || "";
   const xToken = event.headers?.["x-admin-token"] || event.headers?.["X-Admin-Token"] || "";
-  const qsToken = event.queryStringParameters?.token || "";
   let token = "";
   if (auth) token = auth.startsWith("Bearer ") ? auth.slice(7).trim() : auth.trim();
   else if (xToken) token = String(xToken).trim();
-  else if (qsToken) token = String(qsToken).trim();
   if (!token || token !== expected) {
     return { ok: false, res: { statusCode: 401, headers, body: JSON.stringify({ ok: false, error: "Unauthorized" }) } };
   }

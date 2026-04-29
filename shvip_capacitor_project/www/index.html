@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="SHVIP Driver"/>
+<meta name="theme-color" content="#05070E"/>
+<title>SHVIP Driver</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap');
+:root{--ink:#05070E;--card:#0D1120;--gold:#D6B15E;--gold2:#B8922A;--pearl:#E9ECF2;--muted:#5B6480;--line:rgba(255,255,255,0.08);--green:#10B981;--red:#EF4444;--orange:#F59E0B;--blue:#3B82F6;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;background:var(--ink);color:var(--pearl);font-family:'DM Sans',sans-serif;}
+body{display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;max-width:430px;margin:0 auto;}
+.off{display:none!important;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{animation:spin .7s linear infinite;}
+
+/* LOADER */
+#loader{background:var(--ink);align-items:center;justify-content:center;z-index:999;}
+.loader-logo{font-size:40px;font-weight:800;margin-bottom:16px;text-align:center;}
+.loader-logo span{color:var(--gold);}
+.spin-ring{width:28px;height:28px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;}
+
+/* LOGIN */
+#loginScreen{background:var(--ink);padding:32px;justify-content:center;align-items:center;}
+.login-logo{font-size:36px;font-weight:800;text-align:center;margin-bottom:6px;}
+.login-logo span{color:var(--gold);}
+.login-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:36px;}
+.login-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;width:100%;}
+.flabel{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;display:block;}
+.fselect,.finput{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;color:var(--pearl);padding:14px 16px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:16px;transition:border-color .2s;}
+.fselect{-webkit-appearance:none;} .fselect option{background:#0D1120;}
+.finput:focus,.fselect:focus{border-color:var(--gold);}
+.btn-login{width:100%;padding:15px;border-radius:12px;font-size:16px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-login:active{opacity:.8;}
+.login-err{color:var(--red);font-size:12px;text-align:center;margin-top:12px;min-height:18px;}
+
+/* TOPBAR */
+.topbar{padding:50px 20px 14px;background:var(--ink);border-bottom:1px solid var(--line);flex-shrink:0;}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;}
+.av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#000;flex-shrink:0;}
+.btn-out{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:12px;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* SYNCBAR */
+.syncbar{background:rgba(214,177,94,.06);border-bottom:1px solid rgba(214,177,94,.12);padding:7px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.sync-txt{font-size:11px;color:var(--gold);font-family:'DM Mono',monospace;}
+.btn-ref{background:none;border:none;color:var(--gold);font-size:18px;cursor:pointer;display:inline-block;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--line);flex-shrink:0;}
+.tab{flex:1;padding:12px 6px;text-align:center;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;position:relative;}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold);}
+.badge{position:absolute;top:7px;right:calc(50% - 22px);background:var(--red);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px;}
+
+/* SCROLL */
+.scroll{flex:1;overflow-y:auto;padding:14px;-webkit-overflow-scrolling:touch;}
+.scroll::-webkit-scrollbar{display:none;}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card.today{border-color:rgba(239,68,68,.4);}
+.card.tmrw{border-color:rgba(245,158,11,.35);}
+.urg{position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;letter-spacing:.1em;padding:3px 9px;border-radius:20px;}
+.urg.today{background:var(--red);color:#fff;}
+.urg.tmrw{background:var(--orange);color:#000;}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.ctime{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;color:var(--gold);line-height:1;}
+.cdate{font-size:11px;color:var(--muted);margin-top:3px;}
+.cname{font-size:15px;font-weight:700;text-align:right;}
+.ctel{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;text-align:right;}
+.route-box{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;}
+.rrow{display:flex;align-items:flex-start;gap:10px;padding:3px 0;}
+.rdot{width:9px;height:9px;border-radius:50%;margin-top:3px;flex-shrink:0;}
+.rdot.from{background:var(--green);}
+.rdot.to{background:var(--red);}
+.rline{width:1px;height:10px;background:var(--line);margin:2px 0 2px 4px;}
+.rlbl{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;}
+.rval{font-size:13px;color:var(--pearl);line-height:1.4;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.tag{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--line);color:var(--muted);font-family:'DM Mono',monospace;}
+.notebox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.btns{display:grid;gap:8px;margin-top:4px;}
+.g2{grid-template-columns:1fr 1fr;} .g3{grid-template-columns:1fr 1fr 1fr;}
+.abtn{padding:12px 8px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s,transform .1s;text-decoration:none;}
+.abtn:active{transform:scale(.96);}
+.accept{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3);}
+.refuse{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+.maps{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.25);}
+.done{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;}
+.wa{background:rgba(37,211,102,.12);color:#25D366;border:1px solid rgba(37,211,102,.25);}
+.call{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.25);}
+.crow{display:flex;gap:8px;margin-bottom:10px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px 20px;}
+.empty-ico{font-size:44px;margin-bottom:12px;}
+.empty-ttl{font-size:16px;font-weight:700;margin-bottom:6px;}
+.empty-sub{font-size:13px;color:var(--muted);}
+
+/* TOAST */
+.toast{position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-10px);background:rgba(10,13,26,.97);border:1px solid var(--line);color:var(--pearl);padding:12px 22px;border-radius:14px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;z-index:9999;pointer-events:none;white-space:nowrap;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,.5);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.ok{border-color:rgba(16,185,129,.5);}
+.toast.err{border-color:rgba(239,68,68,.5);}
+</style>
+</head>
+<body>
+
+<div class="screen" id="loader">
+  <div class="loader-logo">SH<span>VIP</span></div>
+  <div class="spin-ring"></div>
+</div>
+
+<div class="screen off" id="loginScreen">
+  <div class="login-logo">SH<span>VIP</span></div>
+  <div class="login-sub">Application Chauffeur</div>
+  <div class="login-card">
+    <label class="flabel">Votre nom</label>
+    <select class="fselect" id="dSel"><option value="">Sélectionnez votre nom…</option></select>
+    <label class="flabel">Code d'accès</label>
+    <input class="finput" type="password" id="dCode" placeholder="••••" maxlength="6" inputmode="numeric"/>
+    <button class="btn-login" onclick="login()">Se connecter</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<div class="screen off" id="mainScreen">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="av" id="av">?</div>
+        <div>
+          <div style="font-size:15px;font-weight:700" id="dName">—</div>
+          <div style="font-size:11px;color:var(--muted)" id="dVeh">Chauffeur SHVIP</div>
+        </div>
+      </div>
+      <button class="btn-out" onclick="logout()">Déconnexion</button>
+    </div>
+  </div>
+  <div class="syncbar">
+    <span class="sync-txt" id="syncTxt">⏳ Chargement…</span>
+    <button class="btn-ref" id="refBtn" onclick="load()">↻</button>
+  </div>
+  <div class="tabs">
+    <div class="tab on" id="t0" onclick="goTab(0)">🔔 Nouvelles<div class="badge" id="b0" style="display:none">0</div></div>
+    <div class="tab" id="t1" onclick="goTab(1)">📋 Mes courses</div>
+    <div class="tab" id="t2" onclick="goTab(2)">🏁 Terminées</div>
+  </div>
+  <div class="scroll" id="list"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SB  = "https://htblfillncczsfteciyy.supabase.co";
+const KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0YmxmaWxsbmNjenNmdGVjaXl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MjU3MjIsImV4cCI6MjA4ODUwMTcyMn0.5o-lV-w_q12M6DU1jI7u881HbEmjzNero_y1-wqKeo0";
+
+let driver=null, courses=[], tabIdx=0, autoT;
+
+window.onload = async () => {
+  await loadDrivers();
+  const s = sessionStorage.getItem('shvip_d');
+  if(s){ driver=JSON.parse(s); showMain(); }
+  else { switchScreen('loginScreen'); }
+};
+
+async function loadDrivers() {
+  try {
+    const data = await api('GET','/rest/v1/pilotes?statut=eq.actif&order=prenom.asc');
+    const sel = document.getElementById('dSel');
+    if(data && data.length) {
+      data.forEach(d => {
+        const o = document.createElement('option');
+        o.value = JSON.stringify(d);
+        o.textContent = d.prenom + ' ' + (d.nom_famille||'');
+        sel.appendChild(o);
+      });
+    } else { addFallbackDrivers(); }
+  } catch { addFallbackDrivers(); }
+}
+
+function addFallbackDrivers() {
+  const sel = document.getElementById('dSel');
+  const list = [
+    {prenom:'Samy',nom_famille:'H.',code:'1111',vehicule:'Berline'},
+    {prenom:'Chauffeur',nom_famille:'2',code:'2222',vehicule:'Berline'},
+    {prenom:'Chauffeur',nom_famille:'3',code:'3333',vehicule:'Berline'},
+    {prenom:'Chauffeur',nom_famille:'4',code:'4444',vehicule:'Berline'},
+    {prenom:'Chauffeur',nom_famille:'5',code:'5555',vehicule:'Berline'},
+    {prenom:'Chauffeur',nom_famille:'6',code:'6666',vehicule:'Berline'},
+  ];
+  list.forEach(d => {
+    const o = document.createElement('option');
+    o.value = JSON.stringify(d);
+    o.textContent = d.prenom + ' ' + d.nom_famille;
+    sel.appendChild(o);
+  });
+}
+
+function login() {
+  const sv = document.getElementById('dSel').value;
+  const code = document.getElementById('dCode').value.trim();
+  const err = document.getElementById('loginErr');
+  if(!sv){ err.textContent='Sélectionnez votre nom.'; return; }
+  if(!code){ err.textContent='Entrez votre code.'; return; }
+  const d = JSON.parse(sv);
+  if(d.code !== code){ err.textContent='❌ Code incorrect.'; return; }
+  driver=d; sessionStorage.setItem('shvip_d',JSON.stringify(d)); err.textContent='';
+  showMain();
+}
+
+function logout() {
+  sessionStorage.removeItem('shvip_d'); driver=null;
+  clearInterval(autoT); switchScreen('loginScreen');
+  document.getElementById('dCode').value='';
+}
+
+function showMain() {
+  const full = (driver.prenom+' '+(driver.nom_famille||'')).trim();
+  const ini  = full.split(' ').map(w=>w[0]||'').join('').substring(0,2).toUpperCase();
+  document.getElementById('av').textContent   = ini;
+  document.getElementById('dName').textContent = full;
+  document.getElementById('dVeh').textContent  = driver.vehicule ? '🚗 '+driver.vehicule : 'Chauffeur SHVIP';
+  switchScreen('mainScreen');
+  load();
+  autoT = setInterval(load, 60000);
+}
+
+async function load() {
+  const btn = document.getElementById('refBtn');
+  btn.classList.add('spin');
+  try {
+    courses = await api('GET','/rest/v1/reservations?order=date_course.asc,heure.asc&limit=500');
+    const t = new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('syncTxt').textContent = '✓ '+t;
+    render();
+  } catch {
+    document.getElementById('syncTxt').textContent = '⚠️ Hors ligne';
+    toast('Impossible de charger les courses','err');
+  }
+  btn.classList.remove('spin');
+}
+
+function goTab(i) {
+  tabIdx=i;
+  [0,1,2].forEach(x => document.getElementById('t'+x).classList.toggle('on',x===i));
+  render();
+}
+
+function render() {
+  const today = new Date().toISOString().split('T')[0];
+  const tmrw  = new Date(Date.now()+86400000).toISOString().split('T')[0];
+  const full  = (driver.prenom+' '+(driver.nom_famille||'')).trim();
+  let list;
+  if(tabIdx===0){
+    list = courses.filter(r=>(!r.chauffeur_nom||r.chauffeur_nom==='')&&r.statut!=='Annulée'&&r.statut!=='Terminée');
+    const b=document.getElementById('b0'); b.textContent=list.length; b.style.display=list.length?'flex':'none';
+  } else if(tabIdx===1){
+    list = courses.filter(r=>r.chauffeur_nom===full&&r.statut!=='Terminée'&&r.statut!=='Annulée');
+  } else {
+    list = courses.filter(r=>r.chauffeur_nom===full&&r.statut==='Terminée');
+  }
+
+  const el = document.getElementById('list');
+  if(!list.length){
+    const m=[{ico:'🎉',t:'Aucune nouvelle course',s:'Toutes les courses sont prises.'},{ico:'📭',t:'Aucune course assignée',s:'En attente de dispatch.'},{ico:'🏁',t:'Aucune course terminée',s:'Vos courses finies ici.'}][tabIdx];
+    el.innerHTML=`<div class="empty"><div class="empty-ico">${m.ico}</div><div class="empty-ttl">${m.t}</div><div class="empty-sub">${m.s}</div></div>`;
+    return;
+  }
+
+  el.innerHTML = list.map(r => {
+    const dc  = (r.date_course||'').substring(0,10);
+    const urg = dc===today?'today':dc===tmrw?'tmrw':'';
+    const tel = (r.telephone||'').replace(/\s/g,'');
+    const dep = r.depart||'—', arr = r.arrivee||'—';
+    const maps= `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(dep)}&destination=${encodeURIComponent(arr)}`;
+    const waT = encodeURIComponent(`Bonjour ${r.nom||''}, votre chauffeur SHVIP ${full} prend en charge votre course du ${fmtDate(r.date_course)} à ${r.heure||'—'}. 🚗`);
+    const wa  = `https://wa.me/33${tel.replace(/^0/,'')}?text=${waT}`;
+    let actions='';
+    if(tabIdx===0){
+      actions=`<div class="btns g2"><button class="abtn accept" onclick="accepter(${r.id})">✅ Accepter</button><button class="abtn refuse" onclick="refuser(${r.id})">❌ Refuser</button></div>`;
+    } else if(tabIdx===1){
+      actions=`<div class="btns g3"><a class="abtn maps" href="${maps}" target="_blank">🗺 Maps</a><a class="abtn wa" href="${wa}" target="_blank">💬 WA</a><button class="abtn done" onclick="terminer(${r.id})">🏁 Fini</button></div>`;
+    } else {
+      actions=`<div class="btns g2"><a class="abtn maps" href="${maps}" target="_blank">🗺 Trajet</a><a class="abtn wa" href="${wa}" target="_blank">💬 WA</a></div>`;
+    }
+    return `<div class="card ${urg}">
+      ${urg?`<div class="urg ${urg}">${urg==='today'?"AUJOURD'HUI":'DEMAIN'}</div>`:''}
+      <div class="card-top"><div><div class="ctime">${r.heure||'--:--'}</div><div class="cdate">${fmtDate(r.date_course)}</div></div><div><div class="cname">${esc(r.nom||'—')}</div><div class="ctel">${r.telephone||'—'}</div></div></div>
+      <div class="route-box">
+        <div class="rrow"><div class="rdot from"></div><div><div class="rlbl">Départ</div><div class="rval">${esc(dep)}</div></div></div>
+        <div class="rline"></div>
+        <div class="rrow"><div class="rdot to"></div><div><div class="rlbl">Arrivée</div><div class="rval">${esc(arr)}</div></div></div>
+      </div>
+      <div class="tags">${r.prestation?`<span class="tag">🚗 ${esc(r.prestation)}</span>`:''}<span class="tag">👥 ${r.nb_passagers||1} pass.</span>${r.notes?`<span class="tag">📝 Note</span>`:''}</div>
+      ${r.notes?`<div class="notebox">📝 ${esc(r.notes)}</div>`:''}
+      <div class="crow"><a class="abtn call" href="tel:${tel}" style="flex:1">📞 Appeler</a><a class="abtn wa" href="${wa}" target="_blank" style="flex:1">💬 WhatsApp</a></div>
+      ${actions}
+    </div>`;
+  }).join('');
+}
+
+async function accepter(id) {
+  const full = (driver.prenom+' '+(driver.nom_famille||'')).trim();
+  const ok = await patch(id,{chauffeur_nom:full,statut:'Confirmée'});
+  if(ok){ const r=courses.find(x=>x.id===id); if(r){r.chauffeur_nom=full;r.statut='Confirmée';} toast('✅ Course acceptée !','ok'); render(); }
+}
+async function refuser(id) {
+  const ok = await patch(id,{chauffeur_nom:'',statut:'En attente'});
+  if(ok){ toast('Course refusée','ok'); render(); }
+}
+async function terminer(id) {
+  const ok = await patch(id,{statut:'Terminée'});
+  if(ok){ const r=courses.find(x=>x.id===id); if(r)r.statut='Terminée'; toast('🏁 Course terminée !','ok'); render(); }
+}
+
+async function patch(id,data) {
+  try {
+    const r = await fetch(`${SB}/rest/v1/reservations?id=eq.${id}`,{
+      method:'PATCH',
+      headers:{apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify(data)
+    });
+    if(!r.ok){ const t=await r.text(); toast('Err '+r.status+': '+t.substring(0,50),'err'); return false; }
+    return true;
+  } catch(e){ toast('Erreur réseau','err'); return false; }
+}
+
+async function api(method,path) {
+  const r = await fetch(SB+path,{headers:{apikey:KEY,'Authorization':'Bearer '+KEY}});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+function switchScreen(id) {
+  document.getElementById('loader').classList.add('off');
+  ['loginScreen','mainScreen'].forEach(s=>document.getElementById(s).classList.toggle('off',s!==id));
+}
+function fmtDate(d){ if(!d)return'—'; try{return new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'short'});}catch{return d;} }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+let toastT;
+function toast(m,t='ok'){ const el=document.getElementById('toast'); el.className='toast '+t+' show'; el.textContent=m; clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'),3500); }
+</script>
+</body>
+</html>
