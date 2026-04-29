@@ -1,4 +1,5 @@
 [build]
+  command = "sed -i 's/GOOGLE_MAPS_KEY_PLACEHOLDER/'\"$GOOGLE_MAPS_KEY\"'/g' reservation.html"
   functions = "netlify/functions"
   publish = "."
 
