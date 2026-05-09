@@ -690,24 +690,51 @@ footer {
     const duree = document.getElementById('f-duree').value;
     const prixCalc = calcPrice();
 
+    // ── Champs bruts ───────────────────────────────────────────────────────
+    const rawNom       = document.getElementById('f-nom').value.trim();
+    const rawTel       = document.getElementById('f-telephone').value.trim();
+    const rawEmail     = document.getElementById('f-email').value.trim();
+    const rawDepart    = d ? document.getElementById('f-depart-dispo').value.trim() : document.getElementById('f-depart').value.trim();
+    const rawArrivee   = d ? '(Mise à dispo — ' + duree + 'h)' : document.getElementById('f-arrivee').value.trim();
+    const rawDate      = document.getElementById('f-date').value || '';
+    const rawHeure     = document.getElementById('f-heure').value || '';
+    const rawPassagers = document.getElementById('f-passagers').value || '1';
+    const rawNotes     = document.getElementById('f-notes').value.trim();
+
+    // ── date_souhaitee : timestamp ISO ou null ──────────────────────────
+    let dateSouhaitee = null;
+    if (rawDate && rawHeure) {
+      try { dateSouhaitee = new Date(`${rawDate}T${rawHeure}:00`).toISOString(); } catch(e) {}
+    } else if (rawDate) {
+      try { dateSouhaitee = new Date(`${rawDate}T00:00:00`).toISOString(); } catch(e) {}
+    }
+
+    // ── notes enrichies (infos non stockées dans columns dédiées) ──────
+    const notesEnrichies = [
+      `Réf: ${currentRef}`,
+      `Passagers: ${rawPassagers}`,
+      `Prestation: ${S.svc} | ${S.veh} | ${S.pay}` + (distanceLabel ? ` | ${distanceLabel}` : ''),
+      d ? `Durée: ${duree}h` : '',
+      rawNotes
+    ].filter(Boolean).join(' | ');
+
+    // ── Payload aligné sur le schéma Supabase reservations_web ─────────
     const reservationPayload = {
-      reference:    currentRef,
-      nom:          document.getElementById('f-nom').value.trim(),
-      telephone:    document.getElementById('f-telephone').value.trim(),
-      email:        document.getElementById('f-email').value.trim(),
-      depart:       d ? document.getElementById('f-depart-dispo').value.trim() : document.getElementById('f-depart').value.trim(),
-      arrivee:      d ? '(Mise à dispo — ' + duree + 'h)' : document.getElementById('f-arrivee').value.trim(),
-      date_course:  document.getElementById('f-date').value || '',
-      heure:        document.getElementById('f-heure').value || '',
-      nb_passagers: document.getElementById('f-passagers').value || '1',
-      prix:         prixCalc ?? 0,
-      prestation:   `${S.svc} | ${S.veh} | ${S.pay}` + (distanceLabel ? ` | ${distanceLabel}` : ''),
-      notes:        [d ? `Durée : ${duree}h` : '', document.getElementById('f-notes').value.trim()].filter(Boolean).join(' | ')
+      source:         'web',
+      client:         rawNom,
+      phone:          rawTel,
+      email:          rawEmail,
+      depart:         rawDepart,
+      arrivee:        rawArrivee,
+      date_souhaitee: dateSouhaitee,
+      prix_estime:    prixCalc ?? 0,
+      statut:         'En attente',
+      notes:          notesEnrichies
     };
 
     try {
-      // 1) Enregistrement dans Supabase
-      const { error } = await db.from('reservations').insert([reservationPayload]);
+      // 1) Enregistrement dans Supabase → table reservations_web
+      const { error } = await db.from('reservations_web').insert([reservationPayload]);
 
       if (error) {
         console.error('Supabase error:', error);
@@ -719,17 +746,17 @@ footer {
 
       // 2) Création du devis + email + lien Stripe via Netlify Function
       const quotePayload = {
-        customerEmail: reservationPayload.email,
-        customerName:  reservationPayload.nom,
-        from:          reservationPayload.depart,
-        to:            reservationPayload.arrivee,
-        datetime:      `${reservationPayload.date_course} ${reservationPayload.heure}`.trim(),
+        customerEmail: rawEmail,
+        customerName:  rawNom,
+        from:          rawDepart,
+        to:            rawArrivee,
+        datetime:      `${rawDate} ${rawHeure}`.trim(),
         vehicleType:   S.veh,
-        passengers:    reservationPayload.nb_passagers,
-        notes:         reservationPayload.notes,
+        passengers:    rawPassagers,
+        notes:         notesEnrichies,
         pricingMode:   S.pay === 'Acompte 30 %' ? 'deposit' : 'total',
-        amount:        Number(reservationPayload.prix),
-        depositAmount: S.pay === 'Acompte 30 %' ? Math.round(Number(reservationPayload.prix) * 0.3) : 0
+        amount:        Number(prixCalc ?? 0),
+        depositAmount: S.pay === 'Acompte 30 %' ? Math.round(Number(prixCalc ?? 0) * 0.3) : 0
       };
 
       const res = await fetch('/.netlify/functions/create-quote', {
