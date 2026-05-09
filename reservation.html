@@ -280,6 +280,13 @@ footer {
 }
 
 </style>
+
+  <!-- ═══ SHvip Tracker — NE PAS SUPPRIMER ═══════════════════════════════
+       Envoie une visite au dashboard chaque fois qu'un visiteur ouvre cette page.
+       Remplacez 192.168.1.142 par l'IP publique/fixe de votre serveur si nécessaire.
+  ════════════════════════════════════════════════════════════════════════ -->
+  <script src="http://192.168.1.142:5055/shvip-tracker.js" defer></script>
+
 </head>
 <body>
 
@@ -683,8 +690,8 @@ footer {
     const duree = document.getElementById('f-duree').value;
     const prixCalc = calcPrice();
 
+    // Payload aligné sur le schéma Supabase table "reservations"
     const reservationPayload = {
-      reference:    currentRef,
       nom:          document.getElementById('f-nom').value.trim(),
       telephone:    document.getElementById('f-telephone').value.trim(),
       email:        document.getElementById('f-email').value.trim(),
@@ -693,13 +700,14 @@ footer {
       date_course:  document.getElementById('f-date').value || '',
       heure:        document.getElementById('f-heure').value || '',
       nb_passagers: document.getElementById('f-passagers').value || '1',
-      prix:         prixCalc ?? 0,
       prestation:   `${S.svc} | ${S.veh} | ${S.pay}` + (distanceLabel ? ` | ${distanceLabel}` : ''),
-      notes:        [d ? `Durée : ${duree}h` : '', document.getElementById('f-notes').value.trim()].filter(Boolean).join(' | ')
+      notes:        [`Réf: ${currentRef}`, d ? `Durée: ${duree}h` : '', document.getElementById('f-notes').value.trim()].filter(Boolean).join(' | '),
+      statut:       'En attente',
+      importe:      0
     };
 
     try {
-      // 1) Enregistrement dans Supabase
+      // 1) Enregistrement dans Supabase → table "reservations"
       const { error } = await db.from('reservations').insert([reservationPayload]);
 
       if (error) {
@@ -721,8 +729,8 @@ footer {
         passengers:    reservationPayload.nb_passagers,
         notes:         reservationPayload.notes,
         pricingMode:   S.pay === 'Acompte 30 %' ? 'deposit' : 'total',
-        amount:        Number(reservationPayload.prix),
-        depositAmount: S.pay === 'Acompte 30 %' ? Math.round(Number(reservationPayload.prix) * 0.3) : 0
+        amount:        Number(prixCalc ?? 0),
+        depositAmount: S.pay === 'Acompte 30 %' ? Math.round(Number(prixCalc ?? 0) * 0.3) : 0
       };
 
       const res = await fetch('/.netlify/functions/create-quote', {
